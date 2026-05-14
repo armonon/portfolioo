@@ -12,6 +12,11 @@ export type RadarLane = {
   blocker: string;
   primaryLink?: { label: string; href: string };
   secondaryLink?: { label: string; href: string };
+  evidence?: {
+    source: string;
+    confidence: "low" | "medium" | "high";
+    review: string;
+  };
 };
 
 export const radarLanes: RadarLane[] = [
@@ -33,17 +38,22 @@ export const radarLanes: RadarLane[] = [
   {
     id: "creator-tools",
     icon: "🎬",
-    title: "Auto Cut / Context Compositor",
-    status: "Concept → Prototype",
-    phase: "Workflow design",
-    readiness: 32,
+    title: "Auto Cut + Context Compositor",
+    status: "Live beta + concept",
+    phase: "Creator workflow tools",
+    readiness: 44,
     accent: "from-violet-500/30 via-fuchsia-500/20 to-sky-500/10",
-    summary: "Creator tools for faster editing, subject-aware masking, smart backgrounds, and timeline workflow speed.",
-    bullets: ["Strong creator-tool bundle potential", "Clear portfolio download direction", "Next: clickable editor workflow prototype"],
-    nextAction: "Ship a click-through workflow that shows import → select subject → generate edit/composite.",
-    blocker: "Needs a visible prototype before it can feel like more than a product direction.",
-    primaryLink: { label: "Auto Cut pack", href: "/downloads/auto-cut-preview-pack.zip" },
-    secondaryLink: { label: "Compositor pack", href: "/downloads/context-compositor-preview-pack.zip" },
+    summary: "Auto Cut now has a public English beta for beat-aware edit plans, while Context Compositor remains a subject-aware smart-background concept.",
+    bullets: ["Auto Cut public beta is live", "Exports cut-plan JSON, XMEML, and marker CSV", "Context Compositor still needs proof before bundle claims"],
+    nextAction: "Harden Auto Cut with rendered MP4 export, manual cut editing, BPM/grid polish, and Premiere import QA before broader creator-suite positioning.",
+    blocker: "Not sale-ready yet: needs rendered export, manual edit controls, installer/packaging, and real Premiere workflow validation.",
+    primaryLink: { label: "Auto Cut beta", href: "https://sattari-auto-cut.netlify.app" },
+    secondaryLink: { label: "Compositor preview", href: "/downloads/context-compositor-preview-pack.zip" },
+    evidence: {
+      source: "wiki/projects/video/index.md",
+      confidence: "high",
+      review: "Keep beta/concept wording; no sale-ready claim.",
+    },
   },
   {
     id: "botanica",
@@ -106,9 +116,9 @@ export const radarLanes: RadarLane[] = [
 
 export const radarMetrics = [
   { value: String(radarLanes.length), label: "product lanes" },
-  { value: "4", label: "live surfaces" },
-  { value: "52%", label: "avg readiness" },
-  { value: "1", label: "daily idea loop" },
+  { value: String(radarLanes.filter((lane) => lane.primaryLink?.href.startsWith("http")).length), label: "live/beta surfaces" },
+  { value: `${Math.round(radarLanes.reduce((sum, lane) => sum + lane.readiness, 0) / radarLanes.length)}%`, label: "avg readiness" },
+  { value: "hourly", label: "radar sync loop" },
 ];
 
 export const radarOpportunities = [
@@ -119,26 +129,26 @@ export const radarOpportunities = [
 ];
 
 export const radarNextBuildSteps = [
-  { title: "Data-driven radar", body: "Cards now render from a typed data file instead of hard-coded JSX blocks.", state: "Started" },
-  { title: "Product links", body: "Each serious lane has a live site, download, or source link so it behaves like a product page hub.", state: "Live in v0.2" },
-  { title: "Readiness scores", body: "Every lane now shows a practical readiness percentage, next action, and blocker.", state: "Live in v0.2" },
-  { title: "Daily idea feed", body: "The daily app-idea loop now has a visible intake area on the Radar page.", state: "Seeded" },
+  { title: "Safe public sync", body: "Radar copy now reflects the live Auto Cut beta separately from the still-concept Context Compositor lane.", state: "Live" },
+  { title: "Evidence-backed fields", body: "Lane cards can carry source, confidence, and review notes so future hourly scans know what is safe to update.", state: "Started" },
+  { title: "Automated verification", body: "Safe data changes are designed to run through lint, build, diff check, commit, and push before being treated as complete.", state: "Active" },
+  { title: "Generated inputs", body: "Next step: move more lane fields from hand-maintained TypeScript into a generated wiki/GitHub/Netlify evidence map.", state: "Next" },
 ];
 
 export const radarIdeaFeed = [
   {
     name: "Product Radar OS",
     theme: "Operating system for Armon's active products",
-    mvp: "Auto-generate lane cards from wiki notes, deploy status, and GitHub activity.",
+    mvp: "Auto-sync safe lane copy from wiki evidence, then verify, commit, and push without supervision.",
   },
   {
-    name: "Creator Tool Bundle",
-    theme: "One suite for editors, musicians, and content builders",
-    mvp: "Unify Auto Cut, Context Compositor, and Auto Pitch into one product landing path.",
+    name: "Lane Evidence Ledger",
+    theme: "Per-lane source map for safe autonomous updates",
+    mvp: "Track live link, source page, confidence, blocker source, and review-needed flag for each Radar card.",
   },
   {
-    name: "Evidence Engine",
-    theme: "Reusable provenance layer for research-heavy products",
-    mvp: "Bring Librarian-style source trails into Botanica and Trader cards.",
+    name: "Creator Tool Suite Path",
+    theme: "Honest creator-software bundle story",
+    mvp: "Use Auto Cut's live beta as proof while keeping Context Compositor clearly labeled as concept-stage until validated.",
   },
 ];
