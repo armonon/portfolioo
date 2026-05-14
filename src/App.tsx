@@ -303,6 +303,8 @@ function App() {
       image: "/photos/context-compositor-example.svg",
       href: "/downloads/auto-cut-preview-pack.zip",
       fileLabel: "Download Auto Cut Preview Pack",
+      site: "https://autocut.netlify.app",
+      siteLabel: "Open Auto Cut Site",
       status: "Preview pack",
       tags: ["Video Editing", "AI Workflow", "Creator Tools"]
     },
@@ -683,16 +685,32 @@ function App() {
                       ))}
                     </div>
 
-                    <motion.a
-                      href={product.href}
-                      download
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-zinc-100"
-                    >
-                      <Download size={16} />
-                      {product.fileLabel}
-                    </motion.a>
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      {"site" in product && product.site ? (
+                        <motion.a
+                          href={product.site}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-zinc-500 hover:bg-zinc-800"
+                        >
+                          <ExternalLink size={16} />
+                          {product.siteLabel}
+                        </motion.a>
+                      ) : null}
+
+                      <motion.a
+                        href={product.href}
+                        download
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-zinc-100"
+                      >
+                        <Download size={16} />
+                        {product.fileLabel}
+                      </motion.a>
+                    </div>
                   </div>
                 </motion.div>
               ))}
