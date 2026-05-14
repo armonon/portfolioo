@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Menu, X, ExternalLink, Code2, Mail } from "lucide-react";
+import { Menu, X, ExternalLink, Code2, Mail, Sparkles } from "lucide-react";
 
 function App() {
   const [activeSection, setActiveSection] = useState("hero");
@@ -8,63 +8,184 @@ function App() {
 
   const projects = [
     {
+      id: 1,
+      title: "Auto Pitch",
+      subtitle: "Sattari audio plugin for fast vocal pitch workflow",
+      description:
+        "A music-software product direction built around fast pitch correction, creative vocal control, and a cleaner plugin experience for artists and producers.",
+      tech: ["Audio UX", "Plugin Product", "Music Tech", "AI Workflow"],
+      points: [
+        "Shaped as a Sattari Audio product with a simple, creator-friendly pitch workflow.",
+        "Focuses on speed, clarity, and creative control instead of overwhelming studio menus.",
+        "Part of a larger music software roadmap connected to the Sattari brand."
+      ],
+      live: "https://sattari.netlify.app",
+      liveLabel: "Sattari Site",
+      github: "#",
+      label: "Music Tech",
+      status: "In product build",
+      accent: "from-fuchsia-500/30 via-purple-500/20 to-cyan-500/30"
+    },
+    {
       id: 2,
+      title: "Digital Human MVP",
+      subtitle: "Browser-based avatar engine with voice and realtime interaction",
+      description:
+        "An interactive digital-human platform combining 3D avatar rendering, character chat, voice input, and talking-video research into a client-ready prototype path.",
+      tech: ["React", "Three.js", "R3F", "Realtime AI", "Avatar Systems"],
+      points: [
+        "Built around browser GLB avatar rendering and character-driven conversation flows.",
+        "Explores realtime chat, voice input, and generated talking-head worker pipelines.",
+        "Designed as a flexible foundation for product demos, agents, and branded characters."
+      ],
+      live: "#",
+      github: "#",
+      label: "AI Avatar",
+      status: "Private MVP",
+      accent: "from-sky-500/30 via-indigo-500/20 to-violet-500/30"
+    },
+    {
+      id: 3,
+      title: "Botanica Lab",
+      subtitle: "Botanical R&D and formulation-intelligence site",
+      description:
+        "A living research lab for botanical product concepts, ingredient signals, formula exploration, and safe wellness-product ideation.",
+      tech: ["AI Research", "Netlify", "Data Design", "Compliance-Aware UX"],
+      points: [
+        "Turns botanical research into readable product concepts and research pulses.",
+        "Uses a lab-style interface for remedy ideas, ingredient watchlists, and deeper dives.",
+        "Keeps product claims framed carefully so concepts can be reviewed before public use."
+      ],
+      live: "https://botanica-lab.netlify.app/",
+      liveLabel: "Live Lab",
+      github: "https://github.com/armonon/botanica-lab",
+      label: "Botanical AI",
+      status: "Live concept",
+      accent: "from-emerald-500/30 via-lime-500/20 to-teal-500/30"
+    },
+    {
+      id: 4,
+      title: "Stock Trader Oracle",
+      subtitle: "Market-intelligence dashboard for watchlists and catalysts",
+      description:
+        "A stock research dashboard that turns a watchlist into market radar, ticker news, scenario-based trade ideas, and risk-aware research briefs.",
+      tech: ["Market APIs", "Netlify Functions", "AI Analysis", "Research UX"],
+      points: [
+        "Tracks company watchlists, catalysts, headlines, and adjacent market themes.",
+        "Frames plays as research scenarios with risks and invalidation instead of guarantees.",
+        "Includes an analyst-style chat/API layer for faster ticker exploration."
+      ],
+      live: "https://armon-trader.netlify.app",
+      liveLabel: "Live Dashboard",
+      github: "#",
+      label: "Fintech Research",
+      status: "Live beta",
+      accent: "from-amber-500/30 via-orange-500/20 to-red-500/30"
+    },
+    {
+      id: 5,
+      title: "Librarian",
+      subtitle: "Provenance-first atlas for public-domain books",
+      description:
+        "A book discovery prototype that combines search, source inspection, public-domain availability, reading paths, and authority links into one research interface.",
+      tech: ["Vite", "SQLite", "Open Library", "Wikidata", "Source Provenance"],
+      points: [
+        "Surfaces readable/free book leads with citations, source links, confidence, and retrieval notes.",
+        "Adds exploration paths, source coverage dashboards, and stronger book-discovery flows.",
+        "Built for research trust: every important claim should point back to a source."
+      ],
+      live: "https://librarian-atlas.netlify.app",
+      liveLabel: "Live Atlas",
+      github: "#",
+      label: "Knowledge Tool",
+      status: "Live prototype",
+      accent: "from-stone-400/30 via-zinc-500/20 to-blue-500/30"
+    },
+    {
+      id: 6,
+      title: "Context Compositor",
+      subtitle: "Smart background overlay concept for video editors",
+      description:
+        "A video-editor tool concept for selecting a subject, tracking it through footage, and building believable background/overlay composites faster.",
+      tech: ["Video Tools", "Segmentation", "Compositing", "Creator Workflow"],
+      points: [
+        "Targets Premiere-style workflows where creators need fast subject-aware scene building.",
+        "Explores masking, motion alignment, color matching, and timeline-safe controls.",
+        "Designed for music videos, ads, social edits, and creator content."
+      ],
+      live: "#",
+      github: "#",
+      label: "Video AI",
+      status: "Prototype concept",
+      accent: "from-pink-500/30 via-rose-500/20 to-yellow-500/30"
+    },
+    {
+      id: 7,
       title: "Sattari Music",
       subtitle: "Brand-forward music and drum business website",
       description:
         "A custom web direction for a music business centered on drum gear, local services, rentals, and brand identity.",
-      image:
-        "/photos/sattari-screenshot.png",
+      image: "/photos/sattari-screenshot.png",
       tech: ["React", "Stripe", "E-commerce", "Responsive Design"],
       points: [
-        "Organized the site to highlight products while still making room for repair, rental, and local service offerings.",
-        "Built with a cleaner custom direction in mind rather than a boxed-in template feel.",
+        "Organized the site to highlight products while still making room for repair, rental, and local services.",
+        "Built with a cleaner custom direction instead of a boxed-in template feel.",
         "Focused on making the homepage feel product-led, visual, and strong for a niche audience."
       ],
       live: "https://sattari.netlify.app",
+      liveLabel: "Live Site",
       github: "#",
-      label: "Commerce"
+      label: "Commerce",
+      status: "Live site",
+      accent: "from-zinc-500/30 via-neutral-500/20 to-white/10"
     },
     {
-      id: 3,
+      id: 8,
       title: "Nasiri Team Realty",
       subtitle: "Modern real estate platform with live property listings",
       description:
-        "A responsive real estate website designed for property listings, agent profiles, and seamless client communication. Built with a clean, modern interface for browsing and filtering available properties.",
-      image:
-        "/photos/nasiri-screenshot.png",
+        "A responsive real estate website designed for property listings, agent profiles, and seamless client communication.",
+      image: "/photos/nasiri-screenshot.png",
       tech: ["React", "Real Estate CMS", "Property Listings", "Responsive Design"],
       points: [
-        "Organized property listings with advanced filtering by price, location, and property type.",
-        "Built with a modern design direction that feels professional and trustworthy for real estate clientele.",
-        "Integrated smooth user experience for viewing property details, agent info, and contact options."
+        "Organized property listings with filtering by price, location, and property type.",
+        "Built with a modern design direction that feels professional and trustworthy.",
+        "Integrated smooth flows for viewing property details, agent info, and contact options."
       ],
       live: "https://nasiriteam.netlify.app",
+      liveLabel: "Live Site",
       github: "#",
-      label: "Real Estate"
+      label: "Real Estate",
+      status: "Live site",
+      accent: "from-blue-500/30 via-slate-500/20 to-zinc-500/30"
     }
   ];
 
   const skills = [
     "React",
-    "JavaScript",
     "TypeScript",
-    "HTML",
-    "CSS",
+    "JavaScript",
+    "Vite",
     "Tailwind",
     "Node.js",
+    "Netlify",
     "API Integrations",
+    "AI Product Design",
+    "Realtime Interfaces",
+    "E-commerce",
+    "Data Dashboards",
     "Responsive Design",
     "UI/UX",
-    "Git",
-    "VS Code"
+    "Git"
   ];
 
   const buildingNow = [
-    "AI-powered user tools with simple upload workflows",
-    "Brand-forward websites for creative businesses",
-    "Marketplace concepts for local community and culture",
-    "More polished product pages and digital storefronts"
+    "Auto Pitch and the wider Sattari Audio product line",
+    "Digital humans, avatars, realtime chat, and voice-first interfaces",
+    "Botanica-style living research tools for products, markets, and knowledge",
+    "Stock Trader dashboards that turn watchlists into catalyst-aware research",
+    "Librarian-style source-backed discovery systems",
+    "Video tools for faster creator/editor workflows"
   ];
 
   const fadeUp = {
@@ -185,7 +306,17 @@ function App() {
           viewport={{ once: false }}
           className="min-h-[90vh] flex items-center justify-center px-4 py-20"
         >
-          <div className="max-w-4xl w-full text-center space-y-8">
+          <div className="max-w-5xl w-full text-center space-y-8">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-300"
+            >
+              <Sparkles size={16} /> Product builder • AI tools • creative software
+            </motion.div>
+
             <motion.h1
               variants={fadeUp}
               initial="hidden"
@@ -193,7 +324,7 @@ function App() {
               viewport={{ once: false }}
               className="text-5xl md:text-7xl font-bold tracking-tight"
             >
-              I build websites, AI tools, and creative digital experiences.
+              I build websites, AI products, and creative tools that turn ideas into live experiences.
             </motion.h1>
 
             <motion.p
@@ -201,9 +332,9 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
             >
-              I'm Armon Nasiri, a digital developer focused on modern web design, product ideas, and real-world digital builds that blend function, branding, and strong visual direction.
+              I'm Armon Nasiri, a digital builder focused on product strategy, modern web design, AI-powered workflows, and bold visual systems for music, research, commerce, finance, books, avatars, and creative tools.
             </motion.p>
 
             {/* Stats */}
@@ -212,10 +343,11 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12"
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12"
             >
               {[
-                { label: "AI-integrated concepts", value: "∞" },
+                { label: "Product directions", value: "8+" },
+                { label: "AI-integrated builds", value: "5" },
                 { label: "Brand-forward design", value: "100%" }
               ].map((stat, idx) => (
                 <motion.div key={idx} variants={fadeUp} className="text-center">
@@ -239,7 +371,7 @@ function App() {
                 onClick={() => scrollToSection("projects")}
                 className="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-100 transition-colors"
               >
-                View My Work
+                View Product Work
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -274,11 +406,11 @@ function App() {
               <div className="h-1 w-16 bg-white rounded-full"></div>
               
               <p className="text-lg text-zinc-300 leading-relaxed">
-                I'm a developer and creative builder focused on turning ideas into real digital products. My work includes business websites, community platform concepts, and AI-powered tools designed to be useful, visual, and distinctive.
+                I build across the full early-product loop: naming the idea, shaping the interface, connecting the data, testing the workflow, and turning rough concepts into usable digital products.
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                I care about making websites that feel sharp, intentional, and easy to move through. Whether the goal is branding, conversion, product flow, or cultural identity, I like building experiences that feel modern and memorable.
+                My current portfolio spans AI music tools, digital humans, botanical research, stock-market intelligence, book discovery, video-editor concepts, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
               </p>
             </motion.div>
           </div>
@@ -301,7 +433,7 @@ function App() {
               viewport={{ once: false }}
               className="mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">Featured Work</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Featured Product Work</h2>
               <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
             </motion.div>
 
@@ -320,14 +452,29 @@ function App() {
                   className="group bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                    {/* Image */}
-                    <div className="relative h-64 md:h-full overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                    {/* Image / Visual */}
+                    <div className={`relative h-64 md:h-full min-h-80 overflow-hidden bg-gradient-to-br ${project.accent}`}>
+                      {project.image ? (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center p-8">
+                          <div className="text-center">
+                            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/15 bg-white/10 text-3xl font-black text-white shadow-2xl shadow-black/30">
+                              {project.title.slice(0, 2).toUpperCase()}
+                            </div>
+                            <div className="text-2xl font-bold text-white">{project.title}</div>
+                            <div className="mt-2 text-sm text-zinc-200">{project.status}</div>
+                          </div>
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                      <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                        {project.status}
+                      </div>
                     </div>
 
                     {/* Content */}
@@ -369,23 +516,31 @@ function App() {
                       </div>
 
                       {/* CTA Buttons */}
-                      <div className="flex gap-3">
-                        <motion.a
-                          href={project.live}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex items-center gap-2 px-4 py-2 bg-white text-black font-medium rounded-lg hover:bg-zinc-100 transition-colors text-sm"
-                        >
-                          Live Demo <ExternalLink size={16} />
-                        </motion.a>
-                        <motion.a
-                          href={project.github}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors text-sm"
-                        >
-                          Code <Code2 size={16} />
-                        </motion.a>
+                      <div className="flex flex-wrap gap-3">
+                        {project.live !== "#" && (
+                          <motion.a
+                            href={project.live}
+                            target="_blank"
+                            rel="noreferrer"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-4 py-2 bg-white text-black font-medium rounded-lg hover:bg-zinc-100 transition-colors text-sm"
+                          >
+                            {project.liveLabel ?? "Live Demo"} <ExternalLink size={16} />
+                          </motion.a>
+                        )}
+                        {project.github !== "#" && (
+                          <motion.a
+                            href={project.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors text-sm"
+                          >
+                            Code <Code2 size={16} />
+                          </motion.a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -496,11 +651,11 @@ function App() {
               viewport={{ once: false }}
               className="space-y-8"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">Let's Connect</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Let's Build</h2>
               <div className="h-1 w-16 bg-white rounded-full mx-auto"></div>
               
               <p className="text-lg text-zinc-300 max-w-2xl mx-auto">
-                I'm open to freelance work, collaborations, and exciting new projects. Whether you have a question or want to build something together, feel free to reach out.
+                I'm open to freelance work, collaborations, product builds, and creative technical projects. If you want to turn an idea into something people can actually use, reach out.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
@@ -527,10 +682,10 @@ function App() {
               <div className="text-lg font-bold bg-gradient-to-r from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mb-1">
                 Armon Nasiri
               </div>
-              <p className="text-sm text-zinc-500">Digital Developer</p>
+              <p className="text-sm text-zinc-500">Digital Product Builder</p>
             </div>
             <p className="text-sm text-zinc-500">
-              © 2024 All rights reserved. Crafted with React, Tailwind & Framer Motion.
+              © 2026 All rights reserved. Crafted with React, Tailwind & Framer Motion.
             </p>
           </div>
         </div>
@@ -540,4 +695,3 @@ function App() {
 }
 
 export default App;
-
