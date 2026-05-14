@@ -185,15 +185,6 @@ function App() {
     "Git"
   ];
 
-  const buildingNow = [
-    "Auto Pitch and the wider Sattari Audio product line",
-    "Digital humans, avatars, realtime chat, and voice-first interfaces",
-    "Botanica-style living research tools for products, markets, and knowledge",
-    "Stock Trader dashboards that turn watchlists into catalyst-aware research",
-    "Librarian-style source-backed discovery systems",
-    "Video tools for faster creator/editor workflows"
-  ];
-
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -214,7 +205,6 @@ function App() {
     { label: "Home", id: "hero" },
     { label: "About", id: "about" },
     { label: "Work", id: "projects" },
-    { label: "Building", id: "building" },
     { label: "Skills", id: "skills" },
     { label: "Contact", id: "contact" },
   ];
@@ -550,48 +540,6 @@ function App() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Currently Building Section */}
-        <motion.section
-          id="building"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: false }}
-          className="py-20 px-4"
-        >
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold">Currently Building</h2>
-              <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
-            </motion.div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              {buildingNow.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={fadeUp}
-                  whileHover={{ y: -5, borderColor: "rgb(113, 113, 122)" }}
-                  className="p-6 bg-zinc-900/50 border border-zinc-800 rounded-xl hover:bg-zinc-900/70 transition-all"
-                >
-                  <div className="text-lg font-medium text-white">{item}</div>
                 </motion.div>
               ))}
             </motion.div>
