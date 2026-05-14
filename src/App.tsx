@@ -23,6 +23,7 @@ function App() {
       liveLabel: "Sattari Site",
       github: "#",
       label: "Music Tech",
+      image: "/photos/auto-pitch-example.svg",
       status: "In product build",
       accent: "from-fuchsia-500/30 via-purple-500/20 to-cyan-500/30"
     },
@@ -41,6 +42,7 @@ function App() {
       live: "#",
       github: "#",
       label: "AI Avatar",
+      image: "/photos/digital-human-example.svg",
       status: "Private MVP",
       accent: "from-sky-500/30 via-indigo-500/20 to-violet-500/30"
     },
@@ -60,6 +62,7 @@ function App() {
       liveLabel: "Live Lab",
       github: "https://github.com/armonon/botanica-lab",
       label: "Botanical AI",
+      image: "/photos/botanica-example.svg",
       status: "Live concept",
       accent: "from-emerald-500/30 via-lime-500/20 to-teal-500/30"
     },
@@ -79,6 +82,7 @@ function App() {
       liveLabel: "Live Dashboard",
       github: "#",
       label: "Fintech Research",
+      image: "/photos/trader-oracle-example.svg",
       status: "Live beta",
       accent: "from-amber-500/30 via-orange-500/20 to-red-500/30"
     },
@@ -98,6 +102,7 @@ function App() {
       liveLabel: "Live Atlas",
       github: "#",
       label: "Knowledge Tool",
+      image: "/photos/librarian-example.svg",
       status: "Live prototype",
       accent: "from-stone-400/30 via-zinc-500/20 to-blue-500/30"
     },
@@ -116,6 +121,7 @@ function App() {
       live: "#",
       github: "#",
       label: "Video AI",
+      image: "/photos/context-compositor-example.svg",
       status: "Prototype concept",
       accent: "from-pink-500/30 via-rose-500/20 to-yellow-500/30"
     },
