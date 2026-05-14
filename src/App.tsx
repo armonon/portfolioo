@@ -301,7 +301,7 @@ function App() {
               viewport={{ once: false }}
               className="text-5xl md:text-7xl font-bold tracking-tight"
             >
-              I build websites, AI products, and creative tools that turn ideas into live experiences.
+              I build software, websites, and AI experiences that turn ideas into live products.
             </motion.h1>
 
             <motion.p
