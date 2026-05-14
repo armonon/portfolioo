@@ -1,32 +1,12 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Menu, X, ExternalLink, Code2, Mail, Sparkles } from "lucide-react";
+import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-react";
 
 function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const projects = [
-    {
-      id: 1,
-      title: "Auto Pitch",
-      subtitle: "Sattari audio plugin for fast vocal pitch workflow",
-      description:
-        "A music-software product direction built around fast pitch correction, creative vocal control, and a cleaner plugin experience for artists and producers.",
-      tech: ["Audio UX", "Plugin Product", "Music Tech", "AI Workflow"],
-      points: [
-        "Shaped as a Sattari Audio product with a simple, creator-friendly pitch workflow.",
-        "Focuses on speed, clarity, and creative control instead of overwhelming studio menus.",
-        "Part of a larger music software roadmap connected to the Sattari brand."
-      ],
-      live: "https://sattari.netlify.app",
-      liveLabel: "Sattari Site",
-      github: "#",
-      label: "Music Tech",
-      image: "/photos/auto-pitch-example.svg",
-      status: "In product build",
-      accent: "from-fuchsia-500/30 via-purple-500/20 to-cyan-500/30"
-    },
     {
       id: 3,
       title: "Botanica Lab",
@@ -148,6 +128,31 @@ function App() {
     }
   ];
 
+  const productDownloads = [
+    {
+      title: "Auto Cut",
+      subtitle: "Smart editing workflow preview pack",
+      description:
+        "A creator-focused editing product direction for faster cuts, timeline flow, and AI-assisted video workflow.",
+      image: "/photos/context-compositor-example.svg",
+      href: "/downloads/auto-cut-preview-pack.zip",
+      fileLabel: "Download Auto Cut Preview Pack",
+      status: "Preview pack",
+      tags: ["Video Editing", "AI Workflow", "Creator Tools"]
+    },
+    {
+      title: "Auto Pitch",
+      subtitle: "Sattari audio plugin preview pack",
+      description:
+        "A vocal pitch workflow product for fast correction, creative vocal control, and cleaner music-production sessions.",
+      image: "/photos/auto-pitch-example.svg",
+      href: "/downloads/auto-pitch-preview-pack.zip",
+      fileLabel: "Download Auto Pitch Preview Pack",
+      status: "Preview pack",
+      tags: ["Music Tech", "Audio Plugin", "Vocal Workflow"]
+    }
+  ];
+
   const skills = [
     "React",
     "TypeScript",
@@ -185,6 +190,7 @@ function App() {
   const navItems = [
     { label: "Home", id: "hero" },
     { label: "About", id: "about" },
+    { label: "Downloads", id: "downloads" },
     { label: "Work", id: "projects" },
     { label: "Skills", id: "skills" },
     { label: "Contact", id: "contact" },
@@ -345,10 +351,10 @@ function App() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection("projects")}
+                onClick={() => scrollToSection("downloads")}
                 className="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-100 transition-colors"
               >
-                View Product Work
+                View Product Downloads
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -387,8 +393,91 @@ function App() {
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                My current portfolio spans AI music tools, digital humans, botanical research, stock-market intelligence, book discovery, video-editor concepts, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
+                My current portfolio spans software downloads, AI music tools, botanical research, stock-market intelligence, book discovery, video-editor concepts, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
               </p>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Product Downloads Section */}
+        <motion.section
+          id="downloads"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
+          className="py-20 px-4"
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold">Product Downloads</h2>
+              <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
+              <p className="mt-5 max-w-2xl text-zinc-400">
+                Early product preview packs for the tools I'm building. These are not full installers yet — they package the product direction, feature notes, and next-build outline.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              {productDownloads.map((product) => (
+                <motion.div
+                  key={product.title}
+                  variants={fadeUp}
+                  whileHover={{ y: -5 }}
+                  className="group overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur transition-all hover:border-zinc-700"
+                >
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={`${product.title} preview`}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/35" />
+                    <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                      {product.status}
+                    </div>
+                  </div>
+
+                  <div className="p-6 md:p-7">
+                    <h3 className="text-2xl font-bold">{product.title}</h3>
+                    <p className="mt-2 text-sm text-zinc-400">{product.subtitle}</p>
+                    <p className="mt-4 text-zinc-300 leading-relaxed">{product.description}</p>
+
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {product.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-lg bg-zinc-800/60 px-3 py-1 text-xs font-medium text-zinc-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <motion.a
+                      href={product.href}
+                      download
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="mt-6 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-zinc-100"
+                    >
+                      <Download size={16} />
+                      {product.fileLabel}
+                    </motion.a>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.section>
