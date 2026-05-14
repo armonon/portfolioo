@@ -68,25 +68,6 @@ function App() {
       accent: "from-stone-400/30 via-zinc-500/20 to-blue-500/30"
     },
     {
-      id: 6,
-      title: "Context Compositor",
-      subtitle: "Smart background overlay concept for video editors",
-      description:
-        "A video-editor tool concept for selecting a subject, tracking it through footage, and building believable background/overlay composites faster.",
-      tech: ["Video Tools", "Segmentation", "Compositing", "Creator Workflow"],
-      points: [
-        "Targets Premiere-style workflows where creators need fast subject-aware scene building.",
-        "Explores masking, motion alignment, color matching, and timeline-safe controls.",
-        "Designed for music videos, ads, social edits, and creator content."
-      ],
-      live: "#",
-      github: "#",
-      label: "Video AI",
-      image: "/photos/context-compositor-example.svg",
-      status: "Prototype concept",
-      accent: "from-pink-500/30 via-rose-500/20 to-yellow-500/30"
-    },
-    {
       id: 7,
       title: "Sattari Music",
       subtitle: "Brand-forward music and drum business website",
@@ -139,6 +120,17 @@ function App() {
       fileLabel: "Download Auto Cut Preview Pack",
       status: "Preview pack",
       tags: ["Video Editing", "AI Workflow", "Creator Tools"]
+    },
+    {
+      title: "Context Compositor",
+      subtitle: "Smart background overlay preview pack",
+      description:
+        "A video-editor product direction for subject-aware masking, believable background overlays, and faster compositing workflows.",
+      image: "/photos/context-compositor-example.svg",
+      href: "/downloads/context-compositor-preview-pack.zip",
+      fileLabel: "Download Context Compositor Preview Pack",
+      status: "Preview pack",
+      tags: ["Video Editing", "Compositing", "Creator Tools"]
     },
     {
       title: "Auto Pitch",
