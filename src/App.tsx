@@ -1,67 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-react";
-
-
-const radarLanes = [
-  {
-    icon: "🥁",
-    title: "Sattari Audio",
-    status: "Building",
-    accent: "from-orange-500/30 via-amber-500/20 to-yellow-500/10",
-    summary: "Music tools and Sattari-branded audio products moving toward real installable releases.",
-    bullets: ["Auto Pitch is the lead product lane", "Sale-ready standard over demo hype", "Next: real-user audio tests and installer path"],
-  },
-  {
-    icon: "🎬",
-    title: "Auto Cut / Context Compositor",
-    status: "Concept → Prototype",
-    accent: "from-violet-500/30 via-fuchsia-500/20 to-sky-500/10",
-    summary: "Creator tools for faster editing, subject-aware masking, smart backgrounds, and timeline workflow speed.",
-    bullets: ["Strong creator-tool bundle potential", "Clear portfolio download direction", "Next: clickable editor workflow prototype"],
-  },
-  {
-    icon: "🌿",
-    title: "Botanica Lab",
-    status: "Live concept",
-    accent: "from-emerald-500/30 via-lime-500/20 to-teal-500/10",
-    summary: "A botanical R&D interface for research-backed concept generation with careful claim boundaries.",
-    bullets: ["Living research and article model", "Evidence-first wellness product exploration", "Next: formula cards with risk/evidence scoring"],
-  },
-  {
-    icon: "📈",
-    title: "Trader Oracle",
-    status: "Live beta",
-    accent: "from-amber-500/30 via-orange-500/20 to-red-500/10",
-    summary: "A research dashboard that turns watchlists, market news, and catalysts into educational trade-prep scenarios.",
-    bullets: ["Watchlist + market pulse engine", "Scenario framing with risk and invalidation", "Next: better source trails and alert controls"],
-  },
-  {
-    icon: "📚",
-    title: "Librarian",
-    status: "Prototype",
-    accent: "from-stone-400/30 via-zinc-500/20 to-blue-500/10",
-    summary: "A provenance-first book atlas for public-domain discovery, source inspection, and reading paths.",
-    bullets: ["Source claims are the core edge", "Explore page and path model are started", "Next: richer book detail pages"],
-  },
-  {
-    icon: "✨",
-    title: "Portfolio + Product Downloads",
-    status: "Live",
-    accent: "from-cyan-500/30 via-blue-500/20 to-white/10",
-    summary: "The public surface for Armon's software, websites, AI experiences, and preview-pack product directions.",
-    bullets: ["Product downloads are visible", "Work is grouped by product direction", "Next: make each serious product its own page"],
-  },
-];
-
-const radarOpportunities = [
-  "Turn Product Radar into the portfolio's command-center page for current products and next launches.",
-  "Bundle Auto Cut, Context Compositor, and Sattari Audio as a creator software suite.",
-  "Reuse Librarian-style provenance across Botanica and Trader so claims, ideas, and setups cite sources.",
-  "Add an honest launch-readiness score to each product: build, proof, UX, docs, deploy, risk, and next blocker.",
-];
+import { radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities } from "./productRadarData";
 
 function ProductRadarPage({ onHome }: { onHome: () => void }) {
+  const linkTarget = (href: string) => href.startsWith("http") ? "_blank" : undefined;
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
@@ -79,7 +23,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
             ← Back to portfolio
           </button>
           <div className="rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-400">
-            Product Radar · portfolio page draft
+            Product Radar · v0.2 data-driven roadmap
           </div>
         </div>
 
@@ -92,20 +36,15 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
               Product Radar is the command center for what I'm building next.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-              A living portfolio page for active product directions: what exists, what is live, what is still experimental, and which small app ideas can turn into real products.
+              A living portfolio page for active product directions: readiness, live links, blockers, next actions, and the daily app ideas that should graduate into real builds.
             </p>
           </div>
 
           <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-            {[
-              ["6", "product lanes"],
-              ["4", "live surfaces"],
-              ["3", "creator tools"],
-              ["1", "build radar"],
-            ].map(([value, label]) => (
-              <div key={label} className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div className="text-3xl font-black tracking-tight text-white">{value}</div>
-                <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{label}</div>
+            {radarMetrics.map((metric) => (
+              <div key={metric.label} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-3xl font-black tracking-tight text-white">{metric.value}</div>
+                <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
               </div>
             ))}
           </div>
@@ -114,11 +53,11 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
         <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {radarLanes.map((lane) => (
             <motion.article
-              key={lane.title}
+              key={lane.id}
               whileHover={{ y: -5 }}
               className={`overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-br ${lane.accent} p-[1px]`}
             >
-              <div className="h-full rounded-3xl bg-zinc-950/86 p-6 backdrop-blur">
+              <div className="flex h-full flex-col rounded-3xl bg-zinc-950/86 p-6 backdrop-blur">
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl">
                     {lane.icon}
@@ -129,6 +68,17 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                 </div>
                 <h2 className="text-2xl font-bold tracking-tight">{lane.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-300">{lane.summary}</p>
+
+                <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div className="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                    <span>{lane.phase}</span>
+                    <span className="text-zinc-200">{lane.readiness}%</span>
+                  </div>
+                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full rounded-full bg-white" style={{ width: `${lane.readiness}%` }} />
+                  </div>
+                </div>
+
                 <ul className="mt-5 space-y-2">
                   {lane.bullets.map((bullet) => (
                     <li key={bullet} className="flex gap-2 text-sm text-zinc-400">
@@ -137,6 +87,31 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                     </li>
                   ))}
                 </ul>
+
+                <div className="mt-5 space-y-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm">
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Next action</div>
+                    <p className="mt-1 text-zinc-200">{lane.nextAction}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Blocker</div>
+                    <p className="mt-1 text-zinc-400">{lane.blocker}</p>
+                  </div>
+                </div>
+
+                <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                  {[lane.primaryLink, lane.secondaryLink].filter(Boolean).map((link) => (
+                    <a
+                      key={link!.label}
+                      href={link!.href}
+                      target={linkTarget(link!.href)}
+                      rel={link!.href.startsWith("http") ? "noreferrer" : undefined}
+                      className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
+                    >
+                      {link!.label} <ExternalLink size={13} />
+                    </a>
+                  ))}
+                </div>
               </div>
             </motion.article>
           ))}
@@ -158,21 +133,42 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
           <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
             <h2 className="text-3xl font-bold tracking-tight">Next build sequence</h2>
             <div className="mt-6 space-y-4">
-              {[
-                ["Make the radar data-driven", "Generate cards from project files, live links, and launch-readiness notes."],
-                ["Give each product a page", "Turn serious ideas into public-facing pages with visuals, status, and downloads."],
-                ["Add readiness scores", "Separate prototypes from products people can actually use, buy, or request."],
-                ["Feed daily app ideas", "Let the best daily ideas graduate into the radar and then into build tickets."],
-              ].map(([title, body], index) => (
-                <div key={title} className="grid grid-cols-[2.25rem_1fr] gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
+              {radarNextBuildSteps.map((step, index) => (
+                <div key={step.title} className="grid grid-cols-[2.25rem_1fr_auto] gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-black">{index + 1}</div>
                   <div>
-                    <h3 className="font-semibold text-white">{title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{body}</p>
+                    <h3 className="font-semibold text-white">{step.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{step.body}</p>
                   </div>
+                  <span className="hidden h-fit rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-zinc-300 sm:inline-block">{step.state}</span>
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight">Daily app idea feed</h2>
+              <p className="mt-2 max-w-2xl text-zinc-400">
+                Seed lane for the daily visionary app ideas. The next pass can promote the best idea into a product ticket.
+              </p>
+            </div>
+            <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
+              Daily loop active
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {radarIdeaFeed.map((idea) => (
+              <div key={idea.name} className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                <h3 className="text-xl font-bold text-white">{idea.name}</h3>
+                <p className="mt-2 text-sm text-zinc-300">{idea.theme}</p>
+                <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">MVP</div>
+                <p className="mt-1 text-sm leading-relaxed text-zinc-400">{idea.mvp}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>
