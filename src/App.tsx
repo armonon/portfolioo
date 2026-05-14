@@ -299,7 +299,7 @@ function App() {
       image: "/photos/context-compositor-example.svg",
       href: "/downloads/auto-cut-preview-pack.zip",
       fileLabel: "Download Auto Cut Preview Pack",
-      site: "https://autocut.netlify.app",
+      site: "https://sattari-auto-cut.netlify.app",
       siteLabel: "Open Auto Cut Site",
       status: "Preview pack",
       tags: ["Video Editing", "AI Workflow", "Creator Tools"]
