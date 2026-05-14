@@ -366,7 +366,6 @@ function App() {
 
   const navItems = [
     { label: "Home", id: "hero" },
-    { label: "Radar", id: "product-radar", page: true },
     { label: "About", id: "about" },
     { label: "Downloads", id: "downloads" },
     { label: "Work", id: "projects" },
@@ -432,7 +431,7 @@ function App() {
             </motion.div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex gap-8">
+            <div className="hidden md:flex items-center gap-7">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -446,6 +445,14 @@ function App() {
                   {item.label}
                 </button>
               ))}
+              <motion.button
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => scrollToSection("product-radar")}
+                className="rounded-full border border-white/15 bg-white px-4 py-2 text-sm font-semibold text-black shadow-lg shadow-white/10 transition-colors hover:bg-zinc-100"
+              >
+                Product Radar
+              </motion.button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -478,6 +485,12 @@ function App() {
                   {item.label}
                 </button>
               ))}
+              <button
+                onClick={() => scrollToSection("product-radar")}
+                className="mt-2 block w-full rounded-lg bg-white px-4 py-3 text-left text-sm font-semibold text-black transition-colors hover:bg-zinc-100"
+              >
+                Product Radar
+              </button>
             </motion.div>
           )}
         </div>
