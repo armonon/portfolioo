@@ -4,7 +4,35 @@ import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-r
 import { radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities } from "./productRadarData";
 
 function ProductRadarPage({ onHome }: { onHome: () => void }) {
+  const [selectedLaneId, setSelectedLaneId] = useState(() => {
+    const match = window.location.hash.match(/^#\/product-radar\/([^/?#]+)/);
+    return match?.[1] ?? null;
+  });
+  const selectedLane = radarLanes.find((lane) => lane.id === selectedLaneId);
   const linkTarget = (href: string) => href.startsWith("http") ? "_blank" : undefined;
+  const openLane = (laneId: string) => {
+    setSelectedLaneId(laneId);
+    window.history.pushState(null, "", `#/product-radar/${laneId}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const closeLane = () => {
+    setSelectedLaneId(null);
+    window.history.pushState(null, "", "#/product-radar");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const syncLane = () => {
+      const match = window.location.hash.match(/^#\/product-radar\/([^/?#]+)/);
+      setSelectedLaneId(match?.[1] ?? null);
+    };
+    window.addEventListener("hashchange", syncLane);
+    window.addEventListener("popstate", syncLane);
+    return () => {
+      window.removeEventListener("hashchange", syncLane);
+      window.removeEventListener("popstate", syncLane);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
@@ -17,160 +45,259 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
       <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <button
-            onClick={onHome}
+            onClick={selectedLane ? closeLane : onHome}
             className="w-fit rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white"
           >
-            ← Back to portfolio
+            {selectedLane ? "← Back to all Radar lanes" : "← Back to portfolio"}
           </button>
           <div className="rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-400">
-            Product Radar · v0.2 data-driven roadmap
+            Product Radar · {selectedLane ? `${selectedLane.title} detail` : "v0.3 clickable roadmap"}
           </div>
         </div>
 
-        <section className="overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-900/60 p-7 shadow-2xl shadow-black/30 backdrop-blur md:p-10 lg:p-12">
-          <div className="max-w-4xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
-              <Sparkles size={16} /> Build OS for products, apps, and ideas
-            </div>
-            <h1 className="text-5xl font-black tracking-tight md:text-7xl">
-              Product Radar is the command center for what I'm building next.
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-              A living portfolio page for active product directions: readiness, live links, blockers, next actions, and the daily app ideas that should graduate into real builds.
-            </p>
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-            {radarMetrics.map((metric) => (
-              <div key={metric.label} className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div className="text-3xl font-black tracking-tight text-white">{metric.value}</div>
-                <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
+        {selectedLane ? (
+          <>
+            <section className={`overflow-hidden rounded-[2rem] border border-zinc-800 bg-gradient-to-br ${selectedLane.accent} p-[1px] shadow-2xl shadow-black/30`}>
+              <div className="rounded-[2rem] bg-zinc-950/88 p-7 backdrop-blur md:p-10 lg:p-12">
+                <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="max-w-3xl">
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                      <span className="text-lg">{selectedLane.icon}</span> {selectedLane.detail.eyebrow}
+                    </div>
+                    <h1 className="text-4xl font-black tracking-tight md:text-6xl">{selectedLane.title}</h1>
+                    <p className="mt-5 text-lg leading-relaxed text-zinc-300 md:text-xl">{selectedLane.detail.description}</p>
+                  </div>
+                  <div className="w-full rounded-3xl border border-white/10 bg-black/25 p-5 lg:max-w-sm">
+                    <div className="flex items-center justify-between gap-3 text-sm font-semibold text-zinc-300">
+                      <span>{selectedLane.status}</span>
+                      <span>{selectedLane.readiness}% ready</span>
+                    </div>
+                    <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/10">
+                      <div className="h-full rounded-full bg-white" style={{ width: `${selectedLane.readiness}%` }} />
+                    </div>
+                    <div className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{selectedLane.phase}</div>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {radarLanes.map((lane) => (
-            <motion.article
-              key={lane.id}
-              whileHover={{ y: -5 }}
-              className={`overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-br ${lane.accent} p-[1px]`}
-            >
-              <div className="flex h-full flex-col rounded-3xl bg-zinc-950/86 p-6 backdrop-blur">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl">
-                    {lane.icon}
-                  </div>
-                  <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-zinc-300">
-                    {lane.status}
-                  </span>
-                </div>
-                <h2 className="text-2xl font-bold tracking-tight">{lane.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-300">{lane.summary}</p>
-
-                <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                    <span>{lane.phase}</span>
-                    <span className="text-zinc-200">{lane.readiness}%</span>
-                  </div>
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full rounded-full bg-white" style={{ width: `${lane.readiness}%` }} />
-                  </div>
-                </div>
-
-                <ul className="mt-5 space-y-2">
-                  {lane.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-2 text-sm text-zinc-400">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-5 space-y-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm">
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Next action</div>
-                    <p className="mt-1 text-zinc-200">{lane.nextAction}</p>
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Blocker</div>
-                    <p className="mt-1 text-zinc-400">{lane.blocker}</p>
-                  </div>
-                </div>
-
-                <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                  {[lane.primaryLink, lane.secondaryLink].filter(Boolean).map((link) => (
-                    <a
-                      key={link!.label}
-                      href={link!.href}
-                      target={linkTarget(link!.href)}
-                      rel={link!.href.startsWith("http") ? "noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
-                    >
-                      {link!.label} <ExternalLink size={13} />
-                    </a>
+            <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-5 backdrop-blur md:p-6">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {selectedLane.detail.images.map((image) => (
+                    <figure key={image.src} className="overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+                      <img src={image.src} alt={image.alt} className="h-64 w-full object-cover" />
+                      <figcaption className="border-t border-white/10 px-4 py-3 text-sm text-zinc-300">{image.caption}</figcaption>
+                    </figure>
                   ))}
                 </div>
               </div>
-            </motion.article>
-          ))}
-        </section>
 
-        <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
-            <h2 className="text-3xl font-bold tracking-tight">Opportunity radar</h2>
-            <div className="mt-6 space-y-3">
-              {radarOpportunities.map((item, index) => (
-                <div key={item} className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Idea {index + 1}</div>
-                  <p className="mt-2 text-zinc-200">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
-            <h2 className="text-3xl font-bold tracking-tight">Next build sequence</h2>
-            <div className="mt-6 space-y-4">
-              {radarNextBuildSteps.map((step, index) => (
-                <div key={step.title} className="grid grid-cols-[2.25rem_1fr_auto] gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-black">{index + 1}</div>
-                  <div>
-                    <h3 className="font-semibold text-white">{step.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{step.body}</p>
+              <aside className="space-y-4">
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
+                  <h2 className="text-2xl font-bold tracking-tight">Downloads + links</h2>
+                  <div className="mt-5 space-y-3">
+                    {selectedLane.detail.downloads.map((download) => (
+                      <a
+                        key={`${download.label}-${download.href}`}
+                        href={download.href}
+                        target={linkTarget(download.href)}
+                        rel={download.href.startsWith("http") ? "noreferrer" : undefined}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
+                      >
+                        <span>{download.label}</span>
+                        <ExternalLink size={15} />
+                      </a>
+                    ))}
                   </div>
-                  <span className="hidden h-fit rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-zinc-300 sm:inline-block">{step.state}</span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        <section className="mt-8 rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight">Daily app idea feed</h2>
-              <p className="mt-2 max-w-2xl text-zinc-400">
-                Seed lane for the daily visionary app ideas. The next pass can promote the best idea into a product ticket.
-              </p>
-            </div>
-            <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
-              Daily loop active
-            </div>
-          </div>
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
+                  <h2 className="text-2xl font-bold tracking-tight">Project notes</h2>
+                  <ul className="mt-5 space-y-3">
+                    {selectedLane.detail.highlights.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-zinc-300">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </aside>
+            </section>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {radarIdeaFeed.map((idea) => (
-              <div key={idea.name} className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                <h3 className="text-xl font-bold text-white">{idea.name}</h3>
-                <p className="mt-2 text-sm text-zinc-300">{idea.theme}</p>
-                <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">MVP</div>
-                <p className="mt-1 text-sm leading-relaxed text-zinc-400">{idea.mvp}</p>
+            <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                <h2 className="text-2xl font-bold tracking-tight">Next action</h2>
+                <p className="mt-3 leading-relaxed text-zinc-300">{selectedLane.nextAction}</p>
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                <h2 className="text-2xl font-bold tracking-tight">Current blocker</h2>
+                <p className="mt-3 leading-relaxed text-zinc-400">{selectedLane.blocker}</p>
+              </div>
+            </section>
+          </>
+        ) : (
+          <>
+            <section className="overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-900/60 p-7 shadow-2xl shadow-black/30 backdrop-blur md:p-10 lg:p-12">
+              <div className="max-w-4xl">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                  <Sparkles size={16} /> Build OS for products, apps, and ideas
+                </div>
+                <h1 className="text-5xl font-black tracking-tight md:text-7xl">
+                  Product Radar is the command center for what I'm building next.
+                </h1>
+                <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
+                  A living portfolio page for active product directions. Click any big Radar box to open a deeper project screen with images, descriptions, blockers, links, and downloads.
+                </p>
+              </div>
+
+              <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+                {radarMetrics.map((metric) => (
+                  <div key={metric.label} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <div className="text-3xl font-black tracking-tight text-white">{metric.value}</div>
+                    <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {radarLanes.map((lane) => (
+                <motion.article
+                  key={lane.id}
+                  role="button"
+                  tabIndex={0}
+                  whileHover={{ y: -5 }}
+                  onClick={() => openLane(lane.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openLane(lane.id);
+                    }
+                  }}
+                  className={`cursor-pointer overflow-hidden rounded-3xl border border-zinc-800 bg-gradient-to-br ${lane.accent} p-[1px] outline-none transition focus:ring-2 focus:ring-white/70`}
+                >
+                  <div className="flex h-full flex-col rounded-3xl bg-zinc-950/86 p-6 backdrop-blur">
+                    <div className="mb-5 flex items-center justify-between gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl">
+                        {lane.icon}
+                      </div>
+                      <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-zinc-300">
+                        {lane.status}
+                      </span>
+                    </div>
+                    <h2 className="text-2xl font-bold tracking-tight">{lane.title}</h2>
+                    <p className="mt-3 text-sm leading-relaxed text-zinc-300">{lane.summary}</p>
+
+                    <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
+                      <div className="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                        <span>{lane.phase}</span>
+                        <span className="text-zinc-200">{lane.readiness}%</span>
+                      </div>
+                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full rounded-full bg-white" style={{ width: `${lane.readiness}%` }} />
+                      </div>
+                    </div>
+
+                    <ul className="mt-5 space-y-2">
+                      {lane.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-2 text-sm text-zinc-400">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-5 space-y-3 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm">
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Next action</div>
+                        <p className="mt-1 text-zinc-200">{lane.nextAction}</p>
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Blocker</div>
+                        <p className="mt-1 text-zinc-400">{lane.blocker}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                      <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200">
+                        Open details <ExternalLink size={13} />
+                      </span>
+                      {[lane.primaryLink, lane.secondaryLink].filter(Boolean).map((link) => (
+                        <a
+                          key={link!.label}
+                          href={link!.href}
+                          target={linkTarget(link!.href)}
+                          rel={link!.href.startsWith("http") ? "noreferrer" : undefined}
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
+                        >
+                          {link!.label} <ExternalLink size={13} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </section>
+
+            <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                <h2 className="text-3xl font-bold tracking-tight">Opportunity radar</h2>
+                <div className="mt-6 space-y-3">
+                  {radarOpportunities.map((item, index) => (
+                    <div key={item} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Idea {index + 1}</div>
+                      <p className="mt-2 text-zinc-200">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                <h2 className="text-3xl font-bold tracking-tight">Next build sequence</h2>
+                <div className="mt-6 space-y-4">
+                  {radarNextBuildSteps.map((step, index) => (
+                    <div key={step.title} className="grid grid-cols-[2.25rem_1fr_auto] gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-black">{index + 1}</div>
+                      <div>
+                        <h3 className="font-semibold text-white">{step.title}</h3>
+                        <p className="mt-1 text-sm leading-relaxed text-zinc-400">{step.body}</p>
+                      </div>
+                      <span className="hidden h-fit rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-zinc-300 sm:inline-block">{step.state}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="mt-8 rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+              <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h2 className="text-3xl font-bold tracking-tight">Daily app idea feed</h2>
+                  <p className="mt-2 max-w-2xl text-zinc-400">
+                    Seed lane for the daily visionary app ideas. The next pass can promote the best idea into a product ticket.
+                  </p>
+                </div>
+                <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
+                  Daily loop active
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+                {radarIdeaFeed.map((idea) => (
+                  <div key={idea.name} className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                    <h3 className="text-xl font-bold text-white">{idea.name}</h3>
+                    <p className="mt-2 text-sm text-zinc-300">{idea.theme}</p>
+                    <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">MVP</div>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{idea.mvp}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
       </main>
     </div>
   );
@@ -179,10 +306,10 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
 function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(() => window.location.hash === "#/product-radar" ? "product-radar" : "home");
+  const [currentPage, setCurrentPage] = useState(() => window.location.hash.startsWith("#/product-radar") ? "product-radar" : "home");
 
   useEffect(() => {
-    const syncPage = () => setCurrentPage(window.location.hash === "#/product-radar" ? "product-radar" : "home");
+    const syncPage = () => setCurrentPage(window.location.hash.startsWith("#/product-radar") ? "product-radar" : "home");
     window.addEventListener("hashchange", syncPage);
     return () => window.removeEventListener("hashchange", syncPage);
   }, []);
