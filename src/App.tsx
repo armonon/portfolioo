@@ -28,25 +28,6 @@ function App() {
       accent: "from-fuchsia-500/30 via-purple-500/20 to-cyan-500/30"
     },
     {
-      id: 2,
-      title: "Digital Human MVP",
-      subtitle: "Browser-based avatar engine with voice and realtime interaction",
-      description:
-        "An interactive digital-human platform combining 3D avatar rendering, character chat, voice input, and talking-video research into a client-ready prototype path.",
-      tech: ["React", "Three.js", "R3F", "Realtime AI", "Avatar Systems"],
-      points: [
-        "Built around browser GLB avatar rendering and character-driven conversation flows.",
-        "Explores realtime chat, voice input, and generated talking-head worker pipelines.",
-        "Designed as a flexible foundation for product demos, agents, and branded characters."
-      ],
-      live: "#",
-      github: "#",
-      label: "AI Avatar",
-      image: "/photos/digital-human-example.svg",
-      status: "Private MVP",
-      accent: "from-sky-500/30 via-indigo-500/20 to-violet-500/30"
-    },
-    {
       id: 3,
       title: "Botanica Lab",
       subtitle: "Botanical R&D and formulation-intelligence site",
