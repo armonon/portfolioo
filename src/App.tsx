@@ -419,15 +419,15 @@ function App() {
 
   const productDownloads = [
     {
-      title: "Auto Cut",
-      subtitle: "Smart editing workflow preview pack",
+      title: "ScenePilot Studio",
+      subtitle: "Beat-smart video editing preview pack",
       description:
-        "A creator-focused editing product direction for faster cuts, timeline flow, and AI-assisted video workflow.",
+        "A creator-focused editing product for beat-aware cut planning, timeline flow, and AI-assisted video workflow.",
       image: "/photos/context-compositor-example.svg",
       href: "/downloads/auto-cut-preview-pack.zip",
-      fileLabel: "Download Auto Cut Preview Pack",
+      fileLabel: "Download ScenePilot Preview Pack",
       site: "https://sattari-auto-cut.netlify.app",
-      siteLabel: "Open Auto Cut Site",
+      siteLabel: "Open ScenePilot Site",
       status: "Preview pack",
       tags: ["Video Editing", "AI Workflow", "Creator Tools"]
     },
