@@ -77,14 +77,14 @@ export const radarLanes: RadarLane[] = [
     readiness: 44,
     accent: "from-violet-500/30 via-fuchsia-500/20 to-sky-500/10",
     summary: "ScenePilot Studio is the public English beta for beat-aware edit plans, with Context Compositor remaining the next subject-aware smart-background concept.",
-    bullets: ["ScenePilot public beta is live", "Exports cut-plan JSON, XMEML, and marker CSV", "Context Compositor still needs proof before bundle claims"],
-    nextAction: "Harden ScenePilot with rendered MP4 export, manual cut editing, BPM/grid polish, and Premiere import QA before broader creator-suite positioning.",
-    blocker: "Not sale-ready yet: needs rendered export, manual edit controls, installer/packaging, and real Premiere workflow validation.",
+    bullets: ["ScenePilot public beta is live", "Accepts logos, voiceovers, videos, and effects", "Auto-arranges asset lanes around beat/cut maps"],
+    nextAction: "Harden ScenePilot with rendered MP4/layer export, manual asset editing, BPM/grid polish, and Premiere import QA before broader creator-suite positioning.",
+    blocker: "Not sale-ready yet: needs rendered asset/layer export, manual edit controls, installer/packaging, and real Premiere workflow validation.",
     primaryLink: { label: "ScenePilot beta", href: "https://sattari-auto-cut.netlify.app" },
     secondaryLink: { label: "Compositor preview", href: "/downloads/context-compositor-preview-pack.zip" },
     detail: {
       eyebrow: "Video creator tools",
-      description: "This lane combines creator-workflow ideas without overclaiming them: ScenePilot Studio is the live beta for beat-aware video cut planning, and Context Compositor is the next concept for subject-aware scene/background compositing.",
+      description: "ScenePilot Studio is becoming an auto-arranging editing assistant: add logos, voiceovers, extra videos, and effects, then let it build a beat-aware arrangement plan. Context Compositor remains the next concept for subject-aware scene/background compositing.",
       images: [
         { src: "/photos/context-compositor-example.svg", alt: "Context Compositor concept visual", caption: "Smart background and compositor concept" },
         { src: "/photos/auto-pitch-example.svg", alt: "Sattari software visual system", caption: "Shared Sattari software/product styling" },
@@ -94,7 +94,7 @@ export const radarLanes: RadarLane[] = [
         { label: "Download ScenePilot preview pack", href: "/downloads/auto-cut-preview-pack.zip" },
         { label: "Download Compositor preview pack", href: "/downloads/context-compositor-preview-pack.zip" },
       ],
-      highlights: ["ScenePilot beta is public", "Export formats exist for edit plans", "Context Compositor stays concept-stage until validated"],
+      highlights: ["ScenePilot beta is public", "Creative-kit auto-arrangement is started", "Rendered/layered export is the next hardening gate"],
     },
     evidence: {
       source: "wiki/projects/video/index.md",

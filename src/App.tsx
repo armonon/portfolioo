@@ -422,7 +422,7 @@ function App() {
       title: "ScenePilot Studio",
       subtitle: "Beat-smart video editing preview pack",
       description:
-        "A creator-focused editing product for beat-aware cut planning, timeline flow, and AI-assisted video workflow.",
+        "A creator-focused editing product for adding logos, voiceovers, videos, and effects, then auto-arranging them into a beat-aware timeline plan.",
       image: "/photos/context-compositor-example.svg",
       href: "/downloads/auto-cut-preview-pack.zip",
       fileLabel: "Download ScenePilot Preview Pack",
