@@ -455,6 +455,43 @@ function App() {
     }
   ];
 
+  const experienceHighlights = [
+    {
+      role: "Backend Developer",
+      company: "Softech",
+      timeframe: "4 years",
+      description:
+        "Built and maintained backend systems, APIs, automation, data flows, and production-facing web infrastructure for real businesses.",
+      bullets: ["API and service development", "Database-backed workflows", "Reliable implementation under client/product constraints"]
+    },
+    {
+      role: "AI Engineering Training",
+      company: "4Geeks Academy",
+      timeframe: "AI Engineering",
+      description:
+        "Trained in applied AI engineering: modern AI workflows, prompt and agent patterns, automation, and product-minded AI implementation.",
+      bullets: ["AI product prototyping", "LLM workflow design", "Practical automation and integration"]
+    }
+  ];
+
+  const creationHighlights = [
+    {
+      title: "AI + creative software",
+      image: "/photos/auto-pitch-example.svg",
+      text: "Auto Pitch, ScenePilot, Context Compositor, and Sattari audio/video tools show a creator-software direction: music production, video editing, timeline automation, and workflow acceleration."
+    },
+    {
+      title: "Research and intelligence tools",
+      image: "/photos/trader-oracle-example.svg",
+      text: "Trader Oracle, Botanica Lab, Librarian, and Product Radar turn noisy information into structured dashboards, cited research, next actions, and decision support."
+    },
+    {
+      title: "Business websites and commerce",
+      image: "/photos/sattari-screenshot.png",
+      text: "Sattari Music, Nasiri Team Realty, and local-business sample pages demonstrate polished public sites, service positioning, lead-generation UX, and brand-forward interfaces."
+    }
+  ];
+
   const skills = [
     "React",
     "TypeScript",
@@ -462,9 +499,15 @@ function App() {
     "Vite",
     "Tailwind",
     "Node.js",
+    "Python",
+    "SQL",
+    "REST APIs",
+    "Backend Architecture",
     "Netlify",
     "API Integrations",
+    "AI Engineering",
     "AI Product Design",
+    "LLM Workflows",
     "Realtime Interfaces",
     "E-commerce",
     "Data Dashboards",
@@ -492,6 +535,7 @@ function App() {
   const navItems = [
     { label: "Home", id: "hero" },
     { label: "About", id: "about" },
+    { label: "Experience", id: "experience" },
     { label: "Downloads", id: "downloads" },
     { label: "Work", id: "projects" },
     { label: "Skills", id: "skills" },
@@ -640,7 +684,7 @@ function App() {
               viewport={{ once: false }}
               className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-300"
             >
-              <Sparkles size={16} /> Product builder • AI tools • creative software
+              <Sparkles size={16} /> Backend developer • AI engineer • product builder
             </motion.div>
 
             <motion.h1
@@ -660,7 +704,7 @@ function App() {
               viewport={{ once: false }}
               className="text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
             >
-              I'm Armon Nasiri, a digital builder focused on product strategy, modern web design, AI-powered workflows, and bold visual systems for music, research, commerce, finance, books, avatars, and creative tools.
+              I'm Armon Nasiri, a backend developer with 4 years at Softech and AI engineering training from 4Geeks Academy. I build modern websites, AI-powered workflows, dashboards, creator tools, and product systems that move from rough idea to live experience.
             </motion.p>
 
             {/* Stats */}
@@ -672,9 +716,9 @@ function App() {
               className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12"
             >
               {[
+                { label: "Backend experience", value: "4 yrs" },
                 { label: "Product directions", value: "8+" },
-                { label: "AI-integrated builds", value: "5" },
-                { label: "Brand-forward design", value: "100%" }
+                { label: "AI engineering trained", value: "4Geeks" }
               ].map((stat, idx) => (
                 <motion.div key={idx} variants={fadeUp} className="text-center">
                   <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
@@ -732,12 +776,103 @@ function App() {
               <div className="h-1 w-16 bg-white rounded-full"></div>
               
               <p className="text-lg text-zinc-300 leading-relaxed">
-                I build across the full early-product loop: naming the idea, shaping the interface, connecting the data, testing the workflow, and turning rough concepts into usable digital products.
+                I build across the full product loop: shaping the idea, designing the interface, wiring the backend, connecting data and APIs, testing the workflow, and turning rough concepts into usable digital products.
+              </p>
+
+              <p className="text-lg text-zinc-300 leading-relaxed">
+                My foundation is backend development — 4 years at Softech building practical software systems — plus AI engineering training through 4Geeks Academy. That mix lets me move between infrastructure, product thinking, automation, and user-facing design.
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
                 My current portfolio spans software downloads, AI music tools, botanical research, stock-market intelligence, book discovery, video-editor concepts, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
               </p>
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Experience + Creation Summary Section */}
+        <motion.section
+          id="experience"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
+          className="py-20 px-4"
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold">Experience & What I've Created</h2>
+              <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
+              <p className="mt-5 max-w-3xl text-zinc-400">
+                A portfolio should make the story obvious: I come from backend engineering, I trained in AI engineering, and I now build full product experiences across websites, dashboards, automation, and creative tools.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="grid grid-cols-1 gap-5 lg:grid-cols-2"
+            >
+              {experienceHighlights.map((item) => (
+                <motion.article
+                  key={`${item.role}-${item.company}`}
+                  variants={fadeUp}
+                  className="rounded-3xl border border-zinc-800 bg-zinc-900/55 p-6 backdrop-blur md:p-8"
+                >
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-500">{item.company}</div>
+                      <h3 className="mt-2 text-2xl font-bold text-white">{item.role}</h3>
+                    </div>
+                    <span className="w-fit rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                      {item.timeframe}
+                    </span>
+                  </div>
+                  <p className="mt-5 leading-relaxed text-zinc-300">{item.description}</p>
+                  <ul className="mt-5 space-y-2">
+                    {item.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-3 text-sm text-zinc-400">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.article>
+              ))}
+            </motion.div>
+
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3"
+            >
+              {creationHighlights.map((item) => (
+                <motion.article
+                  key={item.title}
+                  variants={fadeUp}
+                  whileHover={{ y: -5 }}
+                  className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/50 backdrop-blur transition-all hover:border-zinc-700"
+                >
+                  <div className="relative h-52 overflow-hidden">
+                    <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-300 hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/30" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-zinc-300">{item.text}</p>
+                  </div>
+                </motion.article>
+              ))}
             </motion.div>
           </div>
         </motion.section>
