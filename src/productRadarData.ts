@@ -39,6 +39,22 @@ export type RadarLane = {
   };
 };
 
+export type RadarSoftwareProject = {
+  id: string;
+  title: string;
+  category: string;
+  status: string;
+  image: string;
+  summary: string;
+  description: string;
+  tags: string[];
+  live?: RadarLink;
+  repo?: RadarLink;
+  downloads: RadarLink[];
+  testingFocus: string;
+  testSteps: string[];
+};
+
 export const radarLanes: RadarLane[] = [
   {
     id: "sattari-audio",
@@ -214,11 +230,141 @@ export const radarLanes: RadarLane[] = [
   },
 ];
 
+export const radarSoftwareProjects: RadarSoftwareProject[] = [
+  {
+    id: "scenepilot-studio",
+    title: "ScenePilot Studio",
+    category: "Video editing",
+    status: "Public beta + preview pack",
+    image: "/photos/context-compositor-example.svg",
+    summary: "Beat-smart creator workflow for arranging logos, voiceovers, clips, and effects into a timeline plan.",
+    description: "ScenePilot Studio is the most testable video-tool surface right now: a public beta that explores beat-aware edit planning, asset lanes, and creator-friendly arrangement logic. It should be tested as a workflow product rather than as a finished editor until rendered/layered export and manual editing controls are hardened.",
+    tags: ["Video", "Creator tools", "Beat-aware editing"],
+    live: { label: "Open ScenePilot beta", href: "https://sattari-auto-cut.netlify.app" },
+    downloads: [
+      { label: "Download ScenePilot preview pack", href: "/downloads/auto-cut-preview-pack.zip" },
+    ],
+    testingFocus: "Upload/arrangement flow, clarity of the edit plan, asset-lane UX, and whether the product direction feels useful for real creators.",
+    testSteps: ["Open the live beta", "Try a simple creator-kit scenario with video/logo/voiceover assets", "Download the preview pack for the current product brief", "Record missing controls needed before sale-ready positioning"],
+  },
+  {
+    id: "context-compositor",
+    title: "Context Compositor",
+    category: "Video compositing",
+    status: "Concept + preview pack",
+    image: "/photos/context-compositor-example.svg",
+    summary: "Subject-aware smart-background and overlay direction for faster believable compositing.",
+    description: "Context Compositor is the smart-background/overlay product direction for video creators. The current downloadable is an honest preview pack, not an installer, and the next technical gate is native app/editor integration with reliable subject/background behavior.",
+    tags: ["Video", "Compositing", "Smart backgrounds"],
+    downloads: [
+      { label: "Download Context Compositor preview pack", href: "/downloads/context-compositor-preview-pack.zip" },
+    ],
+    testingFocus: "Evaluate the concept, desired editor workflow, and which examples would prove the compositing promise clearly.",
+    testSteps: ["Download the preview pack", "Review the product direction", "Compare against real editing pain points", "List the first examples needed for a convincing native prototype"],
+  },
+  {
+    id: "auto-pitch",
+    title: "Auto Pitch",
+    category: "Audio plugin",
+    status: "Prototype + preview pack",
+    image: "/photos/auto-pitch-example.svg",
+    summary: "Sattari vocal tuning product direction with auto key, adaptive song sections, and sale-ready plugin ambitions.",
+    description: "Auto Pitch is the lead Sattari audio software direction. The public download stays labeled as a preview pack while the actual product work continues toward installer packaging, DAW validation, natural/modern/hard correction modes, and real-user listening tests.",
+    tags: ["Audio", "Music production", "Vocal tuning"],
+    downloads: [
+      { label: "Download Auto Pitch preview pack", href: "/downloads/auto-pitch-preview-pack.zip" },
+    ],
+    testingFocus: "Clarity of the product promise, expected controls, installer expectations, and vocal workflow needs before DAW beta testing.",
+    testSteps: ["Download the preview pack", "Review the tuning workflow direction", "Note which controls are mandatory for singers/producers", "Use those notes to prioritize the first installable build"],
+  },
+  {
+    id: "botanica-lab",
+    title: "Botanica Lab",
+    category: "Research app",
+    status: "Live concept + test pack",
+    image: "/photos/botanica-example.svg",
+    summary: "Botanical R&D surface for evidence-aware formula exploration and wellness-product concept work.",
+    description: "Botanica Lab turns botanical/product research into a safer exploration interface. Testing should focus on source clarity, claim boundaries, formula-card usefulness, and whether the app helps generate reviewable ideas without overclaiming medical outcomes.",
+    tags: ["Botanical R&D", "Research", "Compliance-aware UX"],
+    live: { label: "Open Botanica Lab", href: "https://botanica-lab.netlify.app/" },
+    repo: { label: "Source repo", href: "https://github.com/armonon/botanica-lab" },
+    downloads: [
+      { label: "Download Botanica test pack", href: "/downloads/botanica-lab-test-pack.zip" },
+    ],
+    testingFocus: "Source trails, safety wording, formula-card structure, and whether a reviewer can quickly separate ideas from claims.",
+    testSteps: ["Open the live lab", "Review the research/formula surfaces", "Download the test pack", "Flag any copy that sounds like a consumer medical claim"],
+  },
+  {
+    id: "trader-oracle",
+    title: "Trader Oracle",
+    category: "Market research",
+    status: "Live beta + test pack",
+    image: "/photos/trader-oracle-example.svg",
+    summary: "Watchlist and catalyst dashboard for educational trade-prep scenarios with risk/invalidation framing.",
+    description: "Trader Oracle is a research dashboard for ticker exploration, watchlists, market pulse, and scenario framing. It should be tested for speed, source visibility, risk language, and whether users can understand that it is research/education rather than personalized financial advice.",
+    tags: ["Markets", "Research", "Risk framing"],
+    live: { label: "Open Trader Oracle", href: "https://armon-trader.netlify.app" },
+    downloads: [
+      { label: "Download Trader Oracle test pack", href: "/downloads/trader-oracle-test-pack.zip" },
+    ],
+    testingFocus: "Watchlist flow, news/catalyst clarity, risk/invalidation copy, and speed of forming a research-only setup.",
+    testSteps: ["Open the live dashboard", "Search or review a ticker/watchlist", "Check that risk and invalidation are visible", "Download the test pack and record missing source trails"],
+  },
+  {
+    id: "librarian-atlas",
+    title: "Librarian Atlas",
+    category: "Knowledge tool",
+    status: "Live prototype + test pack",
+    image: "/photos/librarian-example.svg",
+    summary: "Provenance-first public-domain book atlas for discovery, source inspection, and reading paths.",
+    description: "Librarian Atlas is the trust/provenance software lane: a way to discover books, inspect source claims, follow reading paths, and keep public-domain availability grounded in evidence. Testing should focus on whether each important claim has a visible source trail.",
+    tags: ["Books", "Provenance", "Research"],
+    live: { label: "Open Librarian Atlas", href: "https://librarian-atlas.netlify.app" },
+    downloads: [
+      { label: "Download Librarian test pack", href: "/downloads/librarian-atlas-test-pack.zip" },
+    ],
+    testingFocus: "Book discovery, source inspection, authority links, and clarity of public-domain/readability claims.",
+    testSteps: ["Open the atlas", "Search for a book or source path", "Check whether claims are backed by links", "Download the test pack and note where deeper detail pages are needed"],
+  },
+  {
+    id: "digital-human-mvp",
+    title: "Digital Human MVP",
+    category: "AI avatar",
+    status: "Live fallback demo + test pack",
+    image: "/photos/digital-human-example.svg",
+    summary: "Browser avatar/chat demo with visemes and hybrid animation readiness, pending true neural/photo engine approval.",
+    description: "Digital Human MVP is a working fallback demo for avatar chat: browser-GLB responses, viseme metadata, and readiness reporting. The testing page keeps the truth clear: useful fallback demo now, not a true neural/photo talking-head product until the engine and persistence pieces are approved/configured.",
+    tags: ["AI avatar", "Chat", "Animation"],
+    live: { label: "Open Digital Human MVP", href: "https://digital-human-mvp.onrender.com" },
+    downloads: [
+      { label: "Download Digital Human test pack", href: "/downloads/digital-human-mvp-test-pack.zip" },
+    ],
+    testingFocus: "Chat response reliability, avatar readiness, viseme/animation quality, and honest fallback-vs-neural positioning.",
+    testSteps: ["Open the live MVP", "Try a short chat prompt", "Watch avatar/viseme behavior", "Download the test pack and log blockers before neural/photo positioning"],
+  },
+  {
+    id: "product-radar",
+    title: "Project Radar Directory",
+    category: "Portfolio OS",
+    status: "Live directory + test pack",
+    image: "/photos/nasiri-screenshot.png",
+    summary: "The portfolio command center for software pages, downloadables, testing links, and product-status clarity.",
+    description: "Project Radar is being upgraded from a roadmap into the software testing directory: every serious software project gets a clear card, a full page, live links when available, downloadable test/preview packs, and practical test steps.",
+    tags: ["Portfolio", "Directory", "Testing hub"],
+    live: { label: "Open portfolio home", href: "#" },
+    downloads: [
+      { label: "Download Project Radar test pack", href: "/downloads/project-radar-test-pack.zip" },
+    ],
+    testingFocus: "Can someone quickly find every product, understand what it is, download the right pack, and open a focused test page?",
+    testSteps: ["Scan the software directory", "Open three product pages", "Download one pack", "Check whether the status language makes testing easier"],
+  },
+];
+
 export const radarMetrics = [
   { value: String(radarLanes.length), label: "product lanes" },
+  { value: String(radarSoftwareProjects.length), label: "software pages" },
+  { value: String(radarSoftwareProjects.reduce((sum, project) => sum + project.downloads.length, 0)), label: "downloadables" },
   { value: String(radarLanes.filter((lane) => lane.primaryLink?.href.startsWith("http")).length), label: "live/beta surfaces" },
-  { value: `${Math.round(radarLanes.reduce((sum, lane) => sum + lane.readiness, 0) / radarLanes.length)}%`, label: "avg readiness" },
-  { value: "hourly", label: "radar sync loop" },
 ];
 
 export const radarOpportunities = [
@@ -229,10 +375,11 @@ export const radarOpportunities = [
 ];
 
 export const radarNextBuildSteps = [
-  { title: "Clickable lane detail screens", body: "Each big Radar box now opens a focused project screen with images, deeper description, blockers, links, and downloads/resources.", state: "Live" },
+  { title: "Software testing directory", body: "Project Radar now has a dedicated software directory: every serious project gets a card, a full page, test steps, links, and downloadable packs.", state: "Live" },
+  { title: "Clickable lane detail screens", body: "Each big Radar box still opens a focused project screen with images, deeper description, blockers, links, and downloads/resources.", state: "Live" },
   { title: "Safe public sync", body: "Radar copy reflects the live ScenePilot beta separately from the still-concept Context Compositor lane.", state: "Live" },
   { title: "Evidence-backed fields", body: "Lane cards carry source, confidence, and review notes so future hourly scans know what is safe to update.", state: "Started" },
-  { title: "Generated inputs", body: "Next step: move more lane fields from hand-maintained TypeScript into a generated wiki/GitHub/Netlify evidence map.", state: "Next" },
+  { title: "Generated inputs", body: "Next step: generate more software page fields from wiki/GitHub/Netlify evidence so new projects appear automatically.", state: "Next" },
 ];
 
 export const radarIdeaFeed = [

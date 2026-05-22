@@ -1,36 +1,54 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-react";
-import { radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities } from "./productRadarData";
+import { radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities, radarSoftwareProjects } from "./productRadarData";
+
+const readRadarRoute = () => {
+  const productMatch = window.location.hash.match(/^#\/product-radar\/software\/([^/?#]+)/);
+  if (productMatch) {
+    return { laneId: null, softwareId: productMatch[1] };
+  }
+
+  const laneMatch = window.location.hash.match(/^#\/product-radar\/([^/?#]+)/);
+  return { laneId: laneMatch?.[1] ?? null, softwareId: null };
+};
 
 function ProductRadarPage({ onHome }: { onHome: () => void }) {
-  const [selectedLaneId, setSelectedLaneId] = useState(() => {
-    const match = window.location.hash.match(/^#\/product-radar\/([^/?#]+)/);
-    return match?.[1] ?? null;
-  });
+  const [selectedLaneId, setSelectedLaneId] = useState(() => readRadarRoute().laneId);
+  const [selectedSoftwareId, setSelectedSoftwareId] = useState(() => readRadarRoute().softwareId);
   const selectedLane = radarLanes.find((lane) => lane.id === selectedLaneId);
+  const selectedSoftware = radarSoftwareProjects.find((project) => project.id === selectedSoftwareId);
   const linkTarget = (href: string) => href.startsWith("http") ? "_blank" : undefined;
   const openLane = (laneId: string) => {
     setSelectedLaneId(laneId);
+    setSelectedSoftwareId(null);
     window.history.pushState(null, "", `#/product-radar/${laneId}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const closeLane = () => {
+  const openSoftware = (softwareId: string) => {
     setSelectedLaneId(null);
+    setSelectedSoftwareId(softwareId);
+    window.history.pushState(null, "", `#/product-radar/software/${softwareId}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const closeDetail = () => {
+    setSelectedLaneId(null);
+    setSelectedSoftwareId(null);
     window.history.pushState(null, "", "#/product-radar");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   useEffect(() => {
-    const syncLane = () => {
-      const match = window.location.hash.match(/^#\/product-radar\/([^/?#]+)/);
-      setSelectedLaneId(match?.[1] ?? null);
+    const syncRoute = () => {
+      const route = readRadarRoute();
+      setSelectedLaneId(route.laneId);
+      setSelectedSoftwareId(route.softwareId);
     };
-    window.addEventListener("hashchange", syncLane);
-    window.addEventListener("popstate", syncLane);
+    window.addEventListener("hashchange", syncRoute);
+    window.addEventListener("popstate", syncRoute);
     return () => {
-      window.removeEventListener("hashchange", syncLane);
-      window.removeEventListener("popstate", syncLane);
+      window.removeEventListener("hashchange", syncRoute);
+      window.removeEventListener("popstate", syncRoute);
     };
   }, []);
 
@@ -45,17 +63,98 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
       <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <button
-            onClick={selectedLane ? closeLane : onHome}
+            onClick={selectedLane || selectedSoftware ? closeDetail : onHome}
             className="w-fit rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white"
           >
-            {selectedLane ? "← Back to all Radar lanes" : "← Back to portfolio"}
+            {selectedLane || selectedSoftware ? "← Back to Radar directory" : "← Back to portfolio"}
           </button>
           <div className="rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-400">
-            Product Radar · {selectedLane ? `${selectedLane.title} detail` : "v0.3 clickable roadmap"}
+            Product Radar · {selectedSoftware ? `${selectedSoftware.title} test page` : selectedLane ? `${selectedLane.title} detail` : "v0.4 software directory"}
           </div>
         </div>
 
-        {selectedLane ? (
+        {selectedSoftware ? (
+          <>
+            <section className="overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-900/60 p-7 shadow-2xl shadow-black/30 backdrop-blur md:p-10 lg:p-12">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div>
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                    <Download size={16} /> {selectedSoftware.category} · {selectedSoftware.status}
+                  </div>
+                  <h1 className="text-4xl font-black tracking-tight md:text-6xl">{selectedSoftware.title}</h1>
+                  <p className="mt-5 text-lg leading-relaxed text-zinc-300 md:text-xl">{selectedSoftware.description}</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {selectedSoftware.tags.map((tag) => (
+                      <span key={tag} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-zinc-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <figure className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/20">
+                  <img src={selectedSoftware.image} alt={`${selectedSoftware.title} product visual`} className="h-80 w-full object-cover" />
+                  <figcaption className="border-t border-white/10 px-5 py-4 text-sm text-zinc-300">Testing page for {selectedSoftware.title}</figcaption>
+                </figure>
+              </div>
+            </section>
+
+            <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+              <aside className="space-y-4">
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
+                  <h2 className="text-2xl font-bold tracking-tight">Downloadables</h2>
+                  <div className="mt-5 space-y-3">
+                    {selectedSoftware.downloads.map((download) => (
+                      <a
+                        key={`${download.label}-${download.href}`}
+                        href={download.href}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white px-4 py-3 text-sm font-bold text-black transition hover:bg-zinc-200"
+                      >
+                        <span>{download.label}</span>
+                        <Download size={15} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
+                  <h2 className="text-2xl font-bold tracking-tight">Open project</h2>
+                  <div className="mt-5 space-y-3">
+                    {[selectedSoftware.live, selectedSoftware.repo].filter(Boolean).map((link) => (
+                      <a
+                        key={link!.label}
+                        href={link!.href}
+                        target={linkTarget(link!.href)}
+                        rel={link!.href.startsWith("http") ? "noreferrer" : undefined}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
+                      >
+                        <span>{link!.label}</span>
+                        <ExternalLink size={15} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+
+              <div className="space-y-4">
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                  <h2 className="text-2xl font-bold tracking-tight">What to test</h2>
+                  <p className="mt-3 leading-relaxed text-zinc-300">{selectedSoftware.testingFocus}</p>
+                </div>
+                <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur md:p-8">
+                  <h2 className="text-2xl font-bold tracking-tight">Quick testing checklist</h2>
+                  <div className="mt-5 space-y-3">
+                    {selectedSoftware.testSteps.map((step, index) => (
+                      <div key={step} className="grid grid-cols-[2.25rem_1fr] gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-black text-black">{index + 1}</div>
+                        <p className="leading-relaxed text-zinc-300">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        ) : selectedLane ? (
           <>
             <section className={`overflow-hidden rounded-[2rem] border border-zinc-800 bg-gradient-to-br ${selectedLane.accent} p-[1px] shadow-2xl shadow-black/30`}>
               <div className="rounded-[2rem] bg-zinc-950/88 p-7 backdrop-blur md:p-10 lg:p-12">
@@ -145,10 +244,10 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   <Sparkles size={16} /> Build OS for products, apps, and ideas
                 </div>
                 <h1 className="text-5xl font-black tracking-tight md:text-7xl">
-                  Product Radar is the command center for what I'm building next.
+                  Product Radar is now the software testing directory.
                 </h1>
                 <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-                  A living portfolio page for active product directions. Click any big Radar box to open a deeper project screen with images, descriptions, blockers, links, and downloads.
+                  A living portfolio hub for every serious software project. Open a product, read the clear description, download the test/preview pack, and use the full page as the checklist for testing.
                 </p>
               </div>
 
@@ -158,6 +257,76 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                     <div className="text-3xl font-black tracking-tight text-white">{metric.value}</div>
                     <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
                   </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-8 rounded-[2rem] border border-zinc-800 bg-zinc-900/60 p-6 shadow-2xl shadow-black/20 backdrop-blur md:p-8">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                    <Download size={16} /> Software downloads + test pages
+                  </div>
+                  <h2 className="text-3xl font-black tracking-tight md:text-5xl">All software projects in one place.</h2>
+                  <p className="mt-3 max-w-3xl leading-relaxed text-zinc-400">
+                    Each card opens a full testing page with the product description, live links when available, downloadables, and practical test steps.
+                  </p>
+                </div>
+                <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
+                  {radarSoftwareProjects.length} software pages
+                </div>
+              </div>
+
+              <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                {radarSoftwareProjects.map((project) => (
+                  <motion.article
+                    key={project.id}
+                    role="button"
+                    tabIndex={0}
+                    whileHover={{ y: -4 }}
+                    onClick={() => openSoftware(project.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        openSoftware(project.id);
+                      }
+                    }}
+                    className="group flex cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/20 outline-none transition focus:ring-2 focus:ring-white/70"
+                  >
+                    <img src={project.image} alt={`${project.title} preview`} className="h-40 w-full object-cover opacity-90 transition group-hover:opacity-100" />
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-zinc-400">
+                          {project.category}
+                        </span>
+                        <span className="text-xs font-semibold text-zinc-400">{project.downloads.length} download</span>
+                      </div>
+                      <h3 className="mt-4 text-xl font-bold tracking-tight text-white">{project.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-zinc-400">{project.summary}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {project.tags.slice(0, 2).map((tag) => (
+                          <span key={tag} className="rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[0.7rem] font-semibold text-zinc-300">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                        <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200">
+                          Full test page <ExternalLink size={13} />
+                        </span>
+                        {project.downloads.slice(0, 1).map((download) => (
+                          <a
+                            key={download.href}
+                            href={download.href}
+                            onClick={(event) => event.stopPropagation()}
+                            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white px-3 py-2 text-xs font-bold text-black transition hover:bg-zinc-200"
+                          >
+                            Download <Download size={13} />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.article>
                 ))}
               </div>
             </section>
@@ -417,43 +586,18 @@ function App() {
     }
   ];
 
-  const productDownloads = [
-    {
-      title: "ScenePilot Studio",
-      subtitle: "Beat-smart video editing preview pack",
-      description:
-        "A creator-focused editing product for adding logos, voiceovers, videos, and effects, then auto-arranging them into a beat-aware timeline plan.",
-      image: "/photos/context-compositor-example.svg",
-      href: "/downloads/auto-cut-preview-pack.zip",
-      fileLabel: "Download ScenePilot Preview Pack",
-      site: "https://sattari-auto-cut.netlify.app",
-      siteLabel: "Open ScenePilot Site",
-      status: "Preview pack",
-      tags: ["Video Editing", "AI Workflow", "Creator Tools"]
-    },
-    {
-      title: "Context Compositor",
-      subtitle: "Smart background overlay preview pack",
-      description:
-        "A video-editor product direction for subject-aware masking, believable background overlays, and faster compositing workflows.",
-      image: "/photos/context-compositor-example.svg",
-      href: "/downloads/context-compositor-preview-pack.zip",
-      fileLabel: "Download Context Compositor Preview Pack",
-      status: "Preview pack",
-      tags: ["Video Editing", "Compositing", "Creator Tools"]
-    },
-    {
-      title: "Auto Pitch",
-      subtitle: "Sattari audio plugin preview pack",
-      description:
-        "A vocal pitch workflow product for fast correction, creative vocal control, and cleaner music-production sessions.",
-      image: "/photos/auto-pitch-example.svg",
-      href: "/downloads/auto-pitch-preview-pack.zip",
-      fileLabel: "Download Auto Pitch Preview Pack",
-      status: "Preview pack",
-      tags: ["Music Tech", "Audio Plugin", "Vocal Workflow"]
-    }
-  ];
+  const productDownloads = radarSoftwareProjects.map((project) => ({
+    title: project.title,
+    subtitle: project.category,
+    description: project.summary,
+    image: project.image,
+    href: project.downloads[0].href,
+    fileLabel: project.downloads[0].label,
+    site: project.live?.href,
+    siteLabel: project.live?.label,
+    status: project.status,
+    tags: project.tags,
+  }));
 
   const experienceHighlights = [
     {
