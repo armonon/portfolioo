@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-react";
+import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download, RefreshCw } from "lucide-react";
 import { radarEvidenceLedger, radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities, radarSoftwareProjects } from "./productRadarData";
 
 const readRadarRoute = () => {
@@ -16,6 +16,8 @@ const readRadarRoute = () => {
 function ProductRadarPage({ onHome }: { onHome: () => void }) {
   const [selectedLaneId, setSelectedLaneId] = useState(() => readRadarRoute().laneId);
   const [selectedSoftwareId, setSelectedSoftwareId] = useState(() => readRadarRoute().softwareId);
+  const [isSweepRunning, setIsSweepRunning] = useState(false);
+  const [sweepMessage, setSweepMessage] = useState("Ready to request a protected full-system sweep.");
   const selectedLane = radarLanes.find((lane) => lane.id === selectedLaneId);
   const selectedSoftware = radarSoftwareProjects.find((project) => project.id === selectedSoftwareId);
   const linkTarget = (href: string) => href.startsWith("http") ? "_blank" : undefined;
@@ -36,6 +38,69 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
     setSelectedSoftwareId(null);
     window.history.pushState(null, "", "#/product-radar");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const requestFullSystemSweep = async () => {
+    const adminToken = window.prompt("Enter the Product Radar admin token to request a full sweep.");
+
+    if (!adminToken) {
+      setSweepMessage("Sweep canceled. No admin token was provided.");
+      return;
+    }
+
+    const payload = {
+      requestedAt: new Date().toISOString(),
+      source: "portfolio-product-radar",
+      mode: "full-blocker-sweep",
+      requestedActions: [
+        "scan every Product Radar evidence row",
+        "work safe blockers across all projects",
+        "run verification before any push",
+        "push verified safe changes",
+        "generate one fresh next step for each product"
+      ],
+      projects: radarEvidenceLedger.map((project) => ({
+        projectName: project.projectName,
+        priority: project.priority,
+        readinessScore: project.readinessScore,
+        blocker: project.blocker,
+        nextStep: project.nextStep,
+        softwareId: project.softwareId ?? null,
+      })),
+      softwarePages: radarSoftwareProjects.map((project) => ({
+        id: project.id,
+        title: project.title,
+        category: project.category,
+        status: project.status,
+        testingFocus: project.testingFocus,
+      })),
+    };
+
+    setIsSweepRunning(true);
+    setSweepMessage("Sending protected sweep request…");
+
+    try {
+      const response = await fetch("/.netlify/functions/product-sweep", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Product-Sweep-Token": adminToken,
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setSweepMessage(result?.message ?? "Sweep request was not accepted. Check the protected webhook/token configuration.");
+        return;
+      }
+
+      setSweepMessage(result?.message ?? "Sweep request accepted. The system should scan blockers, push verified changes, and generate next steps.");
+    } catch {
+      setSweepMessage("Sweep endpoint is not reachable yet. Deploy the Netlify function and configure the protected webhook/token to activate it.");
+    } finally {
+      setIsSweepRunning(false);
+    }
   };
 
   useEffect(() => {
@@ -258,6 +323,45 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                     <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
                   </div>
                 ))}
+              </div>
+            </section>
+
+            <section className="mt-8 overflow-hidden rounded-[2rem] border border-emerald-400/30 bg-emerald-950/20 p-6 shadow-2xl shadow-emerald-950/20 backdrop-blur md:p-8">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+                    <RefreshCw size={16} /> Admin system refresh
+                  </div>
+                  <h2 className="text-3xl font-black tracking-tight md:text-5xl">Run a full Product Radar sweep.</h2>
+                  <p className="mt-3 leading-relaxed text-zinc-300">
+                    This protected button requests the system to scan every product blocker, work safe fixes, verify before pushing, push clean changes, and generate a fresh next step for each product.
+                  </p>
+                  <p className="mt-3 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-relaxed text-zinc-400">
+                    Safety gate: the public site only sends a request after an admin token is entered. The live automation still needs the private Netlify environment variables for the webhook and token.
+                  </p>
+                </div>
+                <div className="w-full rounded-3xl border border-white/10 bg-black/25 p-5 lg:max-w-sm">
+                  <button
+                    type="button"
+                    onClick={requestFullSystemSweep}
+                    disabled={isSweepRunning}
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-4 text-sm font-black text-black transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <RefreshCw size={18} className={isSweepRunning ? "animate-spin" : undefined} />
+                    {isSweepRunning ? "Requesting sweep…" : "Update all products"}
+                  </button>
+                  <p className="mt-4 text-sm leading-relaxed text-zinc-300">{sweepMessage}</p>
+                  <div className="mt-4 grid grid-cols-2 gap-3 text-center">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div className="text-2xl font-black text-white">{radarEvidenceLedger.length}</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">blocker rows</div>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div className="text-2xl font-black text-white">{radarSoftwareProjects.length}</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">products</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
 
