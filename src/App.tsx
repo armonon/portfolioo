@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download } from "lucide-react";
-import { radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities, radarSoftwareProjects } from "./productRadarData";
+import { radarEvidenceLedger, radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities, radarSoftwareProjects } from "./productRadarData";
 
 const readRadarRoute = () => {
   const productMatch = window.location.hash.match(/^#\/product-radar\/software\/([^/?#]+)/);
@@ -257,6 +257,66 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                     <div className="text-3xl font-black tracking-tight text-white">{metric.value}</div>
                     <div className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">{metric.label}</div>
                   </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="mt-8 rounded-[2rem] border border-zinc-800 bg-zinc-900/60 p-6 shadow-2xl shadow-black/20 backdrop-blur md:p-8">
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
+                    <Sparkles size={16} /> Evidence ledger + priority order
+                  </div>
+                  <h2 className="text-3xl font-black tracking-tight md:text-5xl">What has proof, what is blocked, and what ships next.</h2>
+                  <p className="mt-3 max-w-3xl leading-relaxed text-zinc-400">
+                    Radar now ranks the current NOW/Sattari projects by proof and usefulness. Each row shows the latest verified proof, current blocker, next tiny build step, and revenue path.
+                  </p>
+                </div>
+                <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
+                  {radarEvidenceLedger.length} evidence rows
+                </div>
+              </div>
+
+              <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-2">
+                {radarEvidenceLedger.map((item) => (
+                  <article key={item.projectName} className="rounded-3xl border border-white/10 bg-black/20 p-5">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Priority {item.priority}</div>
+                        <h3 className="mt-1 text-2xl font-bold tracking-tight text-white">{item.projectName}</h3>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-black text-white">
+                        {item.readinessScore}/10
+                      </div>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-zinc-300">{item.promise}</p>
+                    <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                      <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-4">
+                        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Latest proof</div>
+                        <p className="mt-1 text-sm leading-relaxed text-zinc-300">{item.latestProof}</p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-zinc-950/60 p-4">
+                        <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Current blocker</div>
+                        <p className="mt-1 text-sm leading-relaxed text-zinc-300">{item.blocker}</p>
+                      </div>
+                    </div>
+                    <div className="mt-3 rounded-2xl border border-white/10 bg-zinc-950/60 p-4">
+                      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Next tiny build step</div>
+                      <p className="mt-1 text-sm leading-relaxed text-zinc-200">{item.nextStep}</p>
+                    </div>
+                    <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="text-xs leading-relaxed text-zinc-500">Revenue path: {item.monetization}</p>
+                      {item.softwareId ? (
+                        <button
+                          type="button"
+                          onClick={() => openSoftware(item.softwareId!)}
+                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/8 px-3 py-2 text-xs font-semibold text-zinc-200 transition hover:bg-white hover:text-black"
+                        >
+                          Open test page <ExternalLink size={13} />
+                        </button>
+                      ) : null}
+                    </div>
+                  </article>
                 ))}
               </div>
             </section>

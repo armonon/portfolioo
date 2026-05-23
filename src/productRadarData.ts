@@ -55,6 +55,18 @@ export type RadarSoftwareProject = {
   testSteps: string[];
 };
 
+export type RadarEvidenceItem = {
+  priority: number;
+  projectName: string;
+  softwareId?: string;
+  readinessScore: number;
+  promise: string;
+  latestProof: string;
+  blocker: string;
+  nextStep: string;
+  monetization: string;
+};
+
 export const radarLanes: RadarLane[] = [
   {
     id: "sattari-audio",
@@ -414,26 +426,150 @@ export const radarSoftwareProjects: RadarSoftwareProject[] = [
   },
 ];
 
+export const radarEvidenceLedger: RadarEvidenceItem[] = [
+  {
+    priority: 1,
+    projectName: "ScenePilot Studio",
+    softwareId: "scenepilot-studio",
+    readinessScore: 4.5,
+    promise: "Turn creator assets into a beat-aware edit plan creators can understand and eventually export.",
+    latestProof: "Public beta is live; local smoke render exists at sites/auto-cut/smoke-out/smoke-render.mp4.",
+    blocker: "Needs a visible export proof and manual asset/timeline controls before stronger workflow claims.",
+    nextStep: "Produce one deterministic sample input → edit plan → rendered MP4 or structured timeline export.",
+    monetization: "Freemium creator beta, paid exports, then Pro desktop/plugin tier.",
+  },
+  {
+    priority: 2,
+    projectName: "NOW Suite auth/database/profile foundation",
+    softwareId: "now-suite",
+    readinessScore: 3,
+    promise: "Provide the identity, profile, private vault, and service foundation for the product ecosystem.",
+    latestProof: "Preview is live; fixture-safe staging smoke/runbook exists for auth/profile boundaries.",
+    blocker: "Real auth/database/profile ownership needs approved provider, staging database, and secrets handling.",
+    nextStep: "Refresh the fixture-mode staging smoke and attach the exact pass/fail output to the ledger.",
+    monetization: "Account layer for paid NOW services, Market seller profiles, premium profiles, and subscriptions.",
+  },
+  {
+    priority: 3,
+    projectName: "Project Radar Directory",
+    softwareId: "product-radar",
+    readinessScore: 7,
+    promise: "Give every serious application one truthful test page with status, proof, blockers, and next steps.",
+    latestProof: "Live software directory, test pages, preview packs, and internal evidence ledger are active.",
+    blocker: "More evidence fields still need generated sync from wiki/repo/deploy checks instead of manual copy.",
+    nextStep: "Turn this evidence ledger into generated Radar input with proof paths, blockers, and readiness scores.",
+    monetization: "Portfolio operating system for product conversion, services, and future reusable command-center tooling.",
+  },
+  {
+    priority: 4,
+    projectName: "Auto Pitch",
+    softwareId: "auto-pitch",
+    readinessScore: 3.5,
+    promise: "Help singers and producers tune vocals with auto key, adaptive sections, and natural-to-hard correction.",
+    latestProof: "Generated vocal-ish source/corrected/guide WAVs exist for internal listening review.",
+    blocker: "Needs real vocal A/B listening tests, DAW validation, and an installer path.",
+    nextStep: "Create one A/B listening pack with source, natural, modern, hard, and adapt outputs plus a score sheet.",
+    monetization: "Paid Sattari Audio plugin/standalone app with presets, upgrades, and creator bundles.",
+  },
+  {
+    priority: 5,
+    projectName: "Context Compositor",
+    softwareId: "context-compositor",
+    readinessScore: 2.5,
+    promise: "Make subject-aware background and overlay compositing faster for creators.",
+    latestProof: "Local MVP merged-frame/video artifacts exist under sites/context-compositor-mvp/outputs.",
+    blocker: "Needs a clear before/after proof set and a defined editor workflow before public positioning.",
+    nextStep: "Create one before/after proof card from the existing MVP frames and attach it to the ledger.",
+    monetization: "Creator-suite module or paid desktop/editor add-on bundled with ScenePilot/COMPOSITOR.",
+  },
+  {
+    priority: 6,
+    projectName: "COMPOSITOR native editor foundation",
+    softwareId: "compositor-native",
+    readinessScore: 4,
+    promise: "Provide a native frame/layer/timeline editor foundation with reliable project persistence.",
+    latestProof: "Qt/C++ SQLite session, import queue, recovery, and fail-closed relink logs are documented.",
+    blocker: "Needs a visible alpha slice: import clip, view timeline/layers, save/reopen, then eventually render/export.",
+    nextStep: "Capture one local alpha proof log for open project → import queue → save/reopen → relink preview readiness.",
+    monetization: "Paid native creator app, pro license, and modules for compositing/ScenePilot workflows.",
+  },
+  {
+    priority: 7,
+    projectName: "Market seller profile/listing flow",
+    softwareId: "market",
+    readinessScore: 3,
+    promise: "Let sellers present profile-backed listings with clear source/readiness labels before checkout.",
+    latestProof: "NOW Suite Market preview and browser smoke screenshot are live/recorded.",
+    blocker: "No live checkout, scraping, marketplace feed, or external seller/buyer messaging until approved.",
+    nextStep: "Add a seller profile/listing fixture smoke: listing card → seller profile → saved item/inquiry placeholder.",
+    monetization: "Seller subscriptions, listing boosts, transaction fees after compliance, and paid tenant marketplaces.",
+  },
+  {
+    priority: 8,
+    projectName: "Sattari StemDeck",
+    softwareId: "stemdeck",
+    readinessScore: 2.5,
+    promise: "Give producers and performers a dual-deck stem playback/remix tool that can become a validated plugin.",
+    latestProof: "Internal plugin/standalone packages and build artifacts exist; current source has active local changes.",
+    blocker: "Recording write, live stems, BPM sync, mic input, plugin hosting, pluginval, DAW tests, and listening pass are still missing.",
+    nextStep: "Get recording to write one local file or produce a failing test log that isolates the recording-write blocker.",
+    monetization: "Paid Sattari Audio plugin/standalone app, creator bundle, and future sample/stem ecosystem.",
+  },
+  {
+    priority: 9,
+    projectName: "Botanica Lab",
+    softwareId: "botanica-lab",
+    readinessScore: 5.5,
+    promise: "Turn botanical research into evidence-aware formula/concept cards with safety and review status.",
+    latestProof: "Live concept app and public source repo are verified; test pack is listed in Product Radar.",
+    blocker: "Consumer-facing claims require review; formula cards need citations, safety flags, and source strength.",
+    nextStep: "Add one formula-card fixture with citations, safety flags, source strength, and claims-review status.",
+    monetization: "Internal MNR R&D engine, then paid formulation workspace or compliance-aware content tool.",
+  },
+  {
+    priority: 10,
+    projectName: "Trader Oracle",
+    softwareId: "trader-oracle",
+    readinessScore: 5,
+    promise: "Convert watchlists, market news, and catalysts into research-only setups with risk and invalidation.",
+    latestProof: "Live beta dashboard and weekday watchlist/research automation are active.",
+    blocker: "Needs stronger source trails, risk/invalidation display, and a watch/avoid board.",
+    nextStep: "Add one ticker research card fixture with source links, risk note, invalidation point, and research-only label.",
+    monetization: "Research dashboard subscription, premium watchlist tools, and educational market-intelligence reports.",
+  },
+  {
+    priority: 11,
+    projectName: "Librarian Atlas",
+    softwareId: "librarian-atlas",
+    readinessScore: 4.5,
+    promise: "Help readers discover public-domain books and inspect the provenance behind source/readability claims.",
+    latestProof: "Live prototype plus local SQLite/provenance backend artifacts and test pack.",
+    blocker: "Needs richer book detail/source-inspection routes and provenance confidence on important claims.",
+    nextStep: "Add or verify one book detail proof with source link, public-domain confidence, and reading-path link.",
+    monetization: "Premium research library, curated reading paths, source API, and trust layer for Botanica/Trader.",
+  },
+];
+
 export const radarMetrics = [
   { value: String(radarLanes.length), label: "product lanes" },
   { value: String(radarSoftwareProjects.length), label: "software pages" },
   { value: String(radarSoftwareProjects.reduce((sum, project) => sum + project.downloads.length, 0)), label: "downloadables" },
-  { value: String(radarLanes.filter((lane) => lane.primaryLink?.href.startsWith("http")).length), label: "live/beta surfaces" },
+  { value: String(radarEvidenceLedger.length), label: "evidence rows" },
 ];
 
 export const radarOpportunities = [
-  "Turn Product Radar into the portfolio's command-center page for current products and next launches.",
-  "Bundle ScenePilot Studio, COMPOSITOR, Context Compositor, StemDeck, and Sattari Audio as a creator software suite.",
-  "Reuse Librarian-style provenance across Botanica and Trader so claims, ideas, and setups cite sources.",
-  "Add an honest launch-readiness score to each product: build, proof, UX, docs, deploy, risk, and next blocker.",
+  "Make Product Radar answer one question fast: what proof exists, what is blocked, and what is the smallest useful next build?",
+  "Convert the evidence ledger into generated input from wiki, GitHub, deploy checks, screenshots, demos, and build logs.",
+  "Put live proof first: export, screenshot, demo video, test result, or build log before adding more concept copy.",
+  "Keep regulated lanes safe: Market avoids checkout/scraping claims, Trader stays research-only, and Botanica carries citations/safety/review labels.",
 ];
 
 export const radarNextBuildSteps = [
-  { title: "Software testing directory", body: "Project Radar now has a dedicated software directory: every serious project gets a card, a full page, test steps, links, and downloadable packs.", state: "Live" },
-  { title: "Clickable lane detail screens", body: "Each big Radar box still opens a focused project screen with images, deeper description, blockers, links, and downloads/resources.", state: "Live" },
-  { title: "Safe public sync", body: "Radar copy reflects the live ScenePilot beta separately from the still-concept Context Compositor lane.", state: "Live" },
-  { title: "Evidence-backed fields", body: "Lane cards carry source, confidence, and review notes so future hourly scans know what is safe to update.", state: "Started" },
-  { title: "Generated inputs", body: "Next step: generate more software page fields from wiki/GitHub/Netlify evidence so new projects appear automatically; this pass added current NOW/Market, COMPOSITOR, and StemDeck pages manually.", state: "Next" },
+  { title: "ScenePilot export proof", body: "Produce one deterministic sample input → edit plan → rendered MP4 or structured timeline export, then attach the artifact to the ledger.", state: "P0" },
+  { title: "NOW fixture smoke", body: "Refresh the fixture-mode auth/database/profile smoke output before any real provider, secret, or staging cutover work.", state: "P1" },
+  { title: "Generated evidence ledger", body: "Move proof paths, blockers, readiness scores, and risk labels from manual notes into generated Radar input.", state: "P1" },
+  { title: "Auto Pitch A/B pack", body: "Bundle source, natural, modern, hard, and adaptive vocal outputs with a listening score sheet before plugin claims.", state: "P2" },
+  { title: "Safety-first proof cards", body: "Market, Trader, and Botanica must show proof with guardrails: no checkout/scraping, research-only, citations, safety flags, and review labels.", state: "Always" },
 ];
 
 export const radarIdeaFeed = [
