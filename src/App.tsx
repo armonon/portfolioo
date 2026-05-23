@@ -487,6 +487,7 @@ function App() {
     {
       id: "scenepilot-studio",
       title: "ScenePilot Studio",
+      section: "software",
       subtitle: "Beat-aware creator workflow and auto-arranged edit plans",
       description:
         "A public beta for creator kits: logos, voiceovers, clips, and effects can be organized into beat-aware arrangement plans for faster video assembly.",
@@ -507,6 +508,7 @@ function App() {
     {
       id: "compositor-native",
       title: "COMPOSITOR",
+      section: "software",
       subtitle: "Native frame-level video editor foundation",
       description:
         "A native-first C++/Qt video-editor foundation built around frame-level control, layered editing, SQLite project/session storage, import queues, timeline navigation, and recovery-safe project handling.",
@@ -527,6 +529,7 @@ function App() {
     {
       id: "auto-pitch",
       title: "Auto Pitch",
+      section: "software",
       subtitle: "Sattari vocal-tuning plugin direction",
       description:
         "A Sattari audio product direction for vocal tuning with auto key, adaptive song sections, natural/modern/hard modes, and a higher bar than ordinary demo plugins.",
@@ -547,6 +550,7 @@ function App() {
     {
       id: "now-market",
       title: "NOW + Market",
+      section: "software",
       subtitle: "Identity hub and universal marketplace prototype",
       description:
         "A platform-system direction where NOW becomes the profile/identity hub and Market becomes the first service: search listings, connect seller profiles, and prototype marketplace flows safely.",
@@ -567,6 +571,7 @@ function App() {
     {
       id: "digital-human-mvp",
       title: "Digital Human MVP",
+      section: "software",
       subtitle: "AI avatar/chat demo with visemes and animation readiness",
       description:
         "A browser avatar/chat MVP with GLB fallback responses, viseme metadata, hybrid animation readiness, and a clear separation between the working fallback demo and future hosted neural/photo engines.",
@@ -587,6 +592,7 @@ function App() {
     {
       id: "stemdeck",
       title: "Sattari StemDeck",
+      section: "software",
       subtitle: "Dual-deck remix/plugin concept for stem performance",
       description:
         "A Sattari Audio plugin direction for dual-deck stem playback and remix control, developed as part of the internal JUCE/CMake AU/VST3/Standalone product pipeline.",
@@ -607,6 +613,7 @@ function App() {
     {
       id: 3,
       title: "Botanica Lab",
+      section: "software",
       subtitle: "Botanical R&D and formulation-intelligence site",
       description:
         "A living research lab for botanical product concepts, ingredient signals, formula exploration, and safe wellness-product ideation.",
@@ -627,6 +634,7 @@ function App() {
     {
       id: 4,
       title: "Stock Trader Oracle",
+      section: "software",
       subtitle: "Market-intelligence dashboard for watchlists and catalysts",
       description:
         "A stock research dashboard that turns a watchlist into market radar, ticker news, scenario-based trade ideas, and risk-aware research briefs.",
@@ -647,6 +655,7 @@ function App() {
     {
       id: 5,
       title: "Librarian",
+      section: "software",
       subtitle: "Provenance-first atlas for public-domain books",
       description:
         "A book discovery prototype that combines search, source inspection, public-domain availability, reading paths, and authority links into one research interface.",
@@ -667,6 +676,7 @@ function App() {
     {
       id: 7,
       title: "Sattari Music",
+      section: "website",
       subtitle: "Brand-forward music and drum business website",
       description:
         "A custom web direction for a music business centered on drum gear, local services, rentals, and brand identity.",
@@ -687,6 +697,7 @@ function App() {
     {
       id: 8,
       title: "Nasiri Team Realty",
+      section: "website",
       subtitle: "Modern real estate platform with live property listings",
       description:
         "A responsive real estate website designed for property listings, agent profiles, and seamless client communication.",
@@ -706,20 +717,8 @@ function App() {
     }
   ];
 
-  const productDownloads = radarSoftwareProjects
-    .filter((project) => project.downloads.length > 0)
-    .map((project) => ({
-    title: project.title,
-    subtitle: project.category,
-    description: project.summary,
-    image: project.image,
-    href: project.downloads[0].href,
-    fileLabel: project.downloads[0].label,
-    site: project.live?.href,
-    siteLabel: project.live?.label,
-    status: project.status,
-    tags: project.tags,
-  }));
+  const softwareProjects = projects.filter((project) => project.section === "software");
+  const websiteProjects = projects.filter((project) => project.section === "website");
 
   const experienceHighlights = [
     {
@@ -802,8 +801,8 @@ function App() {
     { label: "Home", id: "hero" },
     { label: "About", id: "about" },
     { label: "Experience", id: "experience" },
-    { label: "Downloads", id: "downloads" },
-    { label: "Work", id: "projects" },
+    { label: "Software", id: "projects" },
+    { label: "Websites", id: "websites" },
     { label: "Skills", id: "skills" },
     { label: "Contact", id: "contact" },
   ];
@@ -1004,10 +1003,10 @@ function App() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection("downloads")}
+                onClick={() => scrollToSection("projects")}
                 className="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-100 transition-colors"
               >
-                View Product Downloads
+                View Software
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -1143,106 +1142,7 @@ function App() {
           </div>
         </motion.section>
 
-        {/* Product Downloads Section */}
-        <motion.section
-          id="downloads"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: false }}
-          className="py-20 px-4"
-        >
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="mb-12"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold">Product Downloads</h2>
-              <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
-              <p className="mt-5 max-w-2xl text-zinc-400">
-                Early product preview packs for the tools I'm building. These are not full installers yet — they package the product direction, feature notes, and next-build outline.
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              {productDownloads.map((product) => (
-                <motion.div
-                  key={product.title}
-                  variants={fadeUp}
-                  whileHover={{ y: -5 }}
-                  className="group overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur transition-all hover:border-zinc-700"
-                >
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={`${product.title} preview`}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/35" />
-                    <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-                      {product.status}
-                    </div>
-                  </div>
-
-                  <div className="p-6 md:p-7">
-                    <h3 className="text-2xl font-bold">{product.title}</h3>
-                    <p className="mt-2 text-sm text-zinc-400">{product.subtitle}</p>
-                    <p className="mt-4 text-zinc-300 leading-relaxed">{product.description}</p>
-
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {product.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-lg bg-zinc-800/60 px-3 py-1 text-xs font-medium text-zinc-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      {"site" in product && product.site ? (
-                        <motion.a
-                          href={product.site}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                          className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-zinc-500 hover:bg-zinc-800"
-                        >
-                          <ExternalLink size={16} />
-                          {product.siteLabel}
-                        </motion.a>
-                      ) : null}
-
-                      <motion.a
-                        href={product.href}
-                        download
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-zinc-100"
-                      >
-                        <Download size={16} />
-                        {product.fileLabel}
-                      </motion.a>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Featured Projects Section */}
+        {/* Software Section */}
         <motion.section
           id="projects"
           initial={{ opacity: 0 }}
@@ -1259,8 +1159,11 @@ function App() {
               viewport={{ once: false }}
               className="mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">Featured Product Work</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Software</h2>
               <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
+              <p className="mt-5 max-w-3xl text-zinc-400">
+                AI tools, dashboards, research systems, native app foundations, and creator software — grouped together so the software work is easy to scan.
+              </p>
             </motion.div>
 
             <motion.div
@@ -1270,7 +1173,7 @@ function App() {
               viewport={{ once: false }}
               className="space-y-8"
             >
-              {projects.map((project) => (
+              {softwareProjects.map((project) => (
                 <motion.div
                   key={project.id}
                   variants={fadeUp}
@@ -1353,6 +1256,138 @@ function App() {
                             className="flex items-center gap-2 px-4 py-2 bg-white text-black font-medium rounded-lg hover:bg-zinc-100 transition-colors text-sm"
                           >
                             {project.liveLabel ?? "Live Demo"} <ExternalLink size={16} />
+                          </motion.a>
+                        )}
+                        {project.github !== "#" && (
+                          <motion.a
+                            href={project.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors text-sm"
+                          >
+                            Code <Code2 size={16} />
+                          </motion.a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* Websites Section */}
+        <motion.section
+          id="websites"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
+          className="py-20 px-4"
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold">Websites</h2>
+              <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
+              <p className="mt-5 max-w-3xl text-zinc-400">
+                Public-facing business websites, brand surfaces, commerce pages, and client-style web experiences kept separate from the software products.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              className="space-y-8"
+            >
+              {websiteProjects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  variants={fadeUp}
+                  whileHover={{ y: -5 }}
+                  className="group bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div className={`relative h-64 md:h-full min-h-80 overflow-hidden bg-gradient-to-br ${project.accent}`}>
+                      {project.image ? (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center p-8">
+                          <div className="text-center">
+                            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/15 bg-white/10 text-3xl font-black text-white shadow-2xl shadow-black/30">
+                              {project.title.slice(0, 2).toUpperCase()}
+                            </div>
+                            <div className="text-2xl font-bold text-white">{project.title}</div>
+                            <div className="mt-2 text-sm text-zinc-200">{project.status}</div>
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                      <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                        {project.status}
+                      </div>
+                    </div>
+
+                    <div className="p-6 md:p-8 flex flex-col justify-between">
+                      <div>
+                        <span className="inline-block text-xs font-semibold text-zinc-400 mb-3 px-3 py-1 bg-zinc-800 rounded-full">
+                          {project.label}
+                        </span>
+                        <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                        <p className="text-sm text-zinc-400 mb-4">{project.subtitle}</p>
+                        <p className="text-zinc-300 mb-6 leading-relaxed">
+                          {project.description}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {project.tech.map((tech, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs font-medium text-zinc-300 bg-zinc-800/50 px-3 py-1 rounded-lg"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+
+                        <ul className="space-y-2 mb-6">
+                          {project.points.map((point, idx) => (
+                            <li
+                              key={idx}
+                              className="text-sm text-zinc-400 flex gap-2"
+                            >
+                              <span className="text-white font-bold">•</span>
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="flex flex-wrap gap-3">
+                        {project.live !== "#" && (
+                          <motion.a
+                            href={project.live}
+                            target="_blank"
+                            rel="noreferrer"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 px-4 py-2 bg-white text-black font-medium rounded-lg hover:bg-zinc-100 transition-colors text-sm"
+                          >
+                            {project.liveLabel ?? "Live Site"} <ExternalLink size={16} />
                           </motion.a>
                         )}
                         {project.github !== "#" && (
