@@ -485,6 +485,126 @@ function App() {
 
   const projects = [
     {
+      id: "scenepilot-studio",
+      title: "ScenePilot Studio",
+      subtitle: "Beat-aware creator workflow and auto-arranged edit plans",
+      description:
+        "A public beta for creator kits: logos, voiceovers, clips, and effects can be organized into beat-aware arrangement plans for faster video assembly.",
+      tech: ["React", "Audio Analysis", "Timeline UX", "Creator Tools"],
+      points: [
+        "Turns raw creator assets into a clearer edit-plan structure instead of a blank timeline.",
+        "Explores beat/cut maps, asset lanes, and arrangement logic for short-form content workflows.",
+        "Kept honestly in beta until rendered exports, layer export, and manual editing controls are hardened."
+      ],
+      live: "https://sattari-auto-cut.netlify.app",
+      liveLabel: "Live Beta",
+      github: "#",
+      label: "Video Tool",
+      image: "/photos/context-compositor-example.svg",
+      status: "Public beta",
+      accent: "from-violet-500/30 via-fuchsia-500/20 to-sky-500/30"
+    },
+    {
+      id: "compositor-native",
+      title: "COMPOSITOR",
+      subtitle: "Native frame-level video editor foundation",
+      description:
+        "A native-first C++/Qt video-editor foundation built around frame-level control, layered editing, SQLite project/session storage, import queues, timeline navigation, and recovery-safe project handling.",
+      tech: ["C++", "Qt", "CMake", "SQLite", "FFmpeg Boundary"],
+      points: [
+        "Designed as a real desktop application, not a disposable web toy.",
+        "Includes project/layer/session models, crash-safe SQLite saves, backup recovery, import queues, and timeline controls.",
+        "Current focus is safe media relinking, native editing foundations, and validated internal build gates."
+      ],
+      live: "#",
+      liveLabel: "Internal Build",
+      github: "#",
+      label: "Native App",
+      image: "/photos/context-compositor-example.svg",
+      status: "Native foundation",
+      accent: "from-sky-500/30 via-indigo-500/20 to-zinc-500/30"
+    },
+    {
+      id: "auto-pitch",
+      title: "Auto Pitch",
+      subtitle: "Sattari vocal-tuning plugin direction",
+      description:
+        "A Sattari audio product direction for vocal tuning with auto key, adaptive song sections, natural/modern/hard modes, and a higher bar than ordinary demo plugins.",
+      tech: ["DSP", "Pitch Detection", "Audio UX", "Plugin Roadmap"],
+      points: [
+        "Centers on vocalist-friendly tuning controls and an Adapt Mode concept for key changes over time.",
+        "Uses preview/test packs while the real installable plugin path, DAW validation, and listening tests continue.",
+        "Part of a broader Sattari Audio product line moving toward AU/VST3/Standalone releases."
+      ],
+      live: "#",
+      liveLabel: "Preview Pack",
+      github: "#",
+      label: "Audio Plugin",
+      image: "/photos/auto-pitch-example.svg",
+      status: "Prototype",
+      accent: "from-orange-500/30 via-amber-500/20 to-yellow-500/30"
+    },
+    {
+      id: "now-market",
+      title: "NOW + Market",
+      subtitle: "Identity hub and universal marketplace prototype",
+      description:
+        "A platform-system direction where NOW becomes the profile/identity hub and Market becomes the first service: search listings, connect seller profiles, and prototype marketplace flows safely.",
+      tech: ["JavaScript", "Netlify Functions", "Auth Contracts", "Marketplace UX"],
+      points: [
+        "NOW models profiles, vaults, identity data, permissions, and safe public/private boundaries.",
+        "Market prototypes tenant-aware listing surfaces, source readiness, seller cards, saved items, and inquiry flows.",
+        "Guardrails keep it clear that scraping, checkout, payment, and external messaging are not live yet."
+      ],
+      live: "https://now-suite-preview.netlify.app/market/",
+      liveLabel: "Market Preview",
+      github: "#",
+      label: "Platform System",
+      image: "/photos/digital-human-example.svg",
+      status: "Preview prototype",
+      accent: "from-cyan-500/30 via-blue-500/20 to-purple-500/30"
+    },
+    {
+      id: "digital-human-mvp",
+      title: "Digital Human MVP",
+      subtitle: "AI avatar/chat demo with visemes and animation readiness",
+      description:
+        "A browser avatar/chat MVP with GLB fallback responses, viseme metadata, hybrid animation readiness, and a clear separation between the working fallback demo and future hosted neural/photo engines.",
+      tech: ["Three.js", "React", "Avatar Systems", "AI Chat"],
+      points: [
+        "Delivers a working avatar-chat surface with generated replies and animation metadata.",
+        "Tracks readiness and fallback-vs-neural status instead of overclaiming the demo.",
+        "Useful as a foundation for persistent AI identity and richer avatar experiences."
+      ],
+      live: "https://digital-human-mvp.onrender.com",
+      liveLabel: "Live MVP",
+      github: "#",
+      label: "AI Avatar",
+      image: "/photos/digital-human-example.svg",
+      status: "Live fallback demo",
+      accent: "from-fuchsia-500/30 via-purple-500/20 to-blue-500/30"
+    },
+    {
+      id: "stemdeck",
+      title: "Sattari StemDeck",
+      subtitle: "Dual-deck remix/plugin concept for stem performance",
+      description:
+        "A Sattari Audio plugin direction for dual-deck stem playback and remix control, developed as part of the internal JUCE/CMake AU/VST3/Standalone product pipeline.",
+      tech: ["JUCE", "CMake", "Audio Plugin", "Remix UX"],
+      points: [
+        "Explores a performance-friendly dual-deck workflow for stems, loops, and remix-style control.",
+        "Uses the stricter Sattari plugin build standard before any public sale-ready language.",
+        "Sits alongside Auto Pitch as another serious Sattari Audio product candidate."
+      ],
+      live: "#",
+      liveLabel: "Internal Build",
+      github: "#",
+      label: "Audio Plugin",
+      image: "/photos/auto-pitch-example.svg",
+      status: "Internal build",
+      accent: "from-red-500/30 via-orange-500/20 to-zinc-500/30"
+    },
+    {
       id: 3,
       title: "Botanica Lab",
       subtitle: "Botanical R&D and formulation-intelligence site",
@@ -586,7 +706,9 @@ function App() {
     }
   ];
 
-  const productDownloads = radarSoftwareProjects.map((project) => ({
+  const productDownloads = radarSoftwareProjects
+    .filter((project) => project.downloads.length > 0)
+    .map((project) => ({
     title: project.title,
     subtitle: project.category,
     description: project.summary,
@@ -622,12 +744,12 @@ function App() {
     {
       title: "AI + creative software",
       image: "/photos/auto-pitch-example.svg",
-      text: "Auto Pitch, ScenePilot, Context Compositor, and Sattari audio/video tools show a creator-software direction: music production, video editing, timeline automation, and workflow acceleration."
+      text: "Auto Pitch, StemDeck, ScenePilot, COMPOSITOR, and Sattari audio/video tools show a creator-software direction: music production, native editing, timeline automation, and workflow acceleration."
     },
     {
       title: "Research and intelligence tools",
       image: "/photos/trader-oracle-example.svg",
-      text: "Trader Oracle, Botanica Lab, Librarian, and Product Radar turn noisy information into structured dashboards, cited research, next actions, and decision support."
+      text: "NOW Suite, Market, Trader Oracle, Botanica Lab, Librarian, and Product Radar turn noisy information into structured dashboards, cited research, identity/profile systems, next actions, and decision support."
     },
     {
       title: "Business websites and commerce",
@@ -861,7 +983,7 @@ function App() {
             >
               {[
                 { label: "Backend experience", value: "4 yrs" },
-                { label: "Product directions", value: "8+" },
+                { label: "Product directions", value: "12+" },
                 { label: "AI engineering trained", value: "4Geeks" }
               ].map((stat, idx) => (
                 <motion.div key={idx} variants={fadeUp} className="text-center">
@@ -928,7 +1050,7 @@ function App() {
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                My current portfolio spans software downloads, AI music tools, botanical research, stock-market intelligence, book discovery, video-editor concepts, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
+                My current portfolio spans software downloads, AI music tools, native video-editor work, NOW/Market platform systems, botanical research, stock-market intelligence, book discovery, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
               </p>
             </motion.div>
           </div>
