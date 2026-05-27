@@ -97,6 +97,11 @@ export const radarLanes: RadarLane[] = [
       ],
       highlights: ["Audio suite internal test pack available", "Prototype/internal-alpha only", "Real validation still required before any beta or sale-ready language"],
     },
+    evidence: {
+      source: "wiki/projects/sattari/index.md",
+      confidence: "high",
+      review: "Internal-alpha/pre-alpha only; keep beta, public-beta, professional reliability, and sale-ready claims blocked until DAW/listening validation passes.",
+    },
   },
   {
     id: "creator-tools",
