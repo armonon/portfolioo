@@ -134,7 +134,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
             {selectedLane || selectedSoftware ? "← Back to Radar directory" : "← Back to portfolio"}
           </button>
           <div className="rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-400">
-            Product Radar · {selectedSoftware ? `${selectedSoftware.title} test page` : selectedLane ? `${selectedLane.title} detail` : "v0.4 software directory"}
+            Product Radar · {selectedSoftware ? `${selectedSoftware.title} test page` : selectedLane ? `${selectedLane.title} detail` : "v0.5 software test lab"}
           </div>
         </div>
 
@@ -163,12 +163,54 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
               </div>
             </section>
 
+            {selectedSoftware.webPrototype ? (
+              <section className="mt-8 overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-cyan-950/20 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur md:p-8">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="max-w-3xl">
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100">
+                      <Code2 size={16} /> Web test version
+                    </div>
+                    <h2 className="text-3xl font-black tracking-tight md:text-5xl">{selectedSoftware.webPrototype.title}</h2>
+                    <p className="mt-3 leading-relaxed text-zinc-300">{selectedSoftware.webPrototype.summary}</p>
+                  </div>
+                  <div className="w-full rounded-3xl border border-white/10 bg-black/25 p-5 lg:max-w-md">
+                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">Sample input</div>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-200">{selectedSoftware.webPrototype.sampleInput}</p>
+                    <div className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">Prototype output</div>
+                    <p className="mt-2 text-sm leading-relaxed text-cyan-100">{selectedSoftware.webPrototype.primaryOutput}</p>
+                  </div>
+                </div>
+
+                <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+                  {selectedSoftware.webPrototype.panels.map((panel) => (
+                    <div key={panel.label} className="rounded-3xl border border-white/10 bg-black/25 p-5">
+                      <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">{panel.label}</div>
+                      <h3 className="mt-2 text-xl font-bold tracking-tight text-white">{panel.value}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-zinc-300">{panel.detail}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-7 rounded-3xl border border-white/10 bg-black/25 p-5">
+                  <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Next web-prototype actions</div>
+                  <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+                    {selectedSoftware.webPrototype.actions.map((action, index) => (
+                      <div key={action} className="grid grid-cols-[2rem_1fr] gap-3 rounded-2xl border border-white/10 bg-zinc-950/50 p-4">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-black text-black">{index + 1}</div>
+                        <p className="text-sm leading-relaxed text-zinc-300">{action}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
             <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[0.85fr_1.15fr]">
               <aside className="space-y-4">
                 <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
                   <h2 className="text-2xl font-bold tracking-tight">Downloadables</h2>
                   <div className="mt-5 space-y-3">
-                    {selectedSoftware.downloads.map((download) => (
+                    {selectedSoftware.downloads.length ? selectedSoftware.downloads.map((download) => (
                       <a
                         key={`${download.label}-${download.href}`}
                         href={download.href}
@@ -177,14 +219,18 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                         <span>{download.label}</span>
                         <Download size={15} />
                       </a>
-                    ))}
+                    )) : (
+                      <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-relaxed text-zinc-400">
+                        No download yet. This product currently has a browser-testable Radar prototype page.
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className="rounded-3xl border border-zinc-800 bg-zinc-900/60 p-6 backdrop-blur">
                   <h2 className="text-2xl font-bold tracking-tight">Open project</h2>
                   <div className="mt-5 space-y-3">
-                    {[selectedSoftware.live, selectedSoftware.repo].filter(Boolean).map((link) => (
+                    {[selectedSoftware.live, selectedSoftware.repo].filter(Boolean).length ? [selectedSoftware.live, selectedSoftware.repo].filter(Boolean).map((link) => (
                       <a
                         key={link!.label}
                         href={link!.href}
@@ -195,7 +241,11 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                         <span>{link!.label}</span>
                         <ExternalLink size={15} />
                       </a>
-                    ))}
+                    )) : (
+                      <p className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-relaxed text-zinc-400">
+                        The Radar page below is the first web test surface; no separate live app/repo link is attached yet.
+                      </p>
+                    )}
                   </div>
                 </div>
               </aside>
@@ -312,7 +362,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   Product Radar is now the software testing directory.
                 </h1>
                 <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-                  A living portfolio hub for every serious software project. Open a product, read the clear description, download the test/preview pack, and use the full page as the checklist for testing.
+                  A living portfolio hub for every serious software project and new software idea. Open a product, test its web prototype, read the clear description, download any test/preview pack, and use the full page as the checklist for testing.
                 </p>
               </div>
 
@@ -433,7 +483,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   </div>
                   <h2 className="text-3xl font-black tracking-tight md:text-5xl">All software projects in one place.</h2>
                   <p className="mt-3 max-w-3xl leading-relaxed text-zinc-400">
-                    Each card opens a full testing page with the product description, live links when available, downloadables, and practical test steps.
+                    Each card opens a full testing page with a web prototype, product description, live links when available, downloadables, and practical test steps.
                   </p>
                 </div>
                 <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">

@@ -53,6 +53,20 @@ export type RadarSoftwareProject = {
   downloads: RadarLink[];
   testingFocus: string;
   testSteps: string[];
+  webPrototype?: RadarWebPrototype;
+};
+
+export type RadarWebPrototype = {
+  title: string;
+  summary: string;
+  sampleInput: string;
+  primaryOutput: string;
+  panels: {
+    label: string;
+    value: string;
+    detail: string;
+  }[];
+  actions: string[];
 };
 
 export type RadarEvidenceItem = {
@@ -251,6 +265,142 @@ export const radarLanes: RadarLane[] = [
 ];
 
 export const radarSoftwareProjects: RadarSoftwareProject[] = [
+
+  {
+    id: "sattari-loop-doctor",
+    title: "Sattari Loop Doctor",
+    category: "Audio repair",
+    status: "Radar web prototype",
+    image: "/photos/auto-pitch-example.svg",
+    summary: "Sample and loop repair lab for timing, pitch, transients, loudness, loop points, and export prep.",
+    description: "Sattari Loop Doctor is the proposed producer utility for turning messy loops into production-ready assets. The Radar web version lets Armon test the workflow, proof language, repair checklist, and output expectations before deeper DSP/native/plugin work begins.",
+    tags: ["Audio", "Loops", "Sample repair", "Sattari"],
+    live: { label: "Open Radar web prototype", href: "#/product-radar/software/sattari-loop-doctor" },
+    downloads: [],
+    testingFocus: "Validate whether the loop-intake, auto-detect, repair-plan, before/after, and export-checklist flow feels like a useful producer product before committing to deep DSP implementation.",
+    testSteps: ["Read the web prototype flow", "Use the sample loop scenario as if you were preparing a real loop for a beat", "Check whether the repair categories cover the pain points", "Mark any missing controls before native/plugin work starts"],
+    webPrototype: {
+      title: "Loop repair web test",
+      summary: "A browser-testable product flow for the future native/plugin loop-repair engine.",
+      sampleInput: "Messy 4-bar vocal/synth loop · detected 92.3 BPM · likely F minor · late downbeat · uneven gain · click at loop seam",
+      primaryOutput: "Clean 4-bar export plan: 92 BPM grid, F minor lock, -14 LUFS preview, crossfaded loop seam, transient-safe timing tighten, stems optional.",
+      panels: [
+        { label: "Auto detect", value: "BPM / key / downbeat", detail: "Shows tempo, key confidence, first downbeat, loop length, and warnings before repair." },
+        { label: "Repair plan", value: "Timing + pitch + seam", detail: "Separates safe fixes from risky DSP so users understand what will change." },
+        { label: "Before / after", value: "A/B checklist", detail: "Future web demo should play original vs cleaned preview and show artifact warnings." },
+        { label: "Export", value: "Loop + stems + metadata", detail: "Exports clean WAV, optional stems, BPM/key metadata, and a test report." },
+      ],
+      actions: ["Add fake upload/intake UI", "Add before/after audio preview fixture", "Add repair score and artifact warning card", "Later connect real DSP engine"],
+    },
+  },
+  {
+    id: "midi-genius-sattari-arp-pro",
+    title: "MIDI Genius / Sattari Arp Pro",
+    category: "MIDI plugin",
+    status: "Radar web prototype",
+    image: "/photos/auto-pitch-example.svg",
+    summary: "Chord-to-MIDI idea engine for arps, melodies, basslines, chord chops, drum patterns, groove, and MIDI export.",
+    description: "MIDI Genius / Sattari Arp Pro turns simple notes or chords into usable producer parts that can drive any synth. The Radar web version tests pattern language, presets, performance macros, and MIDI-export expectations while the real AU/VST3 MIDI-effect direction stays native/plugin-first.",
+    tags: ["MIDI", "Audio plugin", "Arpeggiator", "Sattari"],
+    live: { label: "Open Radar web prototype", href: "#/product-radar/software/midi-genius-sattari-arp-pro" },
+    downloads: [],
+    testingFocus: "Validate whether the product feels bigger than a normal arpeggiator: chords in, useful musical parts out, with exportable MIDI and genre-aware controls.",
+    testSteps: ["Review the chord-to-pattern flow", "Check the macro controls and preset categories", "Decide which first 20 presets matter most", "Confirm the web page makes the future plugin easy to understand"],
+    webPrototype: {
+      title: "Chord-to-pattern web test",
+      summary: "A clickable Radar flow for the future AU/VST3 MIDI-effect plugin.",
+      sampleInput: "Input chord: Fm9 · style: dark bounce · rate: 1/16 · swing: 58% · energy: 72%",
+      primaryOutput: "Generated part preview: root/fifth bass pulse, minor pentatonic top motif, velocity accents, 2-bar variation, drag-to-DAW MIDI planned.",
+      panels: [
+        { label: "Pattern engine", value: "Arp / melody / bass / drums", detail: "Lets users test what lanes should exist before plugin UI implementation." },
+        { label: "Groove pocket", value: "Swing + humanize + ratchet", detail: "Explains how boring chords become producer-ready movement." },
+        { label: "Preset browser", value: "20 starter styles", detail: "Trap bells, Afro swing, house plucks, synthwave, R&B, techno, cinematic pulse." },
+        { label: "MIDI export", value: "Capture and drag", detail: "The web page defines the DAW behavior the native/plugin build needs to match." },
+      ],
+      actions: ["Add browser MIDI-pattern fixture", "Add preset cards", "Add MIDI download fixture", "Map final controls to JUCE plugin UI"],
+    },
+  },
+  {
+    id: "hookforge",
+    title: "HookForge",
+    category: "Songwriting tool",
+    status: "Radar web prototype",
+    image: "/photos/auto-pitch-example.svg",
+    summary: "Hook idea machine for generating, mutating, auditioning, scoring, and exporting catchy MIDI/audio hook starters.",
+    description: "HookForge is a controlled hook-generation workspace for producers and songwriters. It should create usable MIDI hooks, not locked black-box AI songs. The Radar web version tests the prompt controls, candidate cards, mutation workflow, and hook-scoring language.",
+    tags: ["Songwriting", "MIDI", "Hooks", "Producer tools"],
+    live: { label: "Open Radar web prototype", href: "#/product-radar/software/hookforge" },
+    downloads: [],
+    testingFocus: "Test whether the browser flow helps a producer generate and choose hook directions quickly, with enough control to feel usable inside a real DAW workflow.",
+    testSteps: ["Review the 10-hook generation concept", "Check the mutate actions", "Decide which hook types matter first", "List what must export as MIDI or audio for a real prototype"],
+    webPrototype: {
+      title: "Hook batch web test",
+      summary: "A Radar prototype for generating and comparing controlled hook ideas.",
+      sampleInput: "Key: A minor · BPM: 142 · vibe: hypnotic/dark · hook type: bell lead · range: narrow · repetition: high",
+      primaryOutput: "10 hook cards planned with catchiness score, singability/range notes, mutation actions, and MIDI/audio export targets.",
+      panels: [
+        { label: "Generate", value: "10 candidate hooks", detail: "Shows several controlled options instead of one opaque AI output." },
+        { label: "Mutate", value: "Darker / bouncier / simpler", detail: "Turns a promising idea into variations without losing ownership or control." },
+        { label: "Score", value: "Catchy / singable / repeatable", detail: "Helps users choose what to keep, not just generate more noise." },
+        { label: "Export", value: "MIDI + guide audio", detail: "The commercial wedge is DAW-usable output." },
+      ],
+      actions: ["Add 10-card generated-hook fixture", "Add mutation buttons", "Add MIDI export proof", "Later connect real phrase generator"],
+    },
+  },
+  {
+    id: "sample-library-brain",
+    title: "Sample Library Brain",
+    category: "Producer library",
+    status: "Radar web prototype",
+    image: "/photos/auto-pitch-example.svg",
+    summary: "Private local sample-library search for BPM, key, instrument, mood, texture, similarity, crates, kits, and DAW drag/drop.",
+    description: "Sample Library Brain is the local-first sample organizer for producers whose folders are chaos. The Radar web version tests the search, tag, smart-kit, similar-sound, and project-match UX before a native Mac app scans real folders.",
+    tags: ["Samples", "Search", "Music production", "Local-first"],
+    live: { label: "Open Radar web prototype", href: "#/product-radar/software/sample-library-brain" },
+    downloads: [],
+    testingFocus: "Validate that the app's browser flow solves the real pain: finding the right sample fast without uploading a producer's private library.",
+    testSteps: ["Review the library-search scenario", "Check if the auto-tags match how producers think", "Decide the first sample categories", "Flag privacy or drag/drop expectations for the native app"],
+    webPrototype: {
+      title: "Sample search web test",
+      summary: "A browser version of the search and organization experience before local folder scanning exists.",
+      sampleInput: "Search: dark 140 BPM vocal chops in F minor · library: 18,240 files · mode: project-compatible only",
+      primaryOutput: "Ranked sample cards with BPM/key, instrument, mood tags, similar sounds, crate save, and DAW-drag target planned.",
+      panels: [
+        { label: "Auto tags", value: "BPM / key / instrument / mood", detail: "Defines the metadata the local scanner must generate." },
+        { label: "Similarity", value: "Find more like this", detail: "Tests the highest-value search behavior for producers." },
+        { label: "Smart kits", value: "Kick + snare + hats + perc", detail: "Turns search into ready-to-use drum kits." },
+        { label: "Privacy", value: "Local-first", detail: "No private sample library should be uploaded for normal use." },
+      ],
+      actions: ["Add sample-card fixture", "Add smart-kit builder mock", "Add folder-scan permission copy", "Later build native scanner"],
+    },
+  },
+  {
+    id: "librarian-atlas-personal-os",
+    title: "Librarian Atlas Personal OS",
+    category: "Knowledge OS",
+    status: "Radar web prototype",
+    image: "/photos/librarian-example.svg",
+    summary: "Private AI librarian for files, notes, projects, decisions, open loops, timelines, and source-cited answers.",
+    description: "Librarian Atlas Personal OS is the broader software idea Armon asked about: a private local knowledge system that helps people find, understand, and recover context across their own documents. The Radar web version tests use cases for students, creators, founders, legal teams, families, and builders before local indexing work begins.",
+    tags: ["Knowledge OS", "Local search", "Source citations", "Project memory"],
+    live: { label: "Open Radar web prototype", href: "#/product-radar/software/librarian-atlas-personal-os" },
+    downloads: [],
+    testingFocus: "Validate whether the product is understandable as a private AI librarian, not a generic chatbot, and which user segment should be the first wedge.",
+    testSteps: ["Review the use-case panels", "Pick the most valuable first audience", "Check whether source citations and privacy boundaries are clear", "List the first folder types to index in a real Mac app"],
+    webPrototype: {
+      title: "Private knowledge web test",
+      summary: "A web prototype for the future local-first file/project memory system.",
+      sampleInput: "Question: what are all my active software ideas, what is blocked, and where are the source notes?",
+      primaryOutput: "Source-cited answer with project cards, decisions, blockers, loose ends, and links back to files or notes.",
+      panels: [
+        { label: "Ask your archive", value: "Answers with sources", detail: "The product wins by citing real files, not guessing." },
+        { label: "Project memory", value: "Decisions + timelines", detail: "Recovers why choices were made and where work stopped." },
+        { label: "Open loops", value: "Todos + blockers", detail: "Finds what needs action across messy notes and folders." },
+        { label: "Privacy", value: "Local-first index", detail: "Designed for personal files, sensitive docs, and opt-in exclusions." },
+      ],
+      actions: ["Add audience-specific demo routes", "Add cited-answer fixture", "Add local-folder permission copy", "Later build native indexer"],
+    },
+  },
   {
     id: "scenepilot-studio",
     title: "ScenePilot Studio",
@@ -268,6 +418,19 @@ export const radarSoftwareProjects: RadarSoftwareProject[] = [
     ],
     testingFocus: "Upload/arrangement flow, clarity of the edit plan, export proof quality, asset-lane UX, and whether the product direction feels useful for real creators.",
     testSteps: ["Open the live beta", "Download the 2026-05-23 export proof MP4 and manifest", "Try a simple creator-kit scenario with video/logo/voiceover assets", "Record missing controls needed before sale-ready positioning"],
+    webPrototype: {
+      title: "Creator video web test",
+      summary: "The browser-testable version of the future creator studio: script/assets in, storyboard/timeline/export plan out.",
+      sampleInput: "30-second product promo · vertical 9:16 · logo + voiceover + 3 clips · beat markers every 2 bars",
+      primaryOutput: "Storyboard, beat-aware timeline plan, caption style, export checklist, and editor-handoff requirements.",
+      panels: [
+        { label: "Script to scenes", value: "Hook / proof / CTA", detail: "Turns raw copy into a structured short-form edit plan." },
+        { label: "Asset lanes", value: "Logo + clips + voice + effects", detail: "Tests whether creators understand what to upload and how it gets used." },
+        { label: "Captions", value: "Animated emphasis", detail: "Defines the caption behavior before rendered export is hardened." },
+        { label: "Handoff", value: "MP4 + editable assets", detail: "The win is editable outputs, not a locked black-box video." },
+      ],
+      actions: ["Keep live beta linked", "Add storyboard fixture", "Add timeline export preview", "Harden one-click rendered export"],
+    },
   },
   {
     id: "context-compositor",
@@ -406,14 +569,14 @@ export const radarSoftwareProjects: RadarSoftwareProject[] = [
   },
   {
     id: "librarian-atlas",
-    title: "Librarian Atlas",
-    category: "Knowledge tool",
+    title: "Librarian Book Atlas",
+    category: "Book atlas",
     status: "Live prototype + test pack",
     image: "/photos/librarian-example.svg",
     summary: "Provenance-first public-domain book atlas for discovery, source inspection, and reading paths.",
-    description: "Librarian Atlas is the trust/provenance software lane: a way to discover books, inspect source claims, follow reading paths, and keep public-domain availability grounded in evidence. Testing should focus on whether each important claim has a visible source trail.",
+    description: "Librarian Book Atlas is the existing trust/provenance software lane: a way to discover books, inspect source claims, follow reading paths, and keep public-domain availability grounded in evidence. It now sits next to the broader Librarian Atlas Personal OS idea, which is the private AI librarian for all personal files and projects.",
     tags: ["Books", "Provenance", "Research"],
-    live: { label: "Open Librarian Atlas", href: "https://librarian-atlas.netlify.app" },
+    live: { label: "Open Librarian Book Atlas", href: "https://librarian-atlas.netlify.app" },
     downloads: [
       { label: "Download Librarian test pack", href: "/downloads/librarian-atlas-test-pack.zip" },
     ],
@@ -468,6 +631,61 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
   },
   {
     priority: 2,
+    projectName: "Sattari Loop Doctor",
+    softwareId: "sattari-loop-doctor",
+    readinessScore: 1.8,
+    promise: "Turn messy loops into production-ready samples by repairing timing, pitch/key, loop seams, transients, loudness, and export metadata.",
+    latestProof: "Radar web prototype entry exists with intake, auto-detect, repair-plan, before/after, and export-checklist fixtures.",
+    blocker: "No real DSP engine or before/after audio fixture is wired yet; this is a concept/test-flow page only.",
+    nextStep: "Build one browser fixture with a fake loop analysis card, repair score, and before/after audio placeholders.",
+    monetization: "Paid Sattari Audio desktop/plugin utility, sample-pack cleanup tier, and producer-suite bundle.",
+  },
+  {
+    priority: 3,
+    projectName: "MIDI Genius / Sattari Arp Pro",
+    softwareId: "midi-genius-sattari-arp-pro",
+    readinessScore: 2.2,
+    promise: "Convert simple chord input into usable arps, melodies, basslines, chord chops, drum patterns, and exportable MIDI.",
+    latestProof: "Radar web prototype entry exists; prior Sattari Arp work established a native/plugin direction for MIDI-effect output.",
+    blocker: "Needs browser MIDI fixture, final preset list, and verified AU/VST3 MIDI-effect packaging path before beta language.",
+    nextStep: "Add one generated-pattern fixture and MIDI-download proof inside the Radar web prototype.",
+    monetization: "Paid Sattari MIDI plugin, preset packs, producer bundle, and future pattern-pack marketplace.",
+  },
+  {
+    priority: 4,
+    projectName: "HookForge",
+    softwareId: "hookforge",
+    readinessScore: 1.6,
+    promise: "Generate, mutate, score, audition, and export controlled hook ideas as DAW-usable MIDI/audio starters.",
+    latestProof: "Radar web prototype entry exists with hook-candidate, mutation, scoring, and export workflow language.",
+    blocker: "No real phrase generator, MIDI export, or audio audition fixture exists yet.",
+    nextStep: "Create a 10-hook candidate fixture with mock scores and mutation buttons, then add a MIDI export artifact.",
+    monetization: "Paid songwriting/producers tool, hook packs, Sattari creative-suite upsell, and DAW plugin tier.",
+  },
+  {
+    priority: 5,
+    projectName: "Sample Library Brain",
+    softwareId: "sample-library-brain",
+    readinessScore: 1.7,
+    promise: "Make a producer's local sample folders searchable by BPM, key, instrument, mood, texture, similarity, smart kits, and DAW workflow.",
+    latestProof: "Radar web prototype entry exists with search, auto-tag, similarity, smart-kit, and privacy-first local scanning fixtures.",
+    blocker: "Needs local scanner, audio metadata extraction, similarity index, and native file/DAW drag-drop behavior.",
+    nextStep: "Build a web fixture with sample cards, filters, smart-kit output, and local-first permission copy.",
+    monetization: "Paid Mac app, pro library tier, producer-suite bundle, and sample-pack organization services.",
+  },
+  {
+    priority: 6,
+    projectName: "Librarian Atlas Personal OS",
+    softwareId: "librarian-atlas-personal-os",
+    readinessScore: 1.9,
+    promise: "Private AI librarian for personal files, notes, projects, decisions, open loops, timelines, and source-cited answers.",
+    latestProof: "Use-case catalog and Radar web prototype entry exist; concept is now separated from the existing public-domain book atlas.",
+    blocker: "Needs first wedge audience, local folder indexer, citation engine, privacy/exclusion controls, and source-trust model.",
+    nextStep: "Build one cited-answer fixture over project/software notes and decide first wedge: builders, students, creators, or teams.",
+    monetization: "Paid local Mac app, pro/team knowledge OS, research-workspace tier, and private project-memory tool.",
+  },
+  {
+    priority: 7,
     projectName: "NOW Suite auth/database/profile foundation",
     softwareId: "now-suite",
     readinessScore: 3,
@@ -478,7 +696,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Account layer for paid NOW services, Market seller profiles, premium profiles, and subscriptions.",
   },
   {
-    priority: 3,
+    priority: 8,
     projectName: "Project Radar Directory",
     softwareId: "product-radar",
     readinessScore: 7,
@@ -489,7 +707,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Portfolio operating system for product conversion, services, and future reusable command-center tooling.",
   },
   {
-    priority: 4,
+    priority: 9,
     projectName: "Auto Pitch",
     softwareId: "auto-pitch",
     readinessScore: 3.5,
@@ -500,7 +718,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Paid Sattari Audio plugin/standalone app with presets, upgrades, and creator bundles.",
   },
   {
-    priority: 5,
+    priority: 10,
     projectName: "Context Compositor",
     softwareId: "context-compositor",
     readinessScore: 2.5,
@@ -511,7 +729,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Creator-suite module or paid desktop/editor add-on bundled with ScenePilot/COMPOSITOR.",
   },
   {
-    priority: 6,
+    priority: 11,
     projectName: "COMPOSITOR native editor foundation",
     softwareId: "compositor-native",
     readinessScore: 4,
@@ -522,7 +740,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Paid native creator app, pro license, and modules for compositing/ScenePilot workflows.",
   },
   {
-    priority: 7,
+    priority: 12,
     projectName: "Market seller profile/listing flow",
     softwareId: "market",
     readinessScore: 3,
@@ -533,7 +751,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Seller subscriptions, listing boosts, transaction fees after compliance, and paid tenant marketplaces.",
   },
   {
-    priority: 8,
+    priority: 13,
     projectName: "Sattari StemDeck",
     softwareId: "stemdeck",
     readinessScore: 4.5,
@@ -544,7 +762,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Paid Sattari Audio plugin/standalone app, creator bundle, and future sample/stem ecosystem.",
   },
   {
-    priority: 9,
+    priority: 14,
     projectName: "Botanica Lab",
     softwareId: "botanica-lab",
     readinessScore: 5.5,
@@ -555,7 +773,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Internal MNR R&D engine, then paid formulation workspace or compliance-aware content tool.",
   },
   {
-    priority: 10,
+    priority: 15,
     projectName: "Trader Oracle",
     softwareId: "trader-oracle",
     readinessScore: 5,
@@ -566,7 +784,7 @@ export const radarEvidenceLedger: RadarEvidenceItem[] = [
     monetization: "Research dashboard subscription, premium watchlist tools, and educational market-intelligence reports.",
   },
   {
-    priority: 11,
+    priority: 16,
     projectName: "Librarian Atlas",
     softwareId: "librarian-atlas",
     readinessScore: 4.5,
@@ -587,24 +805,26 @@ export const radarMetrics = [
 
 export const radarOpportunities = [
   "Make Product Radar answer one question fast: what proof exists, what is blocked, and what is the smallest useful next build?",
+  "Turn every serious software idea into a web-testable Radar prototype before native/plugin/deep-DSP implementation.",
   "Convert the evidence ledger into generated input from wiki, GitHub, deploy checks, screenshots, demos, and build logs.",
-  "Put live proof first: export, screenshot, demo video, test result, or build log before adding more concept copy.",
+  "Put live proof first: export, screenshot, demo video, test result, build log, or web prototype before adding more concept copy.",
   "Keep regulated lanes safe: Market avoids checkout/scraping claims, Trader stays research-only, and Botanica carries citations/safety/review labels.",
 ];
 
 export const radarNextBuildSteps = [
-  { title: "ScenePilot export proof", body: "Produce one deterministic sample input → edit plan → rendered MP4 or structured timeline export, then attach the artifact to the ledger.", state: "P0" },
-  { title: "NOW fixture smoke", body: "Refresh the fixture-mode auth/database/profile smoke output before any real provider, secret, or staging cutover work.", state: "P1" },
+  { title: "Software web prototypes", body: "Add browser-testable fixture flows for Loop Doctor, MIDI Genius, HookForge, Sample Library Brain, ScenePilot, and Librarian Atlas Personal OS before deeper native/plugin builds.", state: "P0" },
+  { title: "MIDI Genius first proof", body: "Create one chord-to-pattern web fixture with generated notes and a MIDI-download placeholder, then map it to the Sattari Arp Pro plugin path.", state: "P0" },
+  { title: "Sample Library Brain fixture", body: "Create sample cards, tags, smart-kit output, and local-first permission copy so the product is easy to test before native folder scanning.", state: "P1" },
+  { title: "ScenePilot export proof", body: "Produce one deterministic sample input → edit plan → rendered MP4 or structured timeline export, then attach the artifact to the ledger.", state: "P1" },
   { title: "Generated evidence ledger", body: "Move proof paths, blockers, readiness scores, and risk labels from manual notes into generated Radar input.", state: "P1" },
-  { title: "Auto Pitch A/B pack", body: "Bundle source, natural, modern, hard, and adaptive vocal outputs with a listening score sheet before plugin claims.", state: "P2" },
   { title: "Safety-first proof cards", body: "Market, Trader, and Botanica must show proof with guardrails: no checkout/scraping, research-only, citations, safety flags, and review labels.", state: "Always" },
 ];
 
 export const radarIdeaFeed = [
   {
-    name: "Product Radar Detail Pages",
-    theme: "Clickable product screens inside the portfolio roadmap",
-    mvp: "Open each lane into images, description, status, blockers, links, and downloads without leaving Product Radar.",
+    name: "Project Radar Web Test Lab",
+    theme: "Every serious software idea gets a browser-testable prototype page",
+    mvp: "Loop Doctor, MIDI Genius, HookForge, Sample Library Brain, ScenePilot, and Librarian Atlas Personal OS each have a Radar test flow before native builds.",
   },
   {
     name: "Product Radar OS",
