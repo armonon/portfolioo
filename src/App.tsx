@@ -3,6 +3,396 @@ import { useEffect, useState } from "react";
 import { Menu, X, ExternalLink, Code2, Mail, Sparkles, Download, RefreshCw } from "lucide-react";
 import { radarEvidenceLedger, radarIdeaFeed, radarLanes, radarMetrics, radarNextBuildSteps, radarOpportunities, radarSoftwareProjects } from "./productRadarData";
 
+type ControlValues = Record<string, string | number | boolean>;
+
+type ControlDefinition = {
+  key: string;
+  label: string;
+  type: "text" | "select" | "range" | "checkbox" | "textarea";
+  value: string | number | boolean;
+  options?: string[];
+  min?: number;
+  max?: number;
+  step?: number;
+};
+
+type PrototypeScenario = {
+  eyebrow: string;
+  prompt: string;
+  controls: ControlDefinition[];
+  generate: (values: ControlValues, tick: number) => {
+    headline: string;
+    summary: string;
+    score: number;
+    cards: { label: string; value: string; detail: string }[];
+    steps: string[];
+    artifact: string;
+  };
+};
+
+const asString = (value: string | number | boolean | undefined, fallback = "") => typeof value === "string" ? value : fallback;
+const asNumber = (value: string | number | boolean | undefined, fallback = 0) => typeof value === "number" ? value : fallback;
+const asBoolean = (value: string | number | boolean | undefined) => value === true;
+
+const createDownloadHref = (name: string, content: string) => `data:text/plain;charset=utf-8,${encodeURIComponent(`Product Radar prototype artifact: ${name}\n\n${content}`)}`;
+
+const buildPrototypeScenario = (softwareId: string): PrototypeScenario => {
+  switch (softwareId) {
+    case "sattari-loop-doctor":
+      return {
+        eyebrow: "Interactive audio repair lab",
+        prompt: "Change the loop condition, then generate a repair plan. This is prototype planning logic, not real DSP yet.",
+        controls: [
+          { key: "loopType", label: "Loop type", type: "select", value: "Vocal chop", options: ["Vocal chop", "Drum loop", "Melodic sample", "Bass loop"] },
+          { key: "bpm", label: "Detected BPM", type: "range", value: 92, min: 60, max: 180, step: 1 },
+          { key: "key", label: "Target key", type: "select", value: "F minor", options: ["F minor", "A minor", "C minor", "D# minor", "G major"] },
+          { key: "tighten", label: "Timing tighten", type: "range", value: 62, min: 0, max: 100, step: 1 },
+          { key: "stemSplit", label: "Include stem-aware plan", type: "checkbox", value: true },
+        ],
+        generate: (values) => {
+          const tighten = asNumber(values.tighten, 62);
+          const bpm = asNumber(values.bpm, 92);
+          const loopType = asString(values.loopType, "Loop");
+          const score = Math.min(96, 54 + Math.round(tighten * 0.32) + (asBoolean(values.stemSplit) ? 8 : 0));
+          return {
+            headline: `${loopType} repair plan · ${score}% usable preview`,
+            summary: `Prepare a ${bpm} BPM ${loopType.toLowerCase()} in ${asString(values.key, "F minor")} with ${tighten}% timing correction, seam cleanup, loudness leveling, and artifact warnings before export.`,
+            score,
+            cards: [
+              { label: "Grid", value: `${bpm} BPM / 4 bars`, detail: "Snap transients to the project grid while preserving groove on softer notes." },
+              { label: "Pitch", value: asString(values.key, "F minor"), detail: "Lock melodic content to target key with conservative formant-safe shifts." },
+              { label: "Seam", value: "8 ms crossfade", detail: "Clean the loop boundary and flag clicks before final bounce." },
+              { label: "Export", value: asBoolean(values.stemSplit) ? "Loop + stems" : "Clean loop", detail: "Write WAV plus BPM/key metadata and repair report." },
+            ],
+            steps: ["Analyze transients/downbeat", "Apply timing repair", "Pitch/key correction", "Normalize loudness", "Export clean loop report"],
+            artifact: `Loop Doctor plan: ${loopType}, ${bpm} BPM, ${values.key}, tighten ${tighten}%, stems ${asBoolean(values.stemSplit) ? "yes" : "no"}`,
+          };
+        },
+      };
+    case "midi-genius-sattari-arp-pro":
+      return {
+        eyebrow: "Interactive MIDI pattern lab",
+        prompt: "Type a chord, choose a style, and generate a pattern plan that could become MIDI export.",
+        controls: [
+          { key: "chord", label: "Input chord", type: "text", value: "Fm9" },
+          { key: "style", label: "Style", type: "select", value: "Dark bounce", options: ["Dark bounce", "Afro swing", "House pluck", "Trap bells", "Synthwave pulse"] },
+          { key: "energy", label: "Energy", type: "range", value: 72, min: 0, max: 100, step: 1 },
+          { key: "swing", label: "Swing", type: "range", value: 58, min: 50, max: 75, step: 1 },
+          { key: "bassLane", label: "Generate bass lane", type: "checkbox", value: true },
+        ],
+        generate: (values, tick) => {
+          const chord = asString(values.chord, "Fm9").trim() || "Fm9";
+          const energy = asNumber(values.energy, 72);
+          const swing = asNumber(values.swing, 58);
+          const variation = tick % 3;
+          const notes = variation === 0 ? `${chord} root · 5th · b7 · octave` : variation === 1 ? `${chord} root · b3 · 5th · 9th` : `${chord} octave jump · passing tone · repeat`;
+          const score = Math.min(98, 45 + Math.round(energy * 0.42) + Math.round((swing - 50) * 0.8));
+          return {
+            headline: `${asString(values.style)} pattern · ${score}% groove readiness`,
+            summary: `Generated a 2-bar ${chord} MIDI pattern with ${energy}% energy, ${swing}% swing, probability accents, and ${asBoolean(values.bassLane) ? "bass + arp lanes" : "arp lane only"}.`,
+            score,
+            cards: [
+              { label: "Chord tones", value: notes, detail: "Pattern stays inside the chord/scale unless spice controls are enabled." },
+              { label: "Rhythm", value: "1/16 + rests", detail: "Uses skip/repeat logic so it feels played, not mechanically filled." },
+              { label: "Velocity", value: `${55 + Math.round(energy / 3)}–118`, detail: "Accent shape follows energy and groove settings." },
+              { label: "Export", value: "MIDI plan", detail: "Download currently exports a text fixture; next step is real .mid output." },
+            ],
+            steps: ["Read held chord", "Generate arp lane", asBoolean(values.bassLane) ? "Generate bass lane" : "Skip bass lane", "Apply groove", "Prepare MIDI export"],
+            artifact: `MIDI Genius pattern: chord=${chord}, style=${values.style}, energy=${energy}, swing=${swing}, notes=${notes}`,
+          };
+        },
+      };
+    case "hookforge":
+      return {
+        eyebrow: "Interactive hook generator lab",
+        prompt: "Set the vibe and generate hook candidates you can compare and mutate.",
+        controls: [
+          { key: "key", label: "Song key", type: "select", value: "A minor", options: ["A minor", "C minor", "F minor", "G major", "D minor"] },
+          { key: "bpm", label: "BPM", type: "range", value: 142, min: 70, max: 180, step: 1 },
+          { key: "vibe", label: "Vibe", type: "select", value: "Hypnotic dark", options: ["Hypnotic dark", "Radio bright", "Sad melodic", "Bouncy club", "Cinematic"] },
+          { key: "hookType", label: "Hook type", type: "select", value: "Bell lead", options: ["Bell lead", "Vocal melody", "Bass riff", "Synth lead", "Counter melody"] },
+          { key: "simple", label: "Keep it simple", type: "checkbox", value: true },
+        ],
+        generate: (values, tick) => {
+          const bpm = asNumber(values.bpm, 142);
+          const key = asString(values.key, "A minor");
+          const hooks = ["Short-repeat motif", "Call/response phrase", "Octave answer", "Syncopated pickup"];
+          const picked = hooks[tick % hooks.length];
+          const score = Math.min(97, 61 + (asBoolean(values.simple) ? 10 : 0) + Math.round((180 - Math.abs(bpm - 128)) / 12));
+          return {
+            headline: `${asString(values.hookType)} · ${picked}`,
+            summary: `Generated hook batch for ${key} at ${bpm} BPM with a ${asString(values.vibe).toLowerCase()} direction. Top candidate emphasizes ${picked.toLowerCase()} and DAW-usable MIDI output.`,
+            score,
+            cards: [
+              { label: "Candidate A", value: "Catchy / repeatable", detail: "Best for chorus or recurring synth hook." },
+              { label: "Candidate B", value: "More space", detail: "Leaves room for vocal and drums." },
+              { label: "Mutation", value: asBoolean(values.simple) ? "Simplify + repeat" : "Add bounce + variation", detail: "Changes rhythm/contour without starting over." },
+              { label: "Export", value: "MIDI + guide", detail: "Future output should include MIDI plus rough instrument preview." },
+            ],
+            steps: ["Generate 10 hooks", "Score catchiness", "Mutate top 3", "Audition over beat", "Export MIDI/guide"],
+            artifact: `HookForge: ${values.hookType}, ${values.vibe}, ${key}, ${bpm} BPM, top=${picked}`,
+          };
+        },
+      };
+    case "sample-library-brain":
+      return {
+        eyebrow: "Interactive sample search lab",
+        prompt: "Search the mock library and generate a smart kit/project-compatible result set.",
+        controls: [
+          { key: "query", label: "Search", type: "text", value: "dark vocal chops" },
+          { key: "projectBpm", label: "Project BPM", type: "range", value: 140, min: 70, max: 180, step: 1 },
+          { key: "projectKey", label: "Project key", type: "select", value: "F minor", options: ["F minor", "A minor", "C minor", "G major", "D minor"] },
+          { key: "category", label: "Category", type: "select", value: "Vocal", options: ["Vocal", "Drums", "808", "Bass", "FX", "Melody"] },
+          { key: "kit", label: "Build smart kit", type: "checkbox", value: true },
+        ],
+        generate: (values) => {
+          const bpm = asNumber(values.projectBpm, 140);
+          const query = asString(values.query, "sample");
+          const score = Math.min(96, 62 + Math.round((180 - Math.abs(bpm - 140)) / 10) + (asBoolean(values.kit) ? 8 : 0));
+          return {
+            headline: `Found 18 matching ${asString(values.category).toLowerCase()} samples`,
+            summary: `Search results for “${query}” are ranked by ${bpm} BPM compatibility, ${asString(values.projectKey)} key match, mood tags, and similarity.`,
+            score,
+            cards: [
+              { label: "Top match", value: `${query}_01.wav`, detail: `${bpm - 2} BPM, ${values.projectKey}, dark/airy texture, 92% project fit.` },
+              { label: "Similar", value: "7 close sounds", detail: "Similarity search groups tone/texture, not just filenames." },
+              { label: "Smart kit", value: asBoolean(values.kit) ? "Kick/snare/hat/perc" : "Off", detail: "Builds project-compatible kits from one-shots." },
+              { label: "Privacy", value: "Local-first", detail: "Real app should scan folders locally, not upload private sample packs." },
+            ],
+            steps: ["Scan folder", "Tag BPM/key/type", "Rank by project", "Preview in tempo/key", "Drag to DAW"],
+            artifact: `Sample Library Brain search: query=${query}, bpm=${bpm}, key=${values.projectKey}, category=${values.category}`,
+          };
+        },
+      };
+    case "librarian-atlas-personal-os":
+      return {
+        eyebrow: "Interactive private-knowledge lab",
+        prompt: "Ask a question and see the kind of cited answer the local knowledge OS should produce.",
+        controls: [
+          { key: "question", label: "Question", type: "textarea", value: "What are all my active software ideas and what is blocked?" },
+          { key: "audience", label: "First user type", type: "select", value: "Builder/founder", options: ["Builder/founder", "Student", "Creator", "Lawyer", "Family/home", "Researcher"] },
+          { key: "depth", label: "Answer depth", type: "range", value: 70, min: 20, max: 100, step: 10 },
+          { key: "openLoops", label: "Extract open loops", type: "checkbox", value: true },
+        ],
+        generate: (values) => {
+          const depth = asNumber(values.depth, 70);
+          const score = Math.min(97, 50 + Math.round(depth * 0.32) + (asBoolean(values.openLoops) ? 12 : 0));
+          return {
+            headline: `Cited answer for ${asString(values.audience)}`,
+            summary: `Answered “${asString(values.question).slice(0, 120)}” by grouping projects, decisions, source notes, and ${asBoolean(values.openLoops) ? "open loops" : "summary only"}.`,
+            score,
+            cards: [
+              { label: "Sources", value: "5 cited files", detail: "Every claim needs a file, note, transcript, or project source link." },
+              { label: "Timeline", value: "Decisions by date", detail: "Shows what changed and why, not just the final state." },
+              { label: "Open loops", value: asBoolean(values.openLoops) ? "Enabled" : "Disabled", detail: "Extracts todos, blockers, and missing decisions from messy notes." },
+              { label: "Privacy", value: "Local index", detail: "Real app should support folder exclusions and sensitive-data boundaries." },
+            ],
+            steps: ["Index selected folders", "Cluster by project/topic", "Answer with citations", "Extract decisions", "Show next actions"],
+            artifact: `Librarian Atlas query: ${values.question}; audience=${values.audience}; openLoops=${values.openLoops}`,
+          };
+        },
+      };
+    case "scenepilot-studio":
+      return {
+        eyebrow: "Interactive creator timeline lab",
+        prompt: "Paste a short promo idea and generate a storyboard/timeline plan.",
+        controls: [
+          { key: "script", label: "Script / brief", type: "textarea", value: "Show the product, prove the before/after, end with a clean CTA." },
+          { key: "format", label: "Format", type: "select", value: "9:16 Reels/TikTok", options: ["9:16 Reels/TikTok", "16:9 YouTube", "1:1 social"] },
+          { key: "duration", label: "Duration seconds", type: "range", value: 30, min: 10, max: 90, step: 5 },
+          { key: "captions", label: "Animated captions", type: "checkbox", value: true },
+        ],
+        generate: (values) => {
+          const duration = asNumber(values.duration, 30);
+          const score = Math.min(96, 58 + Math.round(duration / 3) + (asBoolean(values.captions) ? 10 : 0));
+          return {
+            headline: `${duration}s ${asString(values.format)} timeline`,
+            summary: `Generated a scene plan from the brief with hook, proof beat, b-roll slots, ${asBoolean(values.captions) ? "animated captions" : "clean visual text"}, and CTA.` ,
+            score,
+            cards: [
+              { label: "0–3s", value: "Hook", detail: "Open with strongest visual/result and large safe-area text." },
+              { label: "4–18s", value: "Proof beats", detail: "Alternate b-roll, product closeups, and voiceover emphasis." },
+              { label: "19–26s", value: "Payoff", detail: "Show before/after or creator result." },
+              { label: "CTA", value: "Final frame", detail: "End with brand/title, button copy, and export-safe crop." },
+            ],
+            steps: ["Parse script", "Create scene beats", "Assign assets", "Generate captions", "Export MP4/timeline"],
+            artifact: `ScenePilot plan: ${values.format}, ${duration}s, captions=${values.captions}, brief=${values.script}`,
+          };
+        },
+      };
+    default:
+      return {
+        eyebrow: "Interactive test checklist",
+        prompt: "Use this lightweight runner to test the product promise and capture what should be built next.",
+        controls: [
+          { key: "scenario", label: "Test scenario", type: "textarea", value: "Try the main user workflow and record whether the output is useful." },
+          { key: "readiness", label: "Perceived readiness", type: "range", value: 45, min: 0, max: 100, step: 5 },
+          { key: "needsDownload", label: "Needs downloadable proof", type: "checkbox", value: true },
+        ],
+        generate: (values) => {
+          const score = asNumber(values.readiness, 45);
+          return {
+            headline: `Prototype readiness: ${score}%`,
+            summary: asString(values.scenario, "Test the product flow."),
+            score,
+            cards: [
+              { label: "Promise", value: "Review", detail: "Does the page clearly say what the product does?" },
+              { label: "Flow", value: "Try", detail: "Can a user click through a believable workflow?" },
+              { label: "Proof", value: asBoolean(values.needsDownload) ? "Needed" : "Optional", detail: "Attach a demo, export, report, or build artifact." },
+              { label: "Next", value: "Tighten", detail: "Turn the weakest part into the next build task." },
+            ],
+            steps: ["Define scenario", "Run page flow", "Record blocker", "Attach proof", "Pick next build"],
+            artifact: `Generic Radar test: readiness=${score}, scenario=${values.scenario}`,
+          };
+        },
+      };
+  }
+};
+
+function InteractivePrototypeLab({ softwareId }: { softwareId: string }) {
+  const scenario = buildPrototypeScenario(softwareId);
+  const initialValues = scenario.controls.reduce<ControlValues>((values, control) => {
+    values[control.key] = control.value;
+    return values;
+  }, {});
+  const [values, setValues] = useState<ControlValues>(initialValues);
+  const [tick, setTick] = useState(0);
+  const output = scenario.generate(values, tick);
+
+  const updateValue = (key: string, value: string | number | boolean) => {
+    setValues((current) => ({ ...current, [key]: value }));
+  };
+
+  return (
+    <section className="mt-8 overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-cyan-950/20 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur md:p-8">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div className="max-w-3xl">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100">
+            <Code2 size={16} /> Usable web prototype
+          </div>
+          <h2 className="text-3xl font-black tracking-tight md:text-5xl">{scenario.eyebrow}</h2>
+          <p className="mt-3 leading-relaxed text-zinc-300">{scenario.prompt}</p>
+        </div>
+        <div className="w-full rounded-3xl border border-white/10 bg-black/25 p-5 lg:max-w-sm">
+          <div className="flex items-center justify-between gap-3 text-sm font-semibold text-zinc-300">
+            <span>Prototype score</span>
+            <span>{output.score}%</span>
+          </div>
+          <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/10">
+            <div className="h-full rounded-full bg-cyan-200" style={{ width: `${output.score}%` }} />
+          </div>
+          <p className="mt-4 text-sm leading-relaxed text-cyan-100">{output.headline}</p>
+        </div>
+      </div>
+
+      <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-3xl border border-white/10 bg-black/25 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Try controls</div>
+          <div className="mt-5 space-y-4">
+            {scenario.controls.map((control) => (
+              <label key={control.key} className="block rounded-2xl border border-white/10 bg-zinc-950/50 p-4">
+                <div className="mb-2 flex items-center justify-between gap-3 text-sm font-bold text-zinc-200">
+                  <span>{control.label}</span>
+                  {control.type === "range" ? <span className="text-cyan-100">{String(values[control.key])}</span> : null}
+                </div>
+                {control.type === "select" ? (
+                  <select
+                    value={asString(values[control.key], asString(control.value))}
+                    onChange={(event) => updateValue(control.key, event.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-200"
+                  >
+                    {control.options?.map((option) => <option key={option}>{option}</option>)}
+                  </select>
+                ) : control.type === "range" ? (
+                  <input
+                    type="range"
+                    min={control.min}
+                    max={control.max}
+                    step={control.step}
+                    value={asNumber(values[control.key], asNumber(control.value))}
+                    onChange={(event) => updateValue(control.key, Number(event.target.value))}
+                    className="w-full accent-cyan-200"
+                  />
+                ) : control.type === "checkbox" ? (
+                  <input
+                    type="checkbox"
+                    checked={asBoolean(values[control.key])}
+                    onChange={(event) => updateValue(control.key, event.target.checked)}
+                    className="h-5 w-5 accent-cyan-200"
+                  />
+                ) : control.type === "textarea" ? (
+                  <textarea
+                    value={asString(values[control.key], asString(control.value))}
+                    onChange={(event) => updateValue(control.key, event.target.value)}
+                    rows={4}
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-200"
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={asString(values[control.key], asString(control.value))}
+                    onChange={(event) => updateValue(control.key, event.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-cyan-200"
+                  />
+                )}
+              </label>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setTick((current) => current + 1)}
+            className="mt-5 w-full rounded-2xl bg-white px-5 py-4 text-sm font-black text-black transition hover:bg-zinc-200"
+          >
+            Generate / refresh prototype output
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          <div className="rounded-3xl border border-white/10 bg-black/25 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Generated output</div>
+            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">{output.headline}</h3>
+            <p className="mt-3 leading-relaxed text-zinc-300">{output.summary}</p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {output.cards.map((card) => (
+              <div key={`${card.label}-${card.value}`} className="rounded-3xl border border-white/10 bg-black/25 p-5">
+                <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">{card.label}</div>
+                <h4 className="mt-2 text-lg font-bold tracking-tight text-white">{card.value}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-300">{card.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-3xl border border-white/10 bg-black/25 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Run path</div>
+          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-5">
+            {output.steps.map((step, index) => (
+              <div key={step} className="rounded-2xl border border-white/10 bg-zinc-950/50 p-4">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-black text-black">{index + 1}</div>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-300">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-black/25 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Prototype artifact</div>
+          <pre className="mt-3 max-h-40 overflow-auto whitespace-pre-wrap rounded-2xl border border-white/10 bg-zinc-950/70 p-4 text-xs leading-relaxed text-zinc-300">{output.artifact}</pre>
+          <a
+            href={createDownloadHref(scenario.eyebrow, output.artifact)}
+            download={`${softwareId}-prototype-artifact.txt`}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-cyan-100 px-5 py-3 text-sm font-black text-black transition hover:bg-white"
+          >
+            Download test artifact <Download size={15} />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const readRadarRoute = () => {
   const productMatch = window.location.hash.match(/^#\/product-radar\/software\/([^/?#]+)/);
   if (productMatch) {
@@ -163,47 +553,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
               </div>
             </section>
 
-            {selectedSoftware.webPrototype ? (
-              <section className="mt-8 overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-cyan-950/20 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur md:p-8">
-                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="max-w-3xl">
-                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100">
-                      <Code2 size={16} /> Web test version
-                    </div>
-                    <h2 className="text-3xl font-black tracking-tight md:text-5xl">{selectedSoftware.webPrototype.title}</h2>
-                    <p className="mt-3 leading-relaxed text-zinc-300">{selectedSoftware.webPrototype.summary}</p>
-                  </div>
-                  <div className="w-full rounded-3xl border border-white/10 bg-black/25 p-5 lg:max-w-md">
-                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">Sample input</div>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-200">{selectedSoftware.webPrototype.sampleInput}</p>
-                    <div className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">Prototype output</div>
-                    <p className="mt-2 text-sm leading-relaxed text-cyan-100">{selectedSoftware.webPrototype.primaryOutput}</p>
-                  </div>
-                </div>
-
-                <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-                  {selectedSoftware.webPrototype.panels.map((panel) => (
-                    <div key={panel.label} className="rounded-3xl border border-white/10 bg-black/25 p-5">
-                      <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">{panel.label}</div>
-                      <h3 className="mt-2 text-xl font-bold tracking-tight text-white">{panel.value}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-zinc-300">{panel.detail}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-7 rounded-3xl border border-white/10 bg-black/25 p-5">
-                  <div className="text-xs font-black uppercase tracking-[0.18em] text-zinc-500">Next web-prototype actions</div>
-                  <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    {selectedSoftware.webPrototype.actions.map((action, index) => (
-                      <div key={action} className="grid grid-cols-[2rem_1fr] gap-3 rounded-2xl border border-white/10 bg-zinc-950/50 p-4">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-black text-black">{index + 1}</div>
-                        <p className="text-sm leading-relaxed text-zinc-300">{action}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            ) : null}
+            <InteractivePrototypeLab key={selectedSoftware.id} softwareId={selectedSoftware.id} />
 
             <section className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[0.85fr_1.15fr]">
               <aside className="space-y-4">
