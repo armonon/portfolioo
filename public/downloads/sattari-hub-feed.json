@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "suiteName": "Sattari Audio Suite",
-  "suiteVersion": "0.1.2-autopitch-hotfix-feed",
-  "truthLabel": "internal alpha hub manifest with Auto Pitch hotfix feed; not sale-ready; not notarized",
+  "suiteVersion": "0.1.3-ableton-gatekeeper-feed",
+  "truthLabel": "internal alpha hub manifest with Ableton/Gatekeeper Auto Pitch repair; not sale-ready; not notarized",
   "defaultUpdateChannel": "project-radar-internal-alpha",
   "products": [
     {
       "id": "auto-pitch",
       "name": "Sattari Auto Pitch",
       "category": "Vocal tuning",
-      "version": "0.1.1-alpha+hubfix",
-      "status": "hotfix-ready",
-      "description": "Realtime vocal tuning alpha hotfix with refreshed signed AU/VST3/Standalone bundles and Sattari Wheel key detection bridge.",
+      "version": "0.1.2-alpha+abletonfix",
+      "status": "ableton-gatekeeper-fix-ready",
+      "description": "Realtime vocal tuning alpha with refreshed signed AU/VST3/Standalone bundles, corrected plugin metadata, and Ableton/Gatekeeper install repair.",
       "formats": [
         "AU",
         "VST3",
@@ -20,21 +20,21 @@
       "bundles": [
         {
           "kind": "AU",
-          "relativeSourcePath": "build/auto-pitch-hotfix/SattariAutoPitch_artefacts/Release/AU/Sattari Auto Pitch.component",
+          "relativeSourcePath": "build/auto-pitch-abletonfix/SattariAutoPitch_artefacts/Release/AU/Sattari Auto Pitch.component",
           "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari Auto Pitch.component"
         },
         {
           "kind": "VST3",
-          "relativeSourcePath": "build/auto-pitch-hotfix/SattariAutoPitch_artefacts/Release/VST3/Sattari Auto Pitch.vst3",
+          "relativeSourcePath": "build/auto-pitch-abletonfix/SattariAutoPitch_artefacts/Release/VST3/Sattari Auto Pitch.vst3",
           "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari Auto Pitch.vst3"
         },
         {
           "kind": "Standalone",
-          "relativeSourcePath": "build/auto-pitch-hotfix/SattariAutoPitch_artefacts/Release/Standalone/Sattari Auto Pitch.app",
+          "relativeSourcePath": "build/auto-pitch-abletonfix/SattariAutoPitch_artefacts/Release/Standalone/Sattari Auto Pitch.app",
           "installSubpath": "Applications/Sattari Auto Pitch.app"
         }
       ],
-      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-auto-pitch-payload-v0.1.1.tar.gz"
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-auto-pitch-payload-v0.1.2.tar.gz"
     },
     {
       "id": "voxkey",
