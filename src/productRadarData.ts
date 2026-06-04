@@ -91,10 +91,10 @@ export const radarLanes: RadarLane[] = [
     readiness: 46,
     accent: "from-orange-500/30 via-amber-500/20 to-yellow-500/10",
     summary: "Music tools and Sattari-branded audio products now have a self-contained Sattari Hub installer/updater alpha for Apple Silicon Mac testing.",
-    bullets: ["Sattari Hub internal alpha download is available", "Hub embeds 7 Sattari products / 18 AU-VST3-Standalone payload entries and reads a Project Radar plugin update feed", "Auto Pitch performer-modes build remains internal alpha and needs real vocal/DAW listening tests"],
-    nextAction: "Download Sattari Hub alpha from Product Radar on an Apple Silicon Mac, open the app, install/update the available Sattari builds, then restart/rescan the DAW and record install/listening notes.",
+    bullets: ["Sattari Hub 0.1.1 internal alpha download is available", "Hub 0.1.1 fixes the launch crash, embeds 7 Sattari products / 18 AU-VST3-Standalone payload entries, and reads a Project Radar plugin update feed", "Auto Pitch performer-modes build remains internal alpha and needs real vocal/DAW listening tests"],
+    nextAction: "Download Sattari Hub 0.1.1 alpha from Product Radar on an Apple Silicon Mac, open the app, install/update the available Sattari builds, then restart/rescan the DAW and record install/listening notes.",
     blocker: "Hub is self-contained but still internal alpha: not notarized, not public/sale-ready, Apple Silicon Mac only, and plugin quality still needs real DAW/listening validation.",
-    primaryLink: { label: "Download Sattari Hub alpha", href: "/downloads/sattari-hub-alpha-v0.1.0.tar.gz" },
+    primaryLink: { label: "Download Sattari Hub 0.1.1 alpha", href: "/downloads/sattari-hub-alpha-v0.1.1.tar.gz" },
     secondaryLink: { label: "Sattari site", href: "https://sattari.netlify.app" },
     detail: {
       eyebrow: "Audio product lane",
@@ -104,7 +104,7 @@ export const radarLanes: RadarLane[] = [
         { src: "/photos/sattari-screenshot.png", alt: "Sattari website screenshot", caption: "Sattari public brand surface" },
       ],
       downloads: [
-        { label: "Download Sattari Hub installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.0.tar.gz" },
+        { label: "Download Sattari Hub 0.1.1 installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.1.tar.gz" },
         { label: "Download Sattari Audio Suite internal test pack", href: "/downloads/sattari-audio-suite-internal-test-pack-2026-05-25.zip" },
         { label: "Download StemDeck v0.3.6 laptop macOS 13+ b9f4909", href: "/downloads/stemdeck-plugin-alpha-v0.3.6-laptop-macos13-b9f4909.tar.gz" },
         { label: "Download Auto Pitch preview pack", href: "/downloads/auto-pitch-preview-pack.zip" },
@@ -255,7 +255,7 @@ export const radarLanes: RadarLane[] = [
         { src: "/photos/sattari-screenshot.png", alt: "Sattari site screenshot", caption: "Sattari commerce/brand surface" },
       ],
       downloads: [
-        { label: "Download Sattari Hub installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.0.tar.gz" },
+        { label: "Download Sattari Hub 0.1.1 installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.1.tar.gz" },
         { label: "Download Sattari Audio Suite internal test pack", href: "/downloads/sattari-audio-suite-internal-test-pack-2026-05-25.zip" },
         { label: "Download ScenePilot preview pack", href: "/downloads/auto-cut-preview-pack.zip" },
         { label: "Download Auto Pitch preview pack", href: "/downloads/auto-pitch-preview-pack.zip" },
@@ -500,12 +500,12 @@ export const radarSoftwareProjects: RadarSoftwareProject[] = [
     description: "Sattari Hub is the new downloadable internal alpha app for installing, updating, and hosting the current Sattari Audio software from one place. The packaged archive embeds the available AU/VST3/Standalone payloads so another Apple Silicon Mac can test without cloning the repo, and the updater-capable Hub reads a Project Radar feed so future plugin payload archives can update without replacing the Hub app. It is explicitly not notarized, not a beta, not a public release, not DAW-validated, and not sale-ready. Testing should focus on installation/update flow, Gatekeeper friction, DAW rescan behavior, and real listening notes for Auto Pitch/VoxKey/StemDeck and the other plugin builds.",
     tags: ["Audio", "Internal testing", "Validation", "Sattari"],
     downloads: [
-      { label: "Download Sattari Hub installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.0.tar.gz" },
+      { label: "Download Sattari Hub 0.1.1 installer/updater alpha", href: "/downloads/sattari-hub-alpha-v0.1.1.tar.gz" },
       { label: "Download Sattari Audio Suite internal test pack", href: "/downloads/sattari-audio-suite-internal-test-pack-2026-05-25.zip" },
       { label: "Download StemDeck v0.3.6 laptop macOS 13+ b9f4909", href: "/downloads/stemdeck-plugin-alpha-v0.3.6-laptop-macos13-b9f4909.tar.gz" },
     ],
     testingFocus: "Installer/updater validation only: download the updater-capable Hub once on an Apple Silicon Mac, install/update embedded or online-feed internal-alpha builds, rescan the DAW, and record blockers without treating the suite as beta or sale-ready.",
-    testSteps: ["Download Sattari Hub alpha", "Unzip/open Sattari Hub.app and allow Gatekeeper if prompted", "Install/update the available products from the Hub", "Restart or rescan Logic/Ableton for AU/VST3 visibility", "Record install issues, missing products, DAW scan problems, crashes, artifacts, and UX confusion"],
+    testSteps: ["Download Sattari Hub 0.1.1 alpha", "Unzip/open Sattari Hub.app and allow Gatekeeper if prompted", "Install/update the available products from the Hub", "Restart or rescan Logic/Ableton for AU/VST3 visibility", "Record install issues, missing products, DAW scan problems, crashes, artifacts, and UX confusion"],
   },
   {
     id: "stemdeck",
