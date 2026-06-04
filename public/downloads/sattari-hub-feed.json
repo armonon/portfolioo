@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "suiteName": "Sattari Audio Suite",
-  "suiteVersion": "0.1.4-autopitch-portable-feed",
-  "truthLabel": "internal alpha hub manifest with portable no-external-dylib Auto Pitch; not sale-ready; not notarized",
+  "suiteVersion": "0.1.5-autopitch-real-correction-feed",
+  "truthLabel": "internal alpha hub manifest with bundled Rubber Band real-correction Auto Pitch; not sale-ready; not notarized",
   "defaultUpdateChannel": "project-radar-internal-alpha",
   "products": [
     {
       "id": "auto-pitch",
       "name": "Sattari Auto Pitch",
       "category": "Vocal tuning",
-      "version": "0.1.3-alpha+portable-no-dylib",
-      "status": "portable-no-dylib-ready",
-      "description": "Portable Auto Pitch alpha with no Homebrew/RubberBand dylib dependency; built for DAW opening on other Apple Silicon Macs.",
+      "version": "0.1.4-alpha+bundled-rubberband",
+      "status": "real-correction-ready",
+      "description": "Realtime Auto Pitch alpha with bundled Rubber Band pitch engine for actual correction on Macs without Homebrew.",
       "formats": [
         "AU",
         "VST3",
@@ -20,21 +20,21 @@
       "bundles": [
         {
           "kind": "AU",
-          "relativeSourcePath": "build/auto-pitch-portable/SattariAutoPitch_artefacts/Release/AU/Sattari Auto Pitch.component",
+          "relativeSourcePath": "build/auto-pitch-bundled-rubberband/SattariAutoPitch_artefacts/Release/AU/Sattari Auto Pitch.component",
           "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari Auto Pitch.component"
         },
         {
           "kind": "VST3",
-          "relativeSourcePath": "build/auto-pitch-portable/SattariAutoPitch_artefacts/Release/VST3/Sattari Auto Pitch.vst3",
+          "relativeSourcePath": "build/auto-pitch-bundled-rubberband/SattariAutoPitch_artefacts/Release/VST3/Sattari Auto Pitch.vst3",
           "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari Auto Pitch.vst3"
         },
         {
           "kind": "Standalone",
-          "relativeSourcePath": "build/auto-pitch-portable/SattariAutoPitch_artefacts/Release/Standalone/Sattari Auto Pitch.app",
+          "relativeSourcePath": "build/auto-pitch-bundled-rubberband/SattariAutoPitch_artefacts/Release/Standalone/Sattari Auto Pitch.app",
           "installSubpath": "Applications/Sattari Auto Pitch.app"
         }
       ],
-      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-auto-pitch-payload-v0.1.3-portable.tar.gz"
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-auto-pitch-payload-v0.1.4-real-correction.tar.gz"
     },
     {
       "id": "voxkey",
