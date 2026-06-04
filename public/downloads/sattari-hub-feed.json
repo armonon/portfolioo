@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "suiteName": "Sattari Audio Suite",
+  "suiteVersion": "0.1.1-updater-alpha",
+  "truthLabel": "internal alpha hub manifest with remote plugin update feed; not sale-ready; not notarized",
+  "defaultUpdateChannel": "project-radar-internal-alpha",
+  "products": [
+    {
+      "id": "auto-pitch",
+      "name": "Sattari Auto Pitch",
+      "category": "Vocal tuning",
+      "version": "0.1.0-alpha+performer-modes",
+      "status": "installed-test-build-ready",
+      "description": "Realtime vocal tuning alpha with Sattari Wheel key detection bridge and five performer modes.",
+      "formats": [
+        "AU",
+        "VST3",
+        "Standalone"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/auto-pitch-keytab/SattariAutoPitch_artefacts/Release/AU/Sattari Auto Pitch.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari Auto Pitch.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/auto-pitch-keytab/SattariAutoPitch_artefacts/Release/VST3/Sattari Auto Pitch.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari Auto Pitch.vst3"
+        },
+        {
+          "kind": "Standalone",
+          "relativeSourcePath": "build/auto-pitch-keytab/SattariAutoPitch_artefacts/Release/Standalone/Sattari Auto Pitch.app",
+          "installSubpath": "Applications/Sattari Auto Pitch.app"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "voxkey",
+      "name": "Sattari VoxKey",
+      "category": "Voice-to-MIDI",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "Realtime vocal audio to MIDI plugin for Ableton/DAWs.",
+      "formats": [
+        "AU",
+        "VST3"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/voxkey/SattariVoxKey_artefacts/Release/AU/Sattari VoxKey.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari VoxKey.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/voxkey/SattariVoxKey_artefacts/Release/VST3/Sattari VoxKey.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari VoxKey.vst3"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "stemdeck",
+      "name": "Sattari StemDeck",
+      "category": "Remix / stem performance",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "Dual-deck remix/stem performance instrument foundation.",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "bundles": [
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/all/plugins/stemdeck/SattariStemDeck_artefacts/Release/VST3/Sattari StemDeck.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari StemDeck.vst3"
+        },
+        {
+          "kind": "Standalone",
+          "relativeSourcePath": "build/all/plugins/stemdeck/SattariStemDeck_artefacts/Release/Standalone/Sattari StemDeck.app",
+          "installSubpath": "Applications/Sattari StemDeck.app"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "sub-conjurer",
+      "name": "Sub Conjurer",
+      "category": "Low-end utility",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "Low-end/sub helper internal plugin build.",
+      "formats": [
+        "AU",
+        "VST3",
+        "Standalone"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/all/plugins/sub-conjurer/SubConjurer_artefacts/Release/AU/Sub Conjurer.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Sub Conjurer.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/all/plugins/sub-conjurer/SubConjurer_artefacts/Release/VST3/Sub Conjurer.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sub Conjurer.vst3"
+        },
+        {
+          "kind": "Standalone",
+          "relativeSourcePath": "build/all/plugins/sub-conjurer/SubConjurer_artefacts/Release/Standalone/Sub Conjurer.app",
+          "installSubpath": "Applications/Sub Conjurer.app"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "side-chain-master",
+      "name": "Side Chain Master",
+      "category": "Mix utility",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "Side-chain utility internal plugin build.",
+      "formats": [
+        "AU",
+        "VST3",
+        "Standalone"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/all/plugins/side-chain-master/SideChainMaster_artefacts/Release/AU/Side Chain Master.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Side Chain Master.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/all/plugins/side-chain-master/SideChainMaster_artefacts/Release/VST3/Side Chain Master.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Side Chain Master.vst3"
+        },
+        {
+          "kind": "Standalone",
+          "relativeSourcePath": "build/all/plugins/side-chain-master/SideChainMaster_artefacts/Release/Standalone/Side Chain Master.app",
+          "installSubpath": "Applications/Side Chain Master.app"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "royal-chain",
+      "name": "Sattari Royal Chain",
+      "category": "Vocal chain",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "Vocal-chain concept/internal plugin build.",
+      "formats": [
+        "AU",
+        "VST3",
+        "Standalone"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/all/plugins/royal-chain/SattariRoyalChain_artefacts/Release/AU/Sattari Royal Chain.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari Royal Chain.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/all/plugins/royal-chain/SattariRoyalChain_artefacts/Release/VST3/Sattari Royal Chain.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari Royal Chain.vst3"
+        },
+        {
+          "kind": "Standalone",
+          "relativeSourcePath": "build/all/plugins/royal-chain/SattariRoyalChain_artefacts/Release/Standalone/Sattari Royal Chain.app",
+          "installSubpath": "Applications/Sattari Royal Chain.app"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    },
+    {
+      "id": "sattari-arp",
+      "name": "Sattari Arp",
+      "category": "MIDI generator",
+      "version": "0.1.0-alpha",
+      "status": "internal-alpha",
+      "description": "MIDI arpeggiator/generator internal plugin build.",
+      "formats": [
+        "AU",
+        "VST3"
+      ],
+      "bundles": [
+        {
+          "kind": "AU",
+          "relativeSourcePath": "build/all/plugins/sattari-arp/SattariArp_artefacts/Release/AU/Sattari Arp.component",
+          "installSubpath": "Library/Audio/Plug-Ins/Components/Sattari Arp.component"
+        },
+        {
+          "kind": "VST3",
+          "relativeSourcePath": "build/all/plugins/sattari-arp/SattariArp_artefacts/Release/VST3/Sattari Arp.vst3",
+          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari Arp.vst3"
+        }
+      ],
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+    }
+  ],
+  "updateFeedURL": "https://armonnasiri.netlify.app/downloads/sattari-hub-feed.json"
+}
