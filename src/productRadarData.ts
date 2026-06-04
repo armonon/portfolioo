@@ -91,7 +91,7 @@ export const radarLanes: RadarLane[] = [
     readiness: 46,
     accent: "from-orange-500/30 via-amber-500/20 to-yellow-500/10",
     summary: "Music tools and Sattari-branded audio products now have a self-contained Sattari Hub installer/updater alpha for Apple Silicon Mac testing.",
-    bullets: ["Sattari Hub 0.1.2 internal alpha download is available", "Auto Pitch 0.1.2 Ableton fix is available through the Hub update feed; Hub 0.1.2 embeds 7 Sattari products / 18 AU-VST3-Standalone payload entries", "Auto Pitch performer-modes build remains internal alpha and needs real vocal/DAW listening tests"],
+    bullets: ["Sattari Hub 0.1.2 internal alpha download is available", "Auto Pitch 0.1.3 portable no-dylib fix is available through the Hub update feed; Hub 0.1.2 embeds 7 Sattari products / 18 AU-VST3-Standalone payload entries", "Auto Pitch performer-modes build remains internal alpha and needs real vocal/DAW listening tests"],
     nextAction: "Download Sattari Hub 0.1.2 alpha from Product Radar on an Apple Silicon Mac, open the app, install/update the available Sattari builds, then restart/rescan the DAW and record install/listening notes.",
     blocker: "Hub is self-contained but still internal alpha: not notarized, not public/sale-ready, Apple Silicon Mac only, and plugin quality still needs real DAW/listening validation.",
     primaryLink: { label: "Download Sattari Hub 0.1.2 alpha", href: "/downloads/sattari-hub-alpha-v0.1.2.tar.gz" },
@@ -496,7 +496,7 @@ export const radarSoftwareProjects: RadarSoftwareProject[] = [
     category: "Audio suite",
     status: "Hub installer/updater alpha",
     image: "/photos/auto-pitch-example.svg",
-    summary: "One-download Sattari Hub installer/updater alpha with Project Radar plugin-update feed; Auto Pitch 0.1.2 Ableton fix payload is live for Apple Silicon Mac validation.",
+    summary: "One-download Sattari Hub installer/updater alpha with Project Radar plugin-update feed; Auto Pitch 0.1.3 portable no-dylib fix payload is live for Apple Silicon Mac validation.",
     description: "Sattari Hub is the new downloadable internal alpha app for installing, updating, and hosting the current Sattari Audio software from one place. The packaged archive embeds the available AU/VST3/Standalone payloads so another Apple Silicon Mac can test without cloning the repo, and the updater-capable Hub reads a Project Radar feed so future plugin payload archives can update without replacing the Hub app. It is explicitly not notarized, not a beta, not a public release, not DAW-validated, and not sale-ready. Testing should focus on installation/update flow, Gatekeeper friction, DAW rescan behavior, and real listening notes for Auto Pitch/VoxKey/StemDeck and the other plugin builds.",
     tags: ["Audio", "Internal testing", "Validation", "Sattari"],
     downloads: [
