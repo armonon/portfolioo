@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "suiteName": "Sattari Audio Suite",
-  "suiteVersion": "0.1.5-autopitch-real-correction-feed",
-  "truthLabel": "internal alpha hub manifest with bundled Rubber Band real-correction Auto Pitch; not sale-ready; not notarized",
+  "suiteVersion": "0.1.6-stemdeck-standalone-app-feed",
+  "truthLabel": "internal alpha hub manifest with Auto Pitch bundled Rubber Band and StemDeck standalone app package; not sale-ready; not notarized",
   "defaultUpdateChannel": "project-radar-internal-alpha",
   "products": [
     {
@@ -65,26 +65,20 @@
       "id": "stemdeck",
       "name": "Sattari StemDeck",
       "category": "Remix / stem performance",
-      "version": "0.1.0-alpha",
-      "status": "internal-alpha",
-      "description": "Dual-deck remix/stem performance instrument foundation.",
+      "version": "0.4.0-alpha+standalone-app",
+      "status": "standalone-app-alpha",
+      "description": "Standalone Mac DJ app alpha with split live mixer and arrangement recorder workspace.",
       "formats": [
-        "VST3",
-        "Standalone"
+        "Standalone App"
       ],
       "bundles": [
         {
-          "kind": "VST3",
-          "relativeSourcePath": "build/all/plugins/stemdeck/SattariStemDeck_artefacts/Release/VST3/Sattari StemDeck.vst3",
-          "installSubpath": "Library/Audio/Plug-Ins/VST3/Sattari StemDeck.vst3"
-        },
-        {
           "kind": "Standalone",
-          "relativeSourcePath": "build/all/plugins/stemdeck/SattariStemDeck_artefacts/Release/Standalone/Sattari StemDeck.app",
+          "relativeSourcePath": "stemdeck-app-alpha-v0.4.0-standalone-app/Sattari StemDeck/Sattari StemDeck.app",
           "installSubpath": "Applications/Sattari StemDeck.app"
         }
       ],
-      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/sattari-audio-plugin-payloads-v0.1.0.tar.gz"
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/stemdeck-app-alpha-v0.4.0-standalone-app.tar.gz"
     },
     {
       "id": "sub-conjurer",
