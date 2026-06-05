@@ -409,7 +409,16 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
   const [isSweepRunning, setIsSweepRunning] = useState(false);
   const [sweepMessage, setSweepMessage] = useState("Ready to request a protected full-system sweep.");
   const hasExternalLiveLink = (project: (typeof radarSoftwareProjects)[number]) => Boolean(project.live?.href.startsWith("http"));
-  const liveLinkedRadarSoftwareProjects = radarSoftwareProjects.filter(hasExternalLiveLink);
+  const radarSoftwareDisplayOrder = new Map([
+    ["librarian-atlas", 0],
+    ["botanica-lab", 1],
+    ["trader-oracle", 2],
+    ["market", 98],
+    ["now-suite", 99],
+  ]);
+  const liveLinkedRadarSoftwareProjects = radarSoftwareProjects
+    .filter(hasExternalLiveLink)
+    .sort((a, b) => (radarSoftwareDisplayOrder.get(a.id) ?? 50) - (radarSoftwareDisplayOrder.get(b.id) ?? 50));
   const liveLinkedRadarSoftwareIds = new Set(liveLinkedRadarSoftwareProjects.map((project) => project.id));
   const liveLinkedRadarEvidence = radarEvidenceLedger.filter((item) => item.softwareId && liveLinkedRadarSoftwareIds.has(item.softwareId));
   const selectedLane = radarLanes.find((lane) => lane.id === selectedLaneId);
@@ -1286,7 +1295,15 @@ function App() {
   ];
 
   const projectsWithLiveLinks = projects.filter((project) => project.live && project.live !== "#");
-  const softwareProjects = projectsWithLiveLinks.filter((project) => project.section === "software");
+  const softwareProjectDisplayOrder = new Map([
+    ["5", 0],
+    ["3", 1],
+    ["4", 2],
+    ["now-market", 99],
+  ]);
+  const softwareProjects = projectsWithLiveLinks
+    .filter((project) => project.section === "software")
+    .sort((a, b) => (softwareProjectDisplayOrder.get(String(a.id)) ?? 50) - (softwareProjectDisplayOrder.get(String(b.id)) ?? 50));
   const websiteProjects = projectsWithLiveLinks.filter((project) => project.section === "website");
 
   const experienceHighlights = [
