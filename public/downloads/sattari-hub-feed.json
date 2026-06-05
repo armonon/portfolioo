@@ -65,20 +65,20 @@
       "id": "stemdeck",
       "name": "Sattari StemDeck",
       "category": "Remix / stem performance",
-      "version": "0.4.0-alpha+standalone-app",
+      "version": "0.4.2-alpha+standalone-bundled-rubberband",
       "status": "standalone-app-alpha",
-      "description": "Standalone Mac DJ app alpha with split live mixer and arrangement recorder workspace.",
+      "description": "Standalone Mac DJ app alpha with split live mixer, arrangement recorder workspace, and bundled Rubber Band runtime dylibs.",
       "formats": [
         "Standalone App"
       ],
       "bundles": [
         {
           "kind": "Standalone",
-          "relativeSourcePath": "stemdeck-app-alpha-v0.4.0-standalone-app/Sattari StemDeck/Sattari StemDeck.app",
+          "relativeSourcePath": "stemdeck-app-alpha-v0.4.2-standalone-bundled-rubberband/Sattari StemDeck/Sattari StemDeck.app",
           "installSubpath": "Applications/Sattari StemDeck.app"
         }
       ],
-      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/stemdeck-app-alpha-v0.4.0-standalone-app.tar.gz"
+      "updateArchiveURL": "https://armonnasiri.netlify.app/downloads/stemdeck-app-alpha-v0.4.2-standalone-bundled-rubberband.tar.gz"
     },
     {
       "id": "sub-conjurer",
