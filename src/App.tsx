@@ -408,8 +408,12 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
   const [selectedSoftwareId, setSelectedSoftwareId] = useState(() => readRadarRoute().softwareId);
   const [isSweepRunning, setIsSweepRunning] = useState(false);
   const [sweepMessage, setSweepMessage] = useState("Ready to request a protected full-system sweep.");
+  const hasExternalLiveLink = (project: (typeof radarSoftwareProjects)[number]) => Boolean(project.live?.href.startsWith("http"));
+  const liveLinkedRadarSoftwareProjects = radarSoftwareProjects.filter(hasExternalLiveLink);
+  const liveLinkedRadarSoftwareIds = new Set(liveLinkedRadarSoftwareProjects.map((project) => project.id));
+  const liveLinkedRadarEvidence = radarEvidenceLedger.filter((item) => item.softwareId && liveLinkedRadarSoftwareIds.has(item.softwareId));
   const selectedLane = radarLanes.find((lane) => lane.id === selectedLaneId);
-  const selectedSoftware = radarSoftwareProjects.find((project) => project.id === selectedSoftwareId);
+  const selectedSoftware = liveLinkedRadarSoftwareProjects.find((project) => project.id === selectedSoftwareId);
   const linkTarget = (href: string) => href.startsWith("http") ? "_blank" : undefined;
   const openLane = (laneId: string) => {
     setSelectedLaneId(laneId);
@@ -712,7 +716,7 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   Product Radar is now the software testing directory.
                 </h1>
                 <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300 md:text-xl">
-                  A living portfolio hub for every serious software project and new software idea. Open a product, test its web prototype, read the clear description, download any test/preview pack, and use the full page as the checklist for testing.
+                  A living portfolio hub for live, publicly reachable software projects. Open a product, use its live link, read the clear description, download any available test pack, and use the full page as the checklist for testing.
                 </p>
               </div>
 
@@ -753,12 +757,12 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   <p className="mt-4 text-sm leading-relaxed text-zinc-300">{sweepMessage}</p>
                   <div className="mt-4 grid grid-cols-2 gap-3 text-center">
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                      <div className="text-2xl font-black text-white">{radarEvidenceLedger.length}</div>
-                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">blocker rows</div>
+                      <div className="text-2xl font-black text-white">{liveLinkedRadarEvidence.length}</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">live rows</div>
                     </div>
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                      <div className="text-2xl font-black text-white">{radarSoftwareProjects.length}</div>
-                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">products</div>
+                      <div className="text-2xl font-black text-white">{liveLinkedRadarSoftwareProjects.length}</div>
+                      <div className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-500">live products</div>
                     </div>
                   </div>
                 </div>
@@ -777,12 +781,12 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   </p>
                 </div>
                 <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
-                  {radarEvidenceLedger.length} evidence rows
+                  {liveLinkedRadarEvidence.length} live evidence rows
                 </div>
               </div>
 
               <div className="mt-7 grid grid-cols-1 gap-4 lg:grid-cols-2">
-                {radarEvidenceLedger.map((item) => (
+                {liveLinkedRadarEvidence.map((item) => (
                   <article key={item.projectName} className="rounded-3xl border border-white/10 bg-black/20 p-5">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
@@ -831,18 +835,18 @@ function ProductRadarPage({ onHome }: { onHome: () => void }) {
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300">
                     <Download size={16} /> Software downloads + test pages
                   </div>
-                  <h2 className="text-3xl font-black tracking-tight md:text-5xl">All software projects in one place.</h2>
+                  <h2 className="text-3xl font-black tracking-tight md:text-5xl">Live software projects in one place.</h2>
                   <p className="mt-3 max-w-3xl leading-relaxed text-zinc-400">
-                    Each card opens a full testing page with a web prototype, product description, live links when available, downloadables, and practical test steps.
+                    Only projects with public live links are shown here. Each card opens a focused testing page with the live link, product description, downloadables when available, and practical test steps.
                   </p>
                 </div>
                 <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-sm font-semibold text-zinc-300">
-                  {radarSoftwareProjects.length} software pages
+                  {liveLinkedRadarSoftwareProjects.length} live software pages
                 </div>
               </div>
 
               <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-                {radarSoftwareProjects.map((project) => (
+                {liveLinkedRadarSoftwareProjects.map((project) => (
                   <motion.article
                     key={project.id}
                     role="button"
@@ -1281,22 +1285,23 @@ function App() {
     }
   ];
 
-  const softwareProjects = projects.filter((project) => project.section === "software");
-  const websiteProjects = projects.filter((project) => project.section === "website");
+  const projectsWithLiveLinks = projects.filter((project) => project.live && project.live !== "#");
+  const softwareProjects = projectsWithLiveLinks.filter((project) => project.section === "software");
+  const websiteProjects = projectsWithLiveLinks.filter((project) => project.section === "website");
 
   const experienceHighlights = [
     {
       role: "Backend Developer",
       company: "Softech",
-      timeframe: "4 years",
+      timeframe: "Backend engineering",
       description:
         "Built and maintained backend systems, APIs, automation, data flows, and production-facing web infrastructure for real businesses.",
       bullets: ["API and service development", "Database-backed workflows", "Reliable implementation under client/product constraints"]
     },
     {
       role: "AI Engineering Training",
-      company: "4Geeks Academy",
-      timeframe: "AI Engineering",
+      company: "Applied AI engineering",
+      timeframe: "AI product systems",
       description:
         "Trained in applied AI engineering: modern AI workflows, prompt and agent patterns, automation, and product-minded AI implementation.",
       bullets: ["AI product prototyping", "LLM workflow design", "Practical automation and integration"]
@@ -1533,28 +1538,8 @@ function App() {
               viewport={{ once: false }}
               className="text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
             >
-              I'm Armon Nasiri, a backend developer with 4 years at Softech and AI engineering training from 4Geeks Academy. I build modern websites, AI-powered workflows, dashboards, creator tools, and product systems that move from rough idea to live experience.
+              I'm Armon Nasiri. I come from backend engineering, trained in AI engineering, and now build full product experiences across websites, dashboards, automation, and creative tools.
             </motion.p>
-
-            {/* Stats */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 my-12"
-            >
-              {[
-                { label: "Backend experience", value: "4 yrs" },
-                { label: "Product directions", value: "12+" },
-                { label: "AI engineering trained", value: "4Geeks" }
-              ].map((stat, idx) => (
-                <motion.div key={idx} variants={fadeUp} className="text-center">
-                  <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-sm text-zinc-500">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
@@ -1609,7 +1594,7 @@ function App() {
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                My foundation is backend development — 4 years at Softech building practical software systems — plus AI engineering training through 4Geeks Academy. That mix lets me move between infrastructure, product thinking, automation, and user-facing design.
+                My foundation is backend engineering: APIs, data flows, automation, and practical software systems. I then trained in applied AI engineering, which pushed the work toward intelligent workflows, agent-style automation, and more complete product experiences.
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
