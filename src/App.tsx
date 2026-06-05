@@ -1295,7 +1295,7 @@ function App() {
       company: "Softech",
       timeframe: "Backend engineering",
       description:
-        "Built and maintained backend systems, APIs, automation, data flows, and production-facing web infrastructure for real businesses.",
+        "Built backend systems, APIs, automation, data flows, and production-facing web infrastructure.",
       bullets: ["API and service development", "Database-backed workflows", "Reliable implementation under client/product constraints"]
     },
     {
@@ -1303,7 +1303,7 @@ function App() {
       company: "Applied AI engineering",
       timeframe: "AI product systems",
       description:
-        "Trained in applied AI engineering: modern AI workflows, prompt and agent patterns, automation, and product-minded AI implementation.",
+        "Applied AI workflows, agent patterns, automation, and product-minded implementation.",
       bullets: ["AI product prototyping", "LLM workflow design", "Practical automation and integration"]
     }
   ];
@@ -1312,17 +1312,17 @@ function App() {
     {
       title: "AI + creative software",
       image: "/photos/auto-pitch-example.svg",
-      text: "Auto Pitch, StemDeck, ScenePilot, COMPOSITOR, and Sattari audio/video tools show a creator-software direction: music production, native editing, timeline automation, and workflow acceleration."
+      text: "Creator-software work across video editing, music tools, timeline automation, and workflow acceleration."
     },
     {
       title: "Research and intelligence tools",
       image: "/photos/trader-oracle-example.svg",
-      text: "NOW Suite, Market, Trader Oracle, Botanica Lab, Librarian, and Product Radar turn noisy information into structured dashboards, cited research, identity/profile systems, next actions, and decision support."
+      text: "Dashboards and research systems that turn messy inputs into clearer decisions, citations, and next actions."
     },
     {
       title: "Business websites and commerce",
       image: "/photos/sattari-screenshot.png",
-      text: "Sattari Music, Nasiri Team Realty, and local-business sample pages demonstrate polished public sites, service positioning, lead-generation UX, and brand-forward interfaces."
+      text: "Public websites with clearer positioning, brand surfaces, lead paths, and responsive interfaces."
     }
   ];
 
@@ -1508,7 +1508,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="min-h-[90vh] flex items-center justify-center px-4 py-20"
+          className="min-h-[78vh] flex items-center justify-center px-4 py-16 md:py-20"
         >
           <div className="max-w-5xl w-full text-center space-y-8">
             <motion.div
@@ -1518,7 +1518,7 @@ function App() {
               viewport={{ once: false }}
               className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-300"
             >
-              <Sparkles size={16} /> Backend developer • AI engineer • product builder
+              <Sparkles size={16} /> Backend systems → AI products → polished interfaces
             </motion.div>
 
             <motion.h1
@@ -1526,9 +1526,9 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="text-5xl md:text-7xl font-bold tracking-tight"
+              className="text-4xl md:text-6xl font-bold tracking-tight"
             >
-              I build software, websites, and AI experiences that turn ideas into live products.
+              I turn backend logic, AI workflows, and sharp interfaces into live products.
             </motion.h1>
 
             <motion.p
@@ -1536,9 +1536,9 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
             >
-              I'm Armon Nasiri. I come from backend engineering, trained in AI engineering, and now build full product experiences across websites, dashboards, automation, and creative tools.
+              I'm Armon Nasiri — a backend-minded product builder focused on websites, dashboards, automation, AI tools, and creative software that people can actually open and use.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -1555,7 +1555,7 @@ function App() {
                 onClick={() => scrollToSection("projects")}
                 className="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-100 transition-colors"
               >
-                View Software
+                See live work
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -1563,7 +1563,7 @@ function App() {
                 onClick={() => scrollToSection("contact")}
                 className="px-8 py-3 bg-zinc-900 text-white font-semibold rounded-lg border border-zinc-700 hover:border-zinc-500 transition-colors"
               >
-                Contact Me
+                Work with me
               </motion.button>
             </motion.div>
           </div>
@@ -1576,7 +1576,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -1590,15 +1590,15 @@ function App() {
               <div className="h-1 w-16 bg-white rounded-full"></div>
               
               <p className="text-lg text-zinc-300 leading-relaxed">
-                I build across the full product loop: shaping the idea, designing the interface, wiring the backend, connecting data and APIs, testing the workflow, and turning rough concepts into usable digital products.
+                I build the connective tissue of a product: backend logic, data flows, APIs, UI, automation, and the final web experience.
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                My foundation is backend engineering: APIs, data flows, automation, and practical software systems. I then trained in applied AI engineering, which pushed the work toward intelligent workflows, agent-style automation, and more complete product experiences.
+                The portfolio is intentionally practical: live sites, working dashboards, AI-assisted workflows, and product surfaces that show how the pieces connect.
               </p>
 
               <p className="text-lg text-zinc-300 leading-relaxed">
-                My current portfolio spans software downloads, AI music tools, native video-editor work, NOW/Market platform systems, botanical research, stock-market intelligence, book discovery, and business websites. The common thread is simple: make the product feel useful, sharp, and memorable.
+                The common thread: make the idea clear, make the interface feel strong, and make the product useful fast.
               </p>
             </motion.div>
           </div>
@@ -1611,7 +1611,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -1621,10 +1621,10 @@ function App() {
               viewport={{ once: false }}
               className="mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">Experience & What I've Created</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Background & Product Work</h2>
               <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
               <p className="mt-5 max-w-3xl text-zinc-400">
-                A portfolio should make the story obvious: I come from backend engineering, I trained in AI engineering, and I now build full product experiences across websites, dashboards, automation, and creative tools.
+                A tighter look at the work: backend foundations, applied AI, public websites, dashboards, automation, and creative tools — with live links kept front and center.
               </p>
             </motion.div>
 
@@ -1698,7 +1698,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -1706,12 +1706,12 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="mb-16"
+              className="mb-10"
             >
               <h2 className="text-3xl md:text-4xl font-bold">Software</h2>
               <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
               <p className="mt-5 max-w-3xl text-zinc-400">
-                AI tools, dashboards, research systems, native app foundations, and creator software — grouped together so the software work is easy to scan.
+                Live software, dashboards, AI workflows, and creator tools — kept focused so the strongest work is easy to scan.
               </p>
             </motion.div>
 
@@ -1769,7 +1769,7 @@ function App() {
 
                         {/* Tech Stack */}
                         <div className="flex flex-wrap gap-2 mb-6">
-                          {project.tech.map((tech, idx) => (
+                          {project.tech.slice(0, 4).map((tech, idx) => (
                             <span
                               key={idx}
                               className="text-xs font-medium text-zinc-300 bg-zinc-800/50 px-3 py-1 rounded-lg"
@@ -1781,7 +1781,7 @@ function App() {
 
                         {/* Points */}
                         <ul className="space-y-2 mb-6">
-                          {project.points.map((point, idx) => (
+                          {project.points.slice(0, 2).map((point, idx) => (
                             <li
                               key={idx}
                               className="text-sm text-zinc-400 flex gap-2"
@@ -1835,7 +1835,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -1843,12 +1843,12 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false }}
-              className="mb-16"
+              className="mb-10"
             >
               <h2 className="text-3xl md:text-4xl font-bold">Websites</h2>
               <div className="h-1 w-16 bg-white rounded-full mt-4"></div>
               <p className="mt-5 max-w-3xl text-zinc-400">
-                Public-facing business websites, brand surfaces, commerce pages, and client-style web experiences kept separate from the software products.
+                Public business websites and brand surfaces, separate from the software products.
               </p>
             </motion.div>
 
@@ -1903,7 +1903,7 @@ function App() {
                         </p>
 
                         <div className="flex flex-wrap gap-2 mb-6">
-                          {project.tech.map((tech, idx) => (
+                          {project.tech.slice(0, 4).map((tech, idx) => (
                             <span
                               key={idx}
                               className="text-xs font-medium text-zinc-300 bg-zinc-800/50 px-3 py-1 rounded-lg"
@@ -1914,7 +1914,7 @@ function App() {
                         </div>
 
                         <ul className="space-y-2 mb-6">
-                          {project.points.map((point, idx) => (
+                          {project.points.slice(0, 2).map((point, idx) => (
                             <li
                               key={idx}
                               className="text-sm text-zinc-400 flex gap-2"
@@ -1967,7 +1967,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -2009,7 +2009,7 @@ function App() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="py-20 px-4"
+          className="py-16 px-4"
         >
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -2019,11 +2019,11 @@ function App() {
               viewport={{ once: false }}
               className="space-y-8"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">Let's Build</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">Build something useful</h2>
               <div className="h-1 w-16 bg-white rounded-full mx-auto"></div>
               
               <p className="text-lg text-zinc-300 max-w-2xl mx-auto">
-                I'm open to freelance work, collaborations, product builds, and creative technical projects. If you want to turn an idea into something people can actually use, reach out.
+                Open to product builds, websites, dashboards, AI automation, and creative technical work.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
@@ -2034,7 +2034,7 @@ function App() {
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-zinc-100 transition-colors"
                 >
                   <Mail size={20} />
-                  Email Me
+                  Email Armon
                 </motion.a>
               </div>
             </motion.div>
@@ -2050,10 +2050,10 @@ function App() {
               <div className="text-lg font-bold bg-gradient-to-r from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mb-1">
                 Armon Nasiri
               </div>
-              <p className="text-sm text-zinc-500">Digital Product Builder</p>
+              <p className="text-sm text-zinc-500">Backend-minded product builder</p>
             </div>
             <p className="text-sm text-zinc-500">
-              © 2026 All rights reserved. Crafted with React, Tailwind & Framer Motion.
+              © 2026 Armon Nasiri. React, Tailwind, Framer Motion.
             </p>
           </div>
         </div>
